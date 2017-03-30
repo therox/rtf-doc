@@ -1,0 +1,33 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;rtf-doc&gt;">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../tiger8" />
+      <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$PROJECT_DIR$/../golang.org" />
+      <root url="file://$PROJECT_DIR$/../graphtest" />
+      <root url="file://$PROJECT_DIR$/../ObjectList" />
+      <root url="file://$PROJECT_DIR$/../sourcegraph.com" />
+      <root url="file://$PROJECT_DIR$/../tumblrScrapper" />
+      <root url="file://$PROJECT_DIR$/../gopkg.in" />
+      <root url="file://$PROJECT_DIR$/../gitlab-cli" />
+      <root url="file://$PROJECT_DIR$/../test" />
+      <root url="file://$PROJECT_DIR$/../forfeits" />
+    </CLASSES>
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../tiger8" />
+      <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$PROJECT_DIR$/../golang.org" />
+      <root url="file://$PROJECT_DIR$/../graphtest" />
+      <root url="file://$PROJECT_DIR$/../ObjectList" />
+      <root url="file://$PROJECT_DIR$/../sourcegraph.com" />
+      <root url="file://$PROJECT_DIR$/../tumblrScrapper" />
+      <root url="file://$PROJECT_DIR$/../gopkg.in" />
+      <root url="file://$PROJECT_DIR$/../gitlab-cli" />
+      <root url="file://$PROJECT_DIR$/../test" />
+      <root url="file://$PROJECT_DIR$/../forfeits" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>
