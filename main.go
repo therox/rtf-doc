@@ -1,5 +1,7 @@
-package rtf_doc
+package main
+
+import "fmt"
 
 func main() {
-
+	fmt.Println(string(composeHeader(getDefaultHeader())))
 }

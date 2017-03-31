@@ -1,3 +1,1 @@
-package rtf_doc
-
-
+package main
