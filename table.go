@@ -13,19 +13,17 @@ func getDefaultCellProperties() CellProperties {
 func getDefaultEmptyCell() Cell {
 	return Cell{
 		CellProperties: getDefaultCellProperties(),
-		TextProperties: TextProperties{},
-		text:           "",
+		content:        Paragraph{},
 	}
 }
 
-func getCellWithProperties(cp CellProperties, tp TextProperties) Cell {
+func getCellWithProperties(cp CellProperties) Cell {
 	return Cell{
-		cp,
-		tp,
-		"",
+		CellProperties: cp,
+		content:        Paragraph{},
 	}
 }
 
-func getDefaultTable() Table {
+func NewTable() Table {
 	return Table{}
 }

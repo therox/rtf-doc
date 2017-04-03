@@ -2,32 +2,24 @@ package rtfdoc
 
 import "fmt"
 
-func NewColor(red, green, blue int) Color {
-	return Color{
-		Red:   red,
-		Green: green,
-		Blue:  blue,
-	}
-}
-
-func (color Color) String() string {
+func (color Color) Compose() string {
 	return fmt.Sprintf("\\red%d\\green%d\\blue%d;", color.Red, color.Green, color.Blue)
 }
 
-func (cTbl ColorTable) String() string {
+func (cTbl ColorTable) Compose() string {
 	var res string
 	for i := range cTbl {
-		res += cTbl[i].String()
+		res += cTbl[i].Compose()
 	}
 	return res
 }
 
-func (cTbl *ColorTable) Add(color Color) {
+func (cTbl *ColorTable) AddColor(color Color) {
 	*cTbl = append(*cTbl, color)
 
 }
 
-func (cTbl *ColorTable) Set(color Color) {
+func (cTbl *ColorTable) SetColor(color Color) {
 	*cTbl = []Color{color}
 
 }

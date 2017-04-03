@@ -2,6 +2,14 @@ package rtfdoc
 
 // http://www.biblioscape.com/rtf15_spec.htm#Heading2
 
+type DocumentItem interface {
+	Compose() string
+}
+
+type CellItem interface {
+	InCell()
+}
+
 type Header struct {
 	Version string // Версия RTF, по-умолчанию, 1.5
 	CharSet string // кодировка. Возможные варианты: ansi, mac, pc, pca
@@ -22,11 +30,15 @@ type Color struct {
 type Document struct {
 	Header
 	orientation string
-	PageSize    Size
-	Margins
-
-	Content []string
+	DocumentSettings
+	Content []DocumentItem
 }
+
+type DocumentSettings struct {
+	PageSize Size
+	Margins
+}
+
 type ColorTable []Color
 
 type Font struct {
@@ -34,6 +46,7 @@ type Font struct {
 	Charset int    // Specifies the character set of a font in the font table. Values for N are defined by Windows header files, and in the file RTFDEFS.H accompanying this document.
 	Prq     int    // Specifies the pitch of a font in the font table.
 	Name    string
+	Code    string
 }
 
 type FontTable []Font
@@ -66,10 +79,6 @@ type CellProperties struct {
 	BorderBottom bool
 }
 
-type TextProperties struct {
-	Font *Font
-}
-
 // TableCell - структура ячейки таблицы с заголовком
 type HeaderCell struct {
 	Cell
@@ -84,8 +93,20 @@ type DataRow []DataCell
 
 type Cell struct {
 	CellProperties
-	TextProperties
-	text string
+	content Paragraph
 }
 
 // ============End of Table structs===========
+
+type Paragraph struct {
+	align   string
+	content []Text
+}
+
+type Text struct {
+	fontSize int
+	font     Font
+	italic   bool
+	bold     bool
+	text     string
+}
