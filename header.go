@@ -4,7 +4,7 @@ import "fmt"
 
 func getDefaultHeader() Header {
 	ct := ColorTable{}
-	ct.SetColor(Color{0, 0, 0})
+	ct.SetColor(Color{0, 0, 0, "Black"})
 	return Header{
 		Version: "1",
 		CharSet: "ansi",

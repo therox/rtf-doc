@@ -25,6 +25,7 @@ type Color struct {
 	Red   int
 	Green int
 	Blue  int
+	Code  string
 }
 
 type Document struct {
@@ -64,24 +65,25 @@ type Margins struct {
 }
 
 //=================Table=======
+type TableCell interface {
+	CellCompose() string
+	getCellWidth() int
+	getBorders() []string
+}
 
 // Table - структура с таблицей
 type Table struct {
-	HeaderRow []HeaderCell
-	Data      []DataRow
+	Data []TableRow
+	TableProperties
+}
+
+type TableProperties struct {
+	align string
 }
 
 type CellProperties struct {
-	WithBorder   bool
-	BorderLeft   bool
-	BorderRight  bool
-	BorderTop    bool
-	BorderBottom bool
-}
-
-// TableCell - структура ячейки таблицы с заголовком
-type HeaderCell struct {
-	Cell
+	borders   []string
+	CellWidth int
 }
 
 // DataCell - структура ячейки таблицы с данными
@@ -89,7 +91,7 @@ type DataCell struct {
 	Cell
 }
 
-type DataRow []DataCell
+type TableRow []TableCell
 
 type Cell struct {
 	CellProperties
@@ -99,14 +101,23 @@ type Cell struct {
 // ============End of Table structs===========
 
 type Paragraph struct {
-	align   string
-	content []Text
+	align            string
+	indentFirstLine  int
+	indentBlockLeft  int
+	indentBlockRight int
+	content          []Text
 }
 
 type Text struct {
-	fontSize int
-	font     Font
-	italic   bool
-	bold     bool
-	text     string
+	fontSize  int
+	fontCode  int //code for font in font Table
+	colorCode int
+	italic    bool
+	bold      bool
+	underline bool
+	super     bool
+	sub       bool
+	scaps     bool
+	strike    bool
+	text      string
 }

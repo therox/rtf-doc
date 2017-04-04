@@ -38,7 +38,6 @@ func (doc *Document) Compose() string {
 }
 
 func (doc *Document) AddContent(content DocumentItem) {
-
 	doc.Content = append(doc.Content, content)
 }
 
@@ -54,4 +53,29 @@ func (doc *Document) SetOrientation(orientation string) {
 
 func (doc *Document) SetFontTable(ft FontTable) {
 	doc.Header.FontTBL = ft
+}
+
+func (doc *Document) GetDocumentWidth() int {
+	return doc.PageSize.width
+}
+
+func (doc *Document) SetMargins(lm, tm, rm, bm int) {
+	doc.Margins = Margins{
+		lm,
+		rm,
+		tm,
+		bm,
+	}
+}
+func (doc *Document) getLeftMargin() int {
+	return doc.Margins.left
+}
+func (doc *Document) getRightMargin() int {
+	return doc.Margins.right
+}
+func (doc *Document) getTopMargin() int {
+	return doc.Margins.top
+}
+func (doc *Document) getBottomMargin() int {
+	return doc.Margins.bottom
 }
