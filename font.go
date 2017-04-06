@@ -24,7 +24,7 @@ func NewFontTable() FontTable {
 	return FontTable{}
 }
 
-func (ft FontTable) Compose() string {
+func (ft FontTable) compose() string {
 	var fontInfo string
 	for i := range ft {
 		fontInfo += fmt.Sprintf("{\\f%d%s}", i, ft[i].Compose())

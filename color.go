@@ -2,14 +2,14 @@ package rtfdoc
 
 import "fmt"
 
-func (color Color) Compose() string {
+func (color Color) compose() string {
 	return fmt.Sprintf("\\red%d\\green%d\\blue%d;", color.Red, color.Green, color.Blue)
 }
 
 func (cTbl ColorTable) Compose() string {
 	var res string
 	for i := range cTbl {
-		res += cTbl[i].Compose()
+		res += cTbl[i].compose()
 	}
 	return res
 }

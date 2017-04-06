@@ -14,7 +14,7 @@ func (par *Paragraph) AddText(t Text) {
 	par.content = append(par.content, t)
 }
 
-func (par Paragraph) Compose() string {
+func (par Paragraph) compose() string {
 	res := fmt.Sprintf("\n{\\pard %s \\q%s", par.indent, par.align)
 	for _, c := range par.content {
 		res += c.Compose()
@@ -23,7 +23,7 @@ func (par Paragraph) Compose() string {
 	return res
 }
 
-func (par Paragraph) CellCompose() string {
+func (par Paragraph) cellCompose() string {
 	res := fmt.Sprintf("\n{\\pard \\q%s", par.align)
 	for _, c := range par.content {
 		res += c.Compose()

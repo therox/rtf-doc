@@ -6,7 +6,7 @@ func getDefaultTableProperties() TableProperties {
 	tp := TableProperties{
 		align: "c",
 	}
-	tp.SetMargins(100, 100, 100, 100)
+	tp.SetTableMargins(100, 100, 100, 100)
 	return tp
 }
 
@@ -18,7 +18,7 @@ func (t *Table) AddRow(row TableRow) {
 	t.Data = append(t.Data, row)
 }
 
-func (t *TableProperties) SetMargins(left, top, right, bottom int) {
+func (t *TableProperties) SetTableMargins(left, top, right, bottom int) {
 	margins := ""
 	if left != 0 {
 		margins += fmt.Sprintf(" \\trpaddl%d", left)
@@ -40,7 +40,7 @@ func (t *TableProperties) getMargins() string {
 	return t.margins
 }
 
-func (t Table) Compose() string {
+func (t Table) compose() string {
 	res := ""
 	var align = ""
 	if t.align != "" {
@@ -49,7 +49,7 @@ func (t Table) Compose() string {
 	for _, tr := range t.Data {
 		res += fmt.Sprintf("\n{\\trowd %s", align)
 		res += t.getMargins()
-		res += tr.Compose()
+		res += tr.compose()
 		res += "\n\\row}"
 	}
 	return res
@@ -62,7 +62,7 @@ func (tr *TableRow) AddCell(cell TableCell) {
 	*tr = append(*tr, cell)
 }
 
-func (tr TableRow) Compose() string {
+func (tr TableRow) compose() string {
 	res := ""
 	if len(tr) != 0 {
 		cBegin := 0
@@ -108,7 +108,7 @@ func (dc *DataCell) SetContent(c Paragraph) {
 }
 
 func (dc DataCell) cellCompose() string {
-	res := fmt.Sprintf("\n\\pard\\intbl %s \\cell", dc.Cell.content.CellCompose())
+	res := fmt.Sprintf("\n\\pard\\intbl %s \\cell", dc.Cell.content.cellCompose())
 
 	return res
 }

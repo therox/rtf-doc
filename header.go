@@ -18,11 +18,11 @@ func getDefaultHeader() Header {
 	}
 }
 
-func (h Header) Compose() string {
+func (h Header) compose() string {
 	res := fmt.Sprintf("\\rtf%s\\%s\\deff%s", h.Version, h.CharSet, h.Deff)
 
 	if h.FontTBL != nil {
-		res += fmt.Sprintf("\n{\\fonttbl;%s}", h.FontTBL.Compose())
+		res += fmt.Sprintf("\n{\\fonttbl;%s}", h.FontTBL.compose())
 	}
 	if h.ColorTBL != nil {
 		res += fmt.Sprintf("\n{\\colortbl;%s}", h.ColorTBL.Compose())

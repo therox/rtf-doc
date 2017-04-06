@@ -40,7 +40,7 @@ func main() {
 
 	// Таблица
 	t := rtfdoc.NewTable()
-	t.SetMargins(50, 50, 50, 50)
+	t.SetTableMargins(50, 50, 50, 50)
 	// строка таблицы
 	tr := rtfdoc.NewTableRow()
 
@@ -73,7 +73,7 @@ func main() {
 	tr = rtfdoc.NewTableRow()
 	dc = rtfdoc.NewDataCell(c2[0])
 	dc.SetVerticalMerged(false, true)
-	dc.SetContent(p)
+	//dc.SetContent(p)
 	tr.AddCell(dc)
 
 	dc = rtfdoc.NewDataCell(c2[1])
@@ -97,6 +97,6 @@ func main() {
 
 	d.AddContent(t)
 
-	fmt.Println(d.Compose())
+	fmt.Println(string(d.Export()))
 
 }

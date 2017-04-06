@@ -3,7 +3,7 @@ package rtfdoc
 // http://www.biblioscape.com/rtf15_spec.htm#Heading2
 
 type DocumentItem interface {
-	Compose() string
+	compose() string
 }
 
 type CellItem interface {
@@ -120,12 +120,5 @@ type Text struct {
 	fontCode  int //code for font in font Table
 	colorCode int
 	emphasis  string
-	//italic    bool
-	//bold      bool
-	//underline bool
-	//super     bool
-	//sub       bool
-	//scaps     bool
-	//strike    bool
-	text string
+	text      string
 }

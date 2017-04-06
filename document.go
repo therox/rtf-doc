@@ -14,9 +14,9 @@ func New() Document {
 	}
 }
 
-func (doc *Document) Compose() string {
+func (doc *Document) compose() string {
 	result := "{"
-	result += doc.Header.Compose()
+	result += doc.Header.compose()
 	if doc.orientation != "" {
 		result += fmt.Sprintf("\n\\%s", doc.orientation)
 	}
@@ -31,7 +31,7 @@ func (doc *Document) Compose() string {
 			doc.Margins.bottom)
 	}
 	for _, c := range doc.Content {
-		result += fmt.Sprintf("\n%s", c.Compose())
+		result += fmt.Sprintf("\n%s", c.compose())
 	}
 	result += "\n}"
 	return result
@@ -97,4 +97,8 @@ func (doc *Document) GetTableCellWidthByRatio(tableWidth int, ratio ...float64) 
 		cellWidth[i] = int(ratio[i] * (float64(tw) / cellRatioSum))
 	}
 	return cellWidth
+}
+
+func (doc *Document) Export() []byte {
+	return []byte(doc.compose())
 }
