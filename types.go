@@ -66,10 +66,11 @@ type Margins struct {
 
 //=================Table=======
 type TableCell interface {
-	CellCompose() string
+	cellCompose() string
 	getCellWidth() int
-	getBorders() []string
+	getBorders() string
 	getVerticalMergedProperty() string
+	getCellMargins() string
 }
 
 // Table - структура с таблицей
@@ -79,7 +80,8 @@ type Table struct {
 }
 
 type TableProperties struct {
-	align string
+	align   string
+	margins string
 }
 
 type VerticalMerged struct {
@@ -87,9 +89,10 @@ type VerticalMerged struct {
 }
 
 type CellProperties struct {
-	borders   []string
+	borders   string
 	CellWidth int
 	VerticalMerged
+	margins string
 }
 
 // DataCell - структура ячейки таблицы с данными

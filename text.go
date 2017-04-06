@@ -30,8 +30,9 @@ func (text Text) Compose() string {
 		decor = "{ " + decor
 		decorEnd = "}"
 	}
+	PreparedText := convertCyrillicToUTF16(text.text)
 
-	res += fmt.Sprintf("\n\\fs%d\\f%d \\cf%d %s %s %s\\f0", text.fontSize*2, text.fontCode, text.colorCode, decor, text.text, decorEnd)
+	res += fmt.Sprintf("\n\\fs%d\\f%d \\cf%d %s %s %s\\f0", text.fontSize*2, text.fontCode, text.colorCode, decor, PreparedText, decorEnd)
 	return res
 }
 

@@ -49,11 +49,12 @@ func main() {
 	// ячейка таблицы
 	dc := rtfdoc.NewDataCell(c1[0])
 	// текст
-	cell1Data := rtfdoc.NewText("Чоткий текст", 16, "cs", fontTable, "Blue", d.Header.ColorTBL)
+	cell1Data := rtfdoc.NewText("Чоткий текст на нескольких строчках\\line и еще строчка\\line и еще", 16, "cs", fontTable, "Blue", d.Header.ColorTBL)
 	dc.SetVerticalMerged(true, false)
+	//dc.SetCellMargins(200, 200, 200, 200)
 	p = rtfdoc.NewParagraph()
 	p.AddText(cell1Data)
-	p.SetAlignt("l")
+	p.SetAlignt("j")
 	dc.SetContent(p)
 	tr.AddCell(dc)
 
