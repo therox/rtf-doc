@@ -78,7 +78,7 @@ func main() {
 
 	dc = rtfdoc.NewDataCell(c2[1])
 	cell1Data = rtfdoc.NewText("Blue text In Left Top Cell", 16, "ari", fontTable, "Black", d.Header.ColorTBL)
-	cell1Data.SetBold(true)
+	cell1Data.SetEmphasis(true, false, false, false, false, false, false)
 	p = rtfdoc.NewParagraph()
 	p.AddText(cell1Data)
 	p.SetAlignt("c")
@@ -87,7 +87,7 @@ func main() {
 
 	dc = rtfdoc.NewDataCell(c2[2])
 	cell1Data = rtfdoc.NewText("Third Cell", 16, "cs", fontTable, "Black", d.Header.ColorTBL)
-	cell1Data.SetBold(true)
+	cell1Data.SetEmphasis(false, true, false, false, false, false, false)
 	p = rtfdoc.NewParagraph()
 	p.AddText(cell1Data)
 	p.SetAlignt("c")

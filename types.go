@@ -119,12 +119,13 @@ type Text struct {
 	fontSize  int
 	fontCode  int //code for font in font Table
 	colorCode int
-	italic    bool
-	bold      bool
-	underline bool
-	super     bool
-	sub       bool
-	scaps     bool
-	strike    bool
-	text      string
+	emphasis  string
+	//italic    bool
+	//bold      bool
+	//underline bool
+	//super     bool
+	//sub       bool
+	//scaps     bool
+	//strike    bool
+	text string
 }
