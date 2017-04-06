@@ -32,6 +32,7 @@ func main() {
 	p := rtfdoc.NewParagraph()
 	p.AddText(txt)
 	d.AddContent(p)
+
 	txt = rtfdoc.NewText("TestARI", 48, "ari", fontTable, "Blue", d.Header.ColorTBL)
 	p = rtfdoc.NewParagraph()
 	p.AddText(txt)
@@ -41,18 +42,23 @@ func main() {
 	t := rtfdoc.NewTable()
 	// строка таблицы
 	tr := rtfdoc.NewTableRow()
+
+	// Рассчет ячеек таблицы. Первый ряд
+	c1 := rtfdoc.GetTableCellWidthByRatio(10000, 1, 3)
+
 	// ячейка таблицы
-	dc := rtfdoc.NewDataCell(d.GetDocumentWidth() / 3)
+	dc := rtfdoc.NewDataCell(c1[0])
 	// текст
-	cell1Data := rtfdoc.NewText("Blue text In Cell", 14, "cs", fontTable, "Blue", d.Header.ColorTBL)
+	cell1Data := rtfdoc.NewText("Чоткий текст", 16, "cs", fontTable, "Blue", d.Header.ColorTBL)
+	dc.SetVerticalMerged(true, false)
 	p = rtfdoc.NewParagraph()
 	p.AddText(cell1Data)
 	p.SetAlignt("l")
 	dc.SetContent(p)
 	tr.AddCell(dc)
 
-	dc = rtfdoc.NewDataCell(d.GetDocumentWidth() / 3)
-	cell1Data = rtfdoc.NewText("Blue text In Left Cell", 14, "cs", fontTable, "Green", d.Header.ColorTBL)
+	dc = rtfdoc.NewDataCell(c1[1])
+	cell1Data = rtfdoc.NewText("Blue text In Left Cell", 16, "cs", fontTable, "Green", d.Header.ColorTBL)
 	p = rtfdoc.NewParagraph()
 	p.AddText(cell1Data)
 	p.SetAlignt("r")
@@ -60,17 +66,29 @@ func main() {
 	tr.AddCell(dc)
 	t.AddRow(tr)
 
+	c2 := rtfdoc.GetTableCellWidthByRatio(10000, 1, 1.5, 1.5)
+
 	tr = rtfdoc.NewTableRow()
-	dc = rtfdoc.NewDataCell(d.GetDocumentWidth() / 3)
-	cell1Data = rtfdoc.NewText("Blue text In Top Cell", 14, "tnr", fontTable, "Red", d.Header.ColorTBL)
+	dc = rtfdoc.NewDataCell(c2[0])
+	//cell1Data = rtfdoc.NewText("Blue text In Top Cell", 16, "tnr", fontTable, "Red", d.Header.ColorTBL)
+	dc.SetVerticalMerged(false, true)
+	//p = rtfdoc.NewParagraph()
+	//p.AddText(cell1Data)
+	//p.SetAlignt("c")
+	dc.SetContent(p)
+	tr.AddCell(dc)
+
+	dc = rtfdoc.NewDataCell(c2[1])
+	cell1Data = rtfdoc.NewText("Blue text In Left Top Cell", 16, "ari", fontTable, "Black", d.Header.ColorTBL)
+	cell1Data.SetBold(true)
 	p = rtfdoc.NewParagraph()
 	p.AddText(cell1Data)
 	p.SetAlignt("c")
 	dc.SetContent(p)
 	tr.AddCell(dc)
 
-	dc = rtfdoc.NewDataCell(d.GetDocumentWidth() / 3)
-	cell1Data = rtfdoc.NewText("Blue text In Left Top Cell", 14, "ari", fontTable, "Black", d.Header.ColorTBL)
+	dc = rtfdoc.NewDataCell(c2[2])
+	cell1Data = rtfdoc.NewText("Third Cell", 16, "cs", fontTable, "Black", d.Header.ColorTBL)
 	cell1Data.SetBold(true)
 	p = rtfdoc.NewParagraph()
 	p.AddText(cell1Data)
@@ -82,4 +100,5 @@ func main() {
 	d.AddContent(t)
 
 	fmt.Println(d.Compose())
+
 }

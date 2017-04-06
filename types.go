@@ -69,6 +69,7 @@ type TableCell interface {
 	CellCompose() string
 	getCellWidth() int
 	getBorders() []string
+	getVerticalMergedProperty() string
 }
 
 // Table - структура с таблицей
@@ -81,9 +82,14 @@ type TableProperties struct {
 	align string
 }
 
+type VerticalMerged struct {
+	code string
+}
+
 type CellProperties struct {
 	borders   []string
 	CellWidth int
+	VerticalMerged
 }
 
 // DataCell - структура ячейки таблицы с данными

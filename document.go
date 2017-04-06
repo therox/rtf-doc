@@ -79,3 +79,22 @@ func (doc *Document) getTopMargin() int {
 func (doc *Document) getBottomMargin() int {
 	return doc.Margins.bottom
 }
+
+func (doc *Document) getMaxContentWidth() int {
+	return doc.PageSize.width - doc.Margins.right - doc.Margins.left
+}
+func (doc *Document) GetTableCellWidthByRatio(tableWidth int, ratio ...float64) []int {
+	tw := tableWidth
+	if tw > doc.getMaxContentWidth() {
+		tw = doc.getMaxContentWidth()
+	}
+	cellRatioSum := 0.0
+	for _, cellRatio := range ratio {
+		cellRatioSum += cellRatio
+	}
+	var cellWidth = make([]int, len(ratio))
+	for i := range ratio {
+		cellWidth[i] = int(ratio[i] * (float64(tw) / cellRatioSum))
+	}
+	return cellWidth
+}

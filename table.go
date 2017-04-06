@@ -58,7 +58,7 @@ func (tr TableRow) Compose() string {
 				}
 			}
 			cBegin += dc.getCellWidth()
-			res += fmt.Sprintf("\n%s\\cellx%v", borders, cBegin)
+			res += fmt.Sprintf("\n%s%s\\cellx%v", dc.getVerticalMergedProperty(), borders, cBegin)
 
 		}
 		for _, dc := range tr {
@@ -123,4 +123,30 @@ func (tp *TableProperties) SetAlign(align string) {
 
 func (tp *TableProperties) GetAlign() string {
 	return tp.align
+}
+
+func GetTableCellWidthByRatio(tableWidth int, ratio ...float64) []int {
+
+	cellRatioSum := 0.0
+	for _, cellRatio := range ratio {
+		cellRatioSum += cellRatio
+	}
+	var cellWidth = make([]int, len(ratio))
+	for i := range ratio {
+		cellWidth[i] = int(ratio[i] * (float64(tableWidth) / cellRatioSum))
+	}
+	return cellWidth
+}
+
+func (dc *DataCell) SetVerticalMerged(isFirst, isNext bool) {
+	if isFirst {
+		dc.VerticalMerged.code = "\\clvmgf"
+	}
+	if isNext {
+		dc.VerticalMerged.code = "\\clvmrg"
+	}
+}
+
+func (dc DataCell) getVerticalMergedProperty() string {
+	return dc.VerticalMerged.code
 }
