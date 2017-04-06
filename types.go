@@ -110,11 +110,9 @@ type Cell struct {
 // ============End of Table structs===========
 
 type Paragraph struct {
-	align            string
-	indentFirstLine  int
-	indentBlockLeft  int
-	indentBlockRight int
-	content          []Text
+	align   string
+	indent  string
+	content []Text
 }
 
 type Text struct {

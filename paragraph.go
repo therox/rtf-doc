@@ -4,9 +4,9 @@ import "fmt"
 
 func NewParagraph() Paragraph {
 	return Paragraph{
-		align:           "l",
-		indentFirstLine: 720,
-		content:         nil,
+		align:   "l",
+		indent:  "\\fl720",
+		content: nil,
 	}
 }
 
@@ -15,18 +15,7 @@ func (par *Paragraph) AddText(t Text) {
 }
 
 func (par Paragraph) Compose() string {
-	indent := ""
-	if par.indentFirstLine != 0 {
-		indent += fmt.Sprintf(" \\fi%d", par.indentFirstLine)
-	}
-	if par.indentBlockLeft != 0 {
-		indent += fmt.Sprintf(" \\li%d", par.indentBlockLeft)
-	}
-	if par.indentBlockRight != 0 {
-		indent += fmt.Sprintf(" \\ri%d", par.indentBlockRight)
-	}
-
-	res := fmt.Sprintf("\n{\\pard %s \\q%s", indent, par.align)
+	res := fmt.Sprintf("\n{\\pard %s \\q%s", par.indent, par.align)
 	for _, c := range par.content {
 		res += c.Compose()
 	}
@@ -45,9 +34,17 @@ func (par Paragraph) CellCompose() string {
 }
 
 func (par *Paragraph) SetIndent(fl, li, ri int) {
-	par.indentFirstLine = fl
-	par.indentBlockLeft = li
-	par.indentBlockRight = ri
+	par.indent = ""
+
+	if fl != 0 {
+		par.indent += fmt.Sprintf(" \\fl%d", fl)
+	}
+	if li != 0 {
+		par.indent += fmt.Sprintf(" \\li%d", fl)
+	}
+	if ri != 0 {
+		par.indent += fmt.Sprintf(" \\ri%d", fl)
+	}
 }
 
 func (par *Paragraph) SetAlignt(align string) {

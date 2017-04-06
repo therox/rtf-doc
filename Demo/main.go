@@ -40,6 +40,7 @@ func main() {
 
 	// Таблица
 	t := rtfdoc.NewTable()
+	t.SetMargins(50, 50, 50, 50)
 	// строка таблицы
 	tr := rtfdoc.NewTableRow()
 
@@ -68,14 +69,10 @@ func main() {
 	t.AddRow(tr)
 
 	c2 := rtfdoc.GetTableCellWidthByRatio(10000, 1, 1.5, 1.5)
-
+	// Это соединенная с верхней ячейка. Текст в ней возьмется из первой ячейки.
 	tr = rtfdoc.NewTableRow()
 	dc = rtfdoc.NewDataCell(c2[0])
-	//cell1Data = rtfdoc.NewText("Blue text In Top Cell", 16, "tnr", fontTable, "Red", d.Header.ColorTBL)
 	dc.SetVerticalMerged(false, true)
-	//p = rtfdoc.NewParagraph()
-	//p.AddText(cell1Data)
-	//p.SetAlignt("c")
 	dc.SetContent(p)
 	tr.AddCell(dc)
 
