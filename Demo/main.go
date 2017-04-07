@@ -7,7 +7,7 @@ func main() {
 
 	// Создаем новый чистый, незамутнённый документ
 
-	d := rtfdoc.New()
+	d := rtfdoc.NewDocument()
 	// Настроить хедер
 	// Таблица цветов
 	ct := rtfdoc.ColorTable{}

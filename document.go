@@ -2,7 +2,7 @@ package rtfdoc
 
 import "fmt"
 
-func New() Document {
+func NewDocument() Document {
 	return Document{
 		orientation: "portrait",
 		Header:      getDefaultHeader(),
