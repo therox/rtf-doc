@@ -28,12 +28,17 @@ func main() {
 	d.SetOrientation("landscape")
 	d.SetFontTable(fontTable)
 
-	txt := rtfdoc.NewText("TestTNR", 48, "tnr", fontTable, "Green", d.Header.ColorTBL)
+	txt := rtfdoc.NewText("Green first string (Times New Roman)", 48, "tnr", fontTable, "Green", d.Header.ColorTBL)
 	p := rtfdoc.NewParagraph()
 	p.AddText(txt)
 	d.AddContent(p)
 
-	txt = rtfdoc.NewText("TestARI", 48, "ari", fontTable, "Blue", d.Header.ColorTBL)
+	txt = rtfdoc.NewText("Blue second string (Arial)", 48, "ari", fontTable, "Blue", d.Header.ColorTBL)
+	p = rtfdoc.NewParagraph()
+	p.AddText(txt)
+	d.AddContent(p)
+
+	txt = rtfdoc.NewText("Red Third string (Comic Sans)", 48, "cs", fontTable, "Red", d.Header.ColorTBL)
 	p = rtfdoc.NewParagraph()
 	p.AddText(txt)
 	d.AddContent(p)
@@ -50,7 +55,7 @@ func main() {
 	// ячейка таблицы
 	dc := rtfdoc.NewDataCell(c1[0])
 	// текст
-	cell1Data := rtfdoc.NewText("Чоткий текст на нескольких строчках\\line и еще строчка\\line и еще", 16, "cs", fontTable, "Blue", d.Header.ColorTBL)
+	cell1Data := rtfdoc.NewText("Кириллический текст в нескольких ячейках на нескольких строчках\\line и еще строчка\\line и еще", 16, "cs", fontTable, "Blue", d.Header.ColorTBL)
 	dc.SetVerticalMerged(true, false)
 	//dc.SetCellMargins(200, 200, 200, 200)
 	p = rtfdoc.NewParagraph()

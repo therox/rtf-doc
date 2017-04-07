@@ -36,7 +36,8 @@ type Document struct {
 }
 
 type DocumentSettings struct {
-	PageSize Size
+	pageFormat string
+	pagesize   Size
 	Margins
 }
 
