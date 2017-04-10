@@ -68,7 +68,7 @@ func (tr TableRow) compose() string {
 		cBegin := 0
 		for _, dc := range tr {
 			cBegin += dc.getCellWidth()
-			res += fmt.Sprintf("\n%s %s %s \\cellx%v", dc.getVerticalMergedProperty(), dc.getCellMargins(), dc.getBorders(), cBegin)
+			res += fmt.Sprintf("\n%s %s %s %s \\cellx%v", dc.getVerticalMergedProperty(), dc.getCellMargins(), dc.getBorders(), dc.getCellTextVAlign(), cBegin)
 
 		}
 		for _, dc := range tr {
@@ -201,4 +201,21 @@ func (dc *DataCell) SetCellMargins(left, top, right, bottom int) {
 
 func (dc DataCell) getCellMargins() string {
 	return dc.margins
+}
+
+func (dc *DataCell) SetVAlign(valign string) {
+	switch valign {
+	case "c", "center":
+		dc.vTextAlign = "\\clvertalc"
+	case "t", "top":
+		dc.vTextAlign = "\\clvertalt"
+	case "b", "bottom":
+		dc.vTextAlign = "\\clvertalb"
+	default:
+		dc.vTextAlign = ""
+	}
+}
+
+func (dc DataCell) getCellTextVAlign() string {
+	return dc.vTextAlign
 }
