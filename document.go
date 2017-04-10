@@ -19,7 +19,7 @@ func (doc *Document) compose() string {
 	result := "{"
 	result += doc.Header.compose()
 	if doc.orientation != "" {
-		result += fmt.Sprintf("\n\\%s", doc.orientation)
+		result += fmt.Sprintf("\n%s", doc.orientation)
 	}
 	if doc.pagesize != (Size{}) {
 		result += fmt.Sprintf("\n\\paperw%d\\paperh%d", doc.pagesize.width, doc.pagesize.height)
@@ -57,15 +57,15 @@ func (doc *Document) SetOrientation(orientation string) {
 	if orientation == "landscape" {
 		doc.orientation = "landscape"
 		if doc.pageFormat != "" {
-			size, err := getSize(doc.pageFormat, "landscape")
+			size, err := getSize(doc.pageFormat, "\\landscape")
 			if err == nil {
 				doc.pagesize = size
 			}
 		}
 	} else {
-		doc.orientation = "portrait"
+		doc.orientation = ""
 		if doc.pageFormat != "" {
-			size, err := getSize(doc.pageFormat, "postrait")
+			size, err := getSize(doc.pageFormat, "portrait")
 			if err == nil {
 				doc.pagesize = size
 			}
