@@ -103,13 +103,13 @@ func (doc *Document) SetMargins(left, top, right, bottom int) {
 //	return doc.Margins.bottom
 //}
 
-func (doc *Document) getMaxContentWidth() int {
+func (doc *Document) GetMaxContentWidth() int {
 	return doc.pagesize.width - doc.Margins.right - doc.Margins.left
 }
 func (doc *Document) GetTableCellWidthByRatio(tableWidth int, ratio ...float64) []int {
 	tw := tableWidth
-	if tw > doc.getMaxContentWidth() {
-		tw = doc.getMaxContentWidth()
+	if tw > doc.GetMaxContentWidth() {
+		tw = doc.GetMaxContentWidth()
 	}
 	cellRatioSum := 0.0
 	for _, cellRatio := range ratio {
