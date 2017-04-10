@@ -38,7 +38,7 @@ type Document struct {
 type DocumentSettings struct {
 	pageFormat string
 	pagesize   Size
-	Margins
+	margins
 }
 
 type ColorTable []Color
@@ -58,7 +58,7 @@ type Size struct {
 	height int
 }
 
-type Margins struct {
+type margins struct {
 	left   int
 	right  int
 	top    int

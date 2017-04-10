@@ -7,12 +7,23 @@ func NewDocument() Document {
 		orientation: "portrait",
 		Header:      getDefaultHeader(),
 		DocumentSettings: DocumentSettings{
-			Margins: Margins{720, 720, 720, 720},
+			margins: margins{720, 720, 720, 720},
 		},
 		Content: nil,
 	}
 	doc.SetFormat("A4")
 	return doc
+}
+
+func (doc *Document) getMargins() string {
+	if doc.margins != (margins{}) {
+		return fmt.Sprintf("\n\\margl%d\\margr%d\\margt%d\\margb%d",
+			doc.margins.left,
+			doc.margins.right,
+			doc.margins.top,
+			doc.margins.bottom)
+	}
+	return ""
 }
 
 func (doc *Document) compose() string {
@@ -24,13 +35,9 @@ func (doc *Document) compose() string {
 	if doc.pagesize != (Size{}) {
 		result += fmt.Sprintf("\n\\paperw%d\\paperh%d", doc.pagesize.width, doc.pagesize.height)
 	}
-	if doc.Margins != (Margins{}) {
-		result += fmt.Sprintf("\n\\margl%d\\margr%d\\margt%d\\margb%d",
-			doc.Margins.left,
-			doc.Margins.right,
-			doc.Margins.top,
-			doc.Margins.bottom)
-	}
+
+	result += doc.getMargins()
+
 	for _, c := range doc.Content {
 		result += fmt.Sprintf("\n%s", c.compose())
 	}
@@ -82,7 +89,7 @@ func (doc *Document) GetDocumentWidth() int {
 }
 
 func (doc *Document) SetMargins(left, top, right, bottom int) {
-	doc.Margins = Margins{
+	doc.margins = margins{
 		left,
 		right,
 		top,
@@ -104,7 +111,7 @@ func (doc *Document) SetMargins(left, top, right, bottom int) {
 //}
 
 func (doc *Document) GetMaxContentWidth() int {
-	return doc.pagesize.width - doc.Margins.right - doc.Margins.left
+	return doc.pagesize.width - doc.margins.right - doc.margins.left
 }
 func (doc *Document) GetTableCellWidthByRatio(tableWidth int, ratio ...float64) []int {
 	tw := tableWidth
