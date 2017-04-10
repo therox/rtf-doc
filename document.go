@@ -39,14 +39,14 @@ func (doc *Document) compose() string {
 	result += doc.getMargins()
 
 	for _, c := range doc.Content {
-		result += fmt.Sprintf("\n%s", c.compose())
+		result += fmt.Sprintf("\n%s", (*c).compose())
 	}
 	result += "\n}"
 	return result
 }
 
 func (doc *Document) AddContent(content DocumentItem) {
-	doc.Content = append(doc.Content, content)
+	doc.Content = append(doc.Content, &content)
 }
 
 func (doc *Document) SetFormat(format string) {
@@ -81,7 +81,7 @@ func (doc *Document) SetOrientation(orientation string) {
 }
 
 func (doc *Document) SetFontTable(ft FontTable) {
-	doc.Header.FontTBL = ft
+	doc.Header.FontTable = ft
 }
 
 func (doc *Document) GetDocumentWidth() int {

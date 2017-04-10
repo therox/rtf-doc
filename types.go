@@ -14,9 +14,9 @@ type Header struct {
 	Version string // Версия RTF, по-умолчанию, 1.5
 	CharSet string // кодировка. Возможные варианты: ansi, mac, pc, pca
 	Deff    string
-	FontTBL FontTable
+	FontTable
 	//FileTBL    string
-	ColorTBL ColorTable // Основные цветовые схемы. обращение в документе к ним с помощью управляющих слов \cfN, где N - порядковый номер цветовой схемы.
+	ColorTable // Основные цветовые схемы. обращение в документе к ним с помощью управляющих слов \cfN, где N - порядковый номер цветовой схемы.
 	//StyleSheet string
 	//ListTables string
 	//RevTBL     string
@@ -32,7 +32,7 @@ type Document struct {
 	Header
 	orientation string
 	DocumentSettings
-	Content []DocumentItem
+	Content []*DocumentItem
 }
 
 type DocumentSettings struct {
@@ -124,4 +124,6 @@ type Text struct {
 	colorCode int
 	emphasis  string
 	text      string
+	ColorTable
+	FontTable
 }

@@ -10,8 +10,10 @@ func getDefaultTableProperties() TableProperties {
 	return tp
 }
 
-func NewTable() Table {
-	return Table{TableProperties: getDefaultTableProperties()}
+func (doc *Document) NewTable() *Table {
+	t := Table{TableProperties: getDefaultTableProperties()}
+	doc.AddContent(&t)
+	return &t
 }
 
 func (t *Table) AddRow(row TableRow) {
