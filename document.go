@@ -55,9 +55,9 @@ func (doc *Document) SetFormat(format string) {
 func (doc *Document) SetOrientation(orientation string) {
 
 	if orientation == "landscape" {
-		doc.orientation = "landscape"
+		doc.orientation = "\\landscape"
 		if doc.pageFormat != "" {
-			size, err := getSize(doc.pageFormat, "\\landscape")
+			size, err := getSize(doc.pageFormat, "landscape")
 			if err == nil {
 				doc.pagesize = size
 			}
