@@ -68,7 +68,7 @@ func (tr TableRow) compose() string {
 		cBegin := 0
 		for _, dc := range tr {
 			cBegin += dc.getCellWidth()
-			res += fmt.Sprintf("\n%s %s %s %s \\cellx%v", dc.getVerticalMergedProperty(), dc.getCellMargins(), dc.getBorders(), dc.getCellTextVAlign(), cBegin)
+			res += fmt.Sprintf("\n%s%s%s%s \\cellx%v", dc.getVerticalMergedProperty(), dc.getCellMargins(), dc.getBorders(), dc.getCellTextVAlign(), cBegin)
 
 		}
 		for _, dc := range tr {
