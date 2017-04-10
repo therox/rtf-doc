@@ -10,14 +10,40 @@ func NewParagraph() Paragraph {
 	}
 }
 
-func (par *Paragraph) AddText(t Text) {
-	par.content = append(par.content, t)
+func (doc *Document) NewParagraph() *Paragraph {
+	p := Paragraph{
+		align:   "l",
+		indent:  "\\fl360",
+		content: nil,
+		ct:      doc.ct,
+		ft:      doc.ft,
+	}
+	var i *Paragraph
+	doc.AddContent(&(p.(DocumentItem)))
+
+	return &p
+}
+
+func (dc *DataCell) NewParagraph() *Paragraph {
+	p := Paragraph{
+		align:   "l",
+		indent:  "\\fl360",
+		content: nil,
+		ct:      dc.ct,
+		ft:      dc.ft,
+	}
+	return &p
+}
+
+func (par *Paragraph) AddContent(c Text) *Text {
+	par.content = append(par.content, &c)
+	return &c
 }
 
 func (par Paragraph) compose() string {
 	res := fmt.Sprintf("\n{\\pard %s \\q%s", par.indent, par.align)
 	for _, c := range par.content {
-		res += c.Compose()
+		res += (*c).compose()
 	}
 	res += "\n\\par}"
 	return res
@@ -26,7 +52,7 @@ func (par Paragraph) compose() string {
 func (par Paragraph) cellCompose() string {
 	res := fmt.Sprintf("\n{\\pard \\q%s", par.align)
 	for _, c := range par.content {
-		res += c.Compose()
+		res += c.compose()
 	}
 	res += "\n}"
 

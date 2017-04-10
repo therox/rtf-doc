@@ -2,7 +2,7 @@ package rtfdoc
 
 import "fmt"
 
-func (text Text) Compose() string {
+func (text Text) compose() string {
 	var res string
 	var emphasisBegin string
 	var EmphasisEnd string
@@ -16,29 +16,33 @@ func (text Text) Compose() string {
 	return res
 }
 
-func NewText(text string, fontSize int, fontCode string, ft FontTable, colorCode string, ct ColorTable) Text {
+func (p *Paragraph) AddText(text string, fontSize int, fontCode string, colorCode string) *Text {
 	// Выясняем, какой шрифт имеет код fontcode
 	fn := 0
-	for i := range ft {
-		if ft[i].Code == fontCode {
+	for i := range p.ft {
+		if p.ft[i].Code == fontCode {
 			// Присваиваем тексту порядковый номер шрифта
 			fn = i
 		}
 	}
 	// то-же самое с цветом
 	fc := 0
-	for i := range ct {
-		if ct[i].Code == colorCode {
+	for i := range p.ct {
+		if p.ct[i].Code == colorCode {
 			// Присваиваем тексту порядковый номер шрифта
 			fc = i + 1
 		}
 	}
-	return Text{
+	txt := Text{
 		fontSize:  fontSize,
 		fontCode:  fn,
 		colorCode: fc,
 		text:      text,
+		ct:        p.ct,
+		ft:        p.ft,
 	}
+
+	return p.AddContent(txt)
 }
 
 func (text *Text) SetEmphasis(bold, italic, underlining, super, sub, scaps, strike bool) {

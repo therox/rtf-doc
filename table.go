@@ -12,7 +12,7 @@ func getDefaultTableProperties() TableProperties {
 
 func (doc *Document) NewTable() *Table {
 	t := Table{TableProperties: getDefaultTableProperties()}
-	doc.AddContent(&t)
+	doc.AddContent(t)
 	return &t
 }
 
@@ -57,30 +57,32 @@ func (t Table) compose() string {
 	return res
 }
 
-func NewTableRow() TableRow {
-	return TableRow{}
+func (table *Table) AddTableRow() *TableRow {
+	tr := TableRow{}
+	table.AddRow(tr)
+	return &tr
 }
-func (tr *TableRow) AddCell(cell TableCell) {
-	*tr = append(*tr, cell)
+func (tr *TableRow) addCell(cell TableCell) {
+	tr.cells = append(tr.cells, cell)
 }
 
 func (tr TableRow) compose() string {
 	res := ""
-	if len(tr) != 0 {
+	if len(tr.cells) != 0 {
 		cBegin := 0
-		for _, dc := range tr {
+		for _, dc := range tr.cells {
 			cBegin += dc.getCellWidth()
 			res += fmt.Sprintf("\n%s%s%s%s\\cellx%v", dc.getVerticalMergedProperty(), dc.getCellMargins(), dc.getBorders(), dc.getCellTextVAlign(), cBegin)
 
 		}
-		for _, dc := range tr {
+		for _, dc := range tr.cells {
 			res += dc.cellCompose()
 		}
 	}
 	return res
 }
 
-func NewDataCell(width int) DataCell {
+func (tr *TableRow) NewDataCell(width int) *DataCell {
 	cp := CellProperties{}
 	cp.CellWidth = width
 	dc := DataCell{
@@ -90,7 +92,8 @@ func NewDataCell(width int) DataCell {
 		},
 	}
 	dc.SetBorders(true, true, true, true)
-	return dc
+	tr.addCell(dc)
+	return &dc
 }
 func NewDataCellWithProperties(cp CellProperties) DataCell {
 	return DataCell{Cell{
@@ -158,7 +161,7 @@ func (tp *TableProperties) GetAlign() string {
 	return tp.align
 }
 
-func GetTableCellWidthByRatio(tableWidth int, ratio ...float64) []int {
+func (t *Table) GetTableCellWidthByRatio(ratio ...float64) []int {
 
 	cellRatioSum := 0.0
 	for _, cellRatio := range ratio {
@@ -166,7 +169,7 @@ func GetTableCellWidthByRatio(tableWidth int, ratio ...float64) []int {
 	}
 	var cellWidth = make([]int, len(ratio))
 	for i := range ratio {
-		cellWidth[i] = int(ratio[i] * (float64(tableWidth) / cellRatioSum))
+		cellWidth[i] = int(ratio[i] * (float64(t.width) / cellRatioSum))
 	}
 	return cellWidth
 }
@@ -220,4 +223,8 @@ func (dc *DataCell) SetVAlign(valign string) {
 
 func (dc DataCell) getCellTextVAlign() string {
 	return dc.vTextAlign
+}
+
+func (t *Table) SetWidth(width int) {
+	t.width = width
 }
