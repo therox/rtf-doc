@@ -12,6 +12,8 @@ func getDefaultTableProperties() TableProperties {
 
 func (doc *Document) NewTable() Table {
 	t := Table{TableProperties: getDefaultTableProperties()}
+	t.ct = doc.ct
+	t.ft = doc.ft
 	return t
 }
 
@@ -57,7 +59,10 @@ func (t Table) compose() string {
 }
 
 func (table *Table) NewTableRow() TableRow {
-	tr := TableRow{}
+	tr := TableRow{
+		ft: table.ft,
+		ct: table.ct,
+	}
 	return tr
 }
 func (tr *TableRow) AddCell(cell TableCell) {
@@ -80,9 +85,11 @@ func (tr TableRow) compose() string {
 	return res
 }
 
-func (tr *TableRow) NewDataCell(width int) *DataCell {
+func (tr *TableRow) NewDataCell(width int) DataCell {
 	cp := CellProperties{}
 	cp.CellWidth = width
+	cp.ft = tr.ft
+	cp.ct = tr.ct
 	dc := DataCell{
 		Cell{
 			content:        Paragraph{},
@@ -90,13 +97,7 @@ func (tr *TableRow) NewDataCell(width int) *DataCell {
 		},
 	}
 	dc.SetBorders(true, true, true, true)
-	return &dc
-}
-func NewDataCellWithProperties(cp CellProperties) DataCell {
-	return DataCell{Cell{
-		content:        Paragraph{},
-		CellProperties: cp,
-	}}
+	return dc
 }
 
 func (cp *CellProperties) SetProperties(cellWidth int, borders string) {
