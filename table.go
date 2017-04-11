@@ -10,10 +10,9 @@ func getDefaultTableProperties() TableProperties {
 	return tp
 }
 
-func (doc *Document) NewTable() *Table {
+func (doc *Document) NewTable() Table {
 	t := Table{TableProperties: getDefaultTableProperties()}
-	doc.AddContent(t)
-	return &t
+	return t
 }
 
 func (t *Table) AddRow(row TableRow) {
@@ -57,12 +56,11 @@ func (t Table) compose() string {
 	return res
 }
 
-func (table *Table) AddTableRow() *TableRow {
+func (table *Table) NewTableRow() TableRow {
 	tr := TableRow{}
-	table.AddRow(tr)
-	return &tr
+	return tr
 }
-func (tr *TableRow) addCell(cell TableCell) {
+func (tr *TableRow) AddCell(cell TableCell) {
 	tr.cells = append(tr.cells, cell)
 }
 
@@ -92,7 +90,6 @@ func (tr *TableRow) NewDataCell(width int) *DataCell {
 		},
 	}
 	dc.SetBorders(true, true, true, true)
-	tr.addCell(dc)
 	return &dc
 }
 func NewDataCellWithProperties(cp CellProperties) DataCell {

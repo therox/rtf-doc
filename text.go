@@ -16,7 +16,7 @@ func (text Text) compose() string {
 	return res
 }
 
-func (p *Paragraph) AddText(text string, fontSize int, fontCode string, colorCode string) *Text {
+func (p *Paragraph) NewText(text string, fontSize int, fontCode string, colorCode string) Text {
 	// Выясняем, какой шрифт имеет код fontcode
 	fn := 0
 	for i := range p.ft {
@@ -42,7 +42,7 @@ func (p *Paragraph) AddText(text string, fontSize int, fontCode string, colorCod
 		ft:        p.ft,
 	}
 
-	return p.AddContent(txt)
+	return txt
 }
 
 func (text *Text) SetEmphasis(bold, italic, underlining, super, sub, scaps, strike bool) {

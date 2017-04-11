@@ -32,7 +32,7 @@ type Document struct {
 	Header
 	orientation string
 	DocumentSettings
-	content []*DocumentItem
+	content []DocumentItem
 }
 
 type DocumentSettings struct {
@@ -124,7 +124,7 @@ type Cell struct {
 type Paragraph struct {
 	align   string
 	indent  string
-	content []*Text
+	content []Text
 	ct      ColorTable
 	ft      FontTable
 }

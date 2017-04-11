@@ -43,13 +43,13 @@ func (doc *Document) compose() string {
 	result += doc.getMargins()
 
 	for _, c := range doc.content {
-		result += fmt.Sprintf("\n%s", (*c).compose())
+		result += fmt.Sprintf("\n%s", c.compose())
 	}
 	result += "\n}"
 	return result
 }
 
-func (doc *Document) AddContent(content *DocumentItem) {
+func (doc *Document) AddContent(content DocumentItem) {
 	doc.content = append(doc.content, content)
 }
 
