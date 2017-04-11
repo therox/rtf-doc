@@ -9,10 +9,14 @@ func NewDocument() Document {
 		DocumentSettings: DocumentSettings{
 			margins: margins{720, 720, 720, 720},
 		},
-		Content: nil,
+		content: nil,
 	}
 	doc.SetFormat("A4")
 	return doc
+}
+
+func (doc *Document) SetColorTable(ct ColorTable) {
+	doc.Header.ct = ct
 }
 
 func (doc *Document) getMargins() string {
@@ -38,15 +42,15 @@ func (doc *Document) compose() string {
 
 	result += doc.getMargins()
 
-	for _, c := range doc.Content {
-		result += fmt.Sprintf("\n%s", (*c).compose())
+	for _, c := range doc.content {
+		result += fmt.Sprintf("\n%s", c.compose())
 	}
 	result += "\n}"
 	return result
 }
 
 func (doc *Document) AddContent(content DocumentItem) {
-	doc.Content = append(doc.Content, &content)
+	doc.content = append(doc.content, content)
 }
 
 func (doc *Document) SetFormat(format string) {
@@ -81,7 +85,7 @@ func (doc *Document) SetOrientation(orientation string) {
 }
 
 func (doc *Document) SetFontTable(ft FontTable) {
-	doc.Header.FontTable = ft
+	doc.Header.ft = ft
 }
 
 func (doc *Document) GetDocumentWidth() int {

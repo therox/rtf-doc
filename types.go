@@ -14,9 +14,9 @@ type Header struct {
 	Version string // Версия RTF, по-умолчанию, 1.5
 	CharSet string // кодировка. Возможные варианты: ansi, mac, pc, pca
 	Deff    string
-	FontTable
+	ft      FontTable
+	ct      ColorTable // Основные цветовые схемы. обращение в документе к ним с помощью управляющих слов \cfN, где N - порядковый номер цветовой схемы.
 	//FileTBL    string
-	ColorTable // Основные цветовые схемы. обращение в документе к ним с помощью управляющих слов \cfN, где N - порядковый номер цветовой схемы.
 	//StyleSheet string
 	//ListTables string
 	//RevTBL     string
@@ -32,7 +32,7 @@ type Document struct {
 	Header
 	orientation string
 	DocumentSettings
-	Content []*DocumentItem
+	content []DocumentItem
 }
 
 type DocumentSettings struct {
@@ -82,8 +82,11 @@ type Table struct {
 }
 
 type TableProperties struct {
+	width   int
 	align   string
 	margins string
+	ft      FontTable
+	ct      ColorTable
 }
 
 type VerticalMerged struct {
@@ -96,6 +99,8 @@ type CellProperties struct {
 	VerticalMerged
 	margins    string
 	vTextAlign string
+	ct         ColorTable
+	ft         FontTable
 }
 
 // DataCell - структура ячейки таблицы с данными
@@ -103,7 +108,11 @@ type DataCell struct {
 	Cell
 }
 
-type TableRow []TableCell
+type TableRow struct {
+	cells []TableCell
+	ft    FontTable
+	ct    ColorTable
+}
 
 type Cell struct {
 	CellProperties
@@ -116,6 +125,8 @@ type Paragraph struct {
 	align   string
 	indent  string
 	content []Text
+	ct      ColorTable
+	ft      FontTable
 }
 
 type Text struct {
@@ -124,6 +135,6 @@ type Text struct {
 	colorCode int
 	emphasis  string
 	text      string
-	ColorTable
-	FontTable
+	ct        ColorTable
+	ft        FontTable
 }
