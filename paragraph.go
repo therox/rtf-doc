@@ -2,15 +2,17 @@ package rtfdoc
 
 import "fmt"
 
-func NewParagraph() Paragraph {
-	return Paragraph{
-		align:   "l",
-		indent:  "\\fl720",
-		content: nil,
-	}
-}
+// NewParagraph return new instance of Paragraph
+// func NewParagraph() *Paragraph {
+// 	return &Paragraph{
+// 		align:   "l",
+// 		indent:  "\\fl720",
+// 		content: nil,
+// 	}
+// }
 
-func (doc *Document) NewParagraph() Paragraph {
+// AddParagraph return new instance of Paragraph
+func (doc *Document) AddParagraph() *Paragraph {
 	p := Paragraph{
 		align:   "l",
 		indent:  "\\fl360",
@@ -18,27 +20,18 @@ func (doc *Document) NewParagraph() Paragraph {
 		ct:      doc.ct,
 		ft:      doc.ft,
 	}
-
-	return p
+	doc.content = append(doc.content, &p)
+	return &p
 }
 
-func (dc *DataCell) NewParagraph() Paragraph {
-	p := Paragraph{
-		align:   "l",
-		indent:  "\\fl360",
-		content: nil,
-		ct:      dc.ct,
-		ft:      dc.ft,
-	}
-	return p
-}
-
-func (par *Paragraph) AddContent(c Text) {
-	par.content = append(par.content, c)
-}
+// AddContent adds content
+// func (par *Paragraph) AddContent(c Text) {
+// 	par.content = append(par.content, c)
+// }
 
 func (par Paragraph) compose() string {
 	res := fmt.Sprintf("\n{\\pard %s \\q%s", par.indent, par.align)
+
 	for _, c := range par.content {
 		res += c.compose()
 	}
@@ -46,21 +39,22 @@ func (par Paragraph) compose() string {
 	return res
 }
 
-func (par Paragraph) cellCompose() string {
-	res := fmt.Sprintf("\n{\\pard \\q%s", par.align)
-	for _, c := range par.content {
-		res += c.compose()
-	}
-	res += "\n}"
+// func (par Paragraph) cellCompose() string {
+// 	res := fmt.Sprintf("\n{\\pard %s \\q%s", par.indent, par.align)
+// 	for _, c := range par.content {
+// 		res += c.compose()
+// 	}
+// 	res += "\n}"
 
-	return res
-}
+// 	return res
+// }
 
+// SetIndent sets indent to paragraph (fl - first line indent, li - left ident, ri - right indent in tweeps)
 func (par *Paragraph) SetIndent(fl, li, ri int) {
 	par.indent = ""
 
 	if fl != 0 {
-		par.indent += fmt.Sprintf(" \\fl%d", fl)
+		par.indent += fmt.Sprintf(" \\fi%d", fl)
 	}
 	if li != 0 {
 		par.indent += fmt.Sprintf(" \\li%d", fl)
@@ -70,6 +64,7 @@ func (par *Paragraph) SetIndent(fl, li, ri int) {
 	}
 }
 
+// SetAlignt sets paragraph align (c/center, l/left, r/right, j/justify)
 func (par *Paragraph) SetAlignt(align string) {
 	al := "l"
 	switch align {

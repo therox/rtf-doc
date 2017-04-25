@@ -1,25 +1,31 @@
 package rtfdoc
 
-import "fmt"
+import (
+	"fmt"
+	"image/color"
+)
 
-func (color Color) compose() string {
-	return fmt.Sprintf("\\red%d\\green%d\\blue%d;", color.Red, color.Green, color.Blue)
+func (color Color) encode() string {
+	r, g, b, _ := color.color.RGBA()
+	return fmt.Sprintf("\\red%d\\green%d\\blue%d;", r/256, g/256, b/256)
 }
 
-func (cTbl ColorTable) Compose() string {
+func (cTbl ColorTable) encode() string {
 	var res string
 	for i := range cTbl {
-		res += cTbl[i].compose()
+		res += cTbl[i].encode()
 	}
 	return res
 }
 
-func (cTbl *ColorTable) AddColor(color Color) {
-	*cTbl = append(*cTbl, color)
+// AddColor adds color to color table
+func (cTbl *ColorTable) AddColor(c color.RGBA, name string) {
+	*cTbl = append(*cTbl, Color{c, name})
 
 }
 
-func (cTbl *ColorTable) SetColor(color Color) {
-	*cTbl = []Color{color}
+// SetColor - clears color table and sets color
+func (cTbl *ColorTable) SetColor(c color.RGBA, name string) {
+	*cTbl = []Color{Color{c, name}}
 
 }

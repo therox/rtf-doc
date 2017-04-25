@@ -2,26 +2,15 @@ package rtfdoc
 
 import "fmt"
 
-func getDefaultTableProperties() TableProperties {
-	tp := TableProperties{
+func getDefaultTableProperties() tableProperties {
+	tp := tableProperties{
 		align: "c",
 	}
 	tp.SetTableMargins(100, 100, 100, 100)
 	return tp
 }
 
-func (doc *Document) NewTable() Table {
-	t := Table{TableProperties: getDefaultTableProperties()}
-	t.ct = doc.ct
-	t.ft = doc.ft
-	return t
-}
-
-func (t *Table) AddRow(row TableRow) {
-	t.Data = append(t.Data, row)
-}
-
-func (t *TableProperties) SetTableMargins(left, top, right, bottom int) {
+func (tp *tableProperties) SetTableMargins(left, top, right, bottom int) {
 	margins := ""
 	if left != 0 {
 		margins += fmt.Sprintf(" \\trpaddl%d", left)
@@ -36,11 +25,38 @@ func (t *TableProperties) SetTableMargins(left, top, right, bottom int) {
 		margins += fmt.Sprintf(" \\trpaddb%d", bottom)
 	}
 	margins += " "
-	t.margins = margins
+	tp.margins = margins
 }
 
-func (t *TableProperties) getMargins() string {
-	return t.margins
+func (tp *tableProperties) getMargins() string {
+	return tp.margins
+}
+
+// SetAlign sets table aligning (c/center, l/left, r/right)
+func (tp *tableProperties) SetAlign(align string) {
+	switch align {
+	case "c", "center":
+		tp.align = "c"
+	case "l", "left":
+		tp.align = "l"
+	case "r", "right":
+		tp.align = "r"
+	default:
+		tp.align = ""
+	}
+}
+
+func (tp *tableProperties) GetAlign() string {
+	return tp.align
+}
+
+// AddTable returns Table instance
+func (doc *Document) AddTable() *Table {
+	t := Table{tableProperties: getDefaultTableProperties()}
+	t.ct = doc.ct
+	t.ft = doc.ft
+	doc.content = append(doc.content, &t)
+	return &t
 }
 
 func (t Table) compose() string {
@@ -49,78 +65,99 @@ func (t Table) compose() string {
 	if t.align != "" {
 		align = fmt.Sprintf("\\trq%s", t.align)
 	}
-	for _, tr := range t.Data {
+	for _, tr := range t.data {
 		res += fmt.Sprintf("\n{\\trowd %s", align)
 		res += t.getMargins()
-		res += tr.compose()
+		res += tr.encode()
 		res += "\n\\row}"
 	}
 	return res
 }
 
-func (table *Table) NewTableRow() TableRow {
+// AddTableRow returns new table row instance
+func (t *Table) AddTableRow() *TableRow {
 	tr := TableRow{
-		ft: table.ft,
-		ct: table.ct,
+		ft: t.ft,
+		ct: t.ct,
 	}
-	return tr
-}
-func (tr *TableRow) AddCell(cell TableCell) {
-	tr.cells = append(tr.cells, cell)
+	t.data = append(t.data, &tr)
+	return &tr
 }
 
-func (tr TableRow) compose() string {
+// AddCell add cell to TableRow
+// func (tr *TableRow) AddCell(cell *TableCell) {
+// 	tr.cells = append(tr.cells, cell)
+// }
+
+func (tr *TableRow) encode() string {
 	res := ""
 	if len(tr.cells) != 0 {
 		cBegin := 0
-		for _, dc := range tr.cells {
-			cBegin += dc.getCellWidth()
-			res += fmt.Sprintf("\n%s%s%s%s\\cellx%v", dc.getVerticalMergedProperty(), dc.getCellMargins(), dc.getBorders(), dc.getCellTextVAlign(), cBegin)
+		for _, tc := range tr.cells {
+			cBegin += tc.getCellWidth()
+			res += fmt.Sprintf("\n%s%s%s%s\\cellx%v", tc.getVerticalMergedProperty(), tc.getCellMargins(), tc.getBorders(), tc.getCellTextVAlign(), cBegin)
 
 		}
-		for _, dc := range tr.cells {
-			res += dc.cellCompose()
+		for _, tc := range tr.cells {
+			res += tc.cellCompose()
 		}
 	}
 	return res
 }
 
-func (tr *TableRow) NewDataCell(width int) DataCell {
-	cp := CellProperties{}
+// AddDataCell returns new DataCell
+func (tr *TableRow) AddDataCell(width int) *TableCell {
+	cp := cellProperties{}
 	cp.CellWidth = width
 	cp.ft = tr.ft
 	cp.ct = tr.ct
-	dc := DataCell{
-		Cell{
-			content:        Paragraph{},
-			CellProperties: cp,
-		},
+	dc := TableCell{
+		cellProperties: cp,
 	}
 	dc.SetBorders(true, true, true, true)
-	return dc
+	tr.cells = append(tr.cells, &dc)
+	return &dc
 }
 
-func (cp *CellProperties) SetProperties(cellWidth int, borders string) {
+// SetProperties sets cell properties
+func (cp *cellProperties) SetProperties(cellWidth int, borders string) {
 	cp.CellWidth = cellWidth
 	cp.borders = borders
 	return
 }
 
-func (dc *DataCell) SetContent(c Paragraph) {
-	dc.content = c
-}
+// SetContent sets paragraph to datacell
+// func (dc *DataCell) SetContent(c Paragraph) {
+// 	dc.content = c
+// }
 
-func (dc DataCell) cellCompose() string {
-	res := fmt.Sprintf("\n\\pard\\intbl %s \\cell", dc.Cell.content.cellCompose())
+// AddParagraph return cell's paragraph
+func (dc *TableCell) AddParagraph() *Paragraph {
+	p := Paragraph{
+		align:  "l",
+		indent: "\\fl360",
+		ct:     dc.ct,
+		ft:     dc.ft,
+	}
+	dc.content = append(dc.content, &p)
+	return &p
+}
+func (dc TableCell) cellCompose() string {
+	res := ""
+	for _, p := range dc.content {
+		res += fmt.Sprintf("\n\\pard\\intbl %s \n", p.compose())
+	}
+	res += "\\cell"
 
 	return res
 }
 
-func (dc DataCell) getCellWidth() int {
+func (dc TableCell) getCellWidth() int {
 	return dc.CellWidth
 }
 
-func (dc *DataCell) SetBorders(left, top, right, bottom bool) {
+// SetBorders sets borders to datacell
+func (dc *TableCell) SetBorders(left, top, right, bottom bool) {
 	b := ""
 	bTemplStr := "\\clbrdr%s\\brdrw15\\brdrs"
 	if left {
@@ -138,27 +175,11 @@ func (dc *DataCell) SetBorders(left, top, right, bottom bool) {
 	dc.borders = b
 }
 
-func (dc DataCell) getBorders() string {
+func (dc TableCell) getBorders() string {
 	return dc.borders
 }
 
-func (tp *TableProperties) SetAlign(align string) {
-	switch align {
-	case "c", "center":
-		tp.align = "c"
-	case "l", "left":
-		tp.align = "l"
-	case "r", "right":
-		tp.align = "r"
-	default:
-		tp.align = ""
-	}
-}
-
-func (tp *TableProperties) GetAlign() string {
-	return tp.align
-}
-
+// GetTableCellWidthByRatio returns slice of cells width
 func (t *Table) GetTableCellWidthByRatio(ratio ...float64) []int {
 
 	cellRatioSum := 0.0
@@ -172,20 +193,22 @@ func (t *Table) GetTableCellWidthByRatio(ratio ...float64) []int {
 	return cellWidth
 }
 
-func (dc *DataCell) SetVerticalMerged(isFirst, isNext bool) {
+// SetVerticalMerged verticalMergedCell
+func (dc *TableCell) SetVerticalMerged(isFirst, isNext bool) {
 	if isFirst {
-		dc.VerticalMerged.code = "\\clvmgf"
+		dc.VerticalMerged = "\\clvmgf"
 	}
 	if isNext {
-		dc.VerticalMerged.code = "\\clvmrg"
+		dc.VerticalMerged = "\\clvmrg"
 	}
 }
 
-func (dc DataCell) getVerticalMergedProperty() string {
-	return dc.VerticalMerged.code
+func (dc TableCell) getVerticalMergedProperty() string {
+	return dc.VerticalMerged
 }
 
-func (dc *DataCell) SetCellMargins(left, top, right, bottom int) {
+// SetCellMargins sets cell margins
+func (dc *TableCell) SetCellMargins(left, top, right, bottom int) {
 	m := ""
 	if left != 0 {
 		m += fmt.Sprintf("\\clpadl%d", left)
@@ -202,11 +225,12 @@ func (dc *DataCell) SetCellMargins(left, top, right, bottom int) {
 	dc.margins = m
 }
 
-func (dc DataCell) getCellMargins() string {
+func (dc TableCell) getCellMargins() string {
 	return dc.margins
 }
 
-func (dc *DataCell) SetVAlign(valign string) {
+// SetVAlign sets align (c/center, t/top, b/bottom)
+func (dc *TableCell) SetVAlign(valign string) {
 	switch valign {
 	case "c", "center":
 		dc.vTextAlign = "\\clvertalc"
@@ -219,10 +243,11 @@ func (dc *DataCell) SetVAlign(valign string) {
 	}
 }
 
-func (dc DataCell) getCellTextVAlign() string {
+func (dc TableCell) getCellTextVAlign() string {
 	return dc.vTextAlign
 }
 
+// SetWidth sets width of Table
 func (t *Table) SetWidth(width int) {
 	t.width = width
 }
