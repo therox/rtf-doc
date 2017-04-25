@@ -11,9 +11,9 @@ func main() {
 	// Настроить хедер
 	// Таблица цветов
 	ct := rtfdoc.ColorTable{}
-	ct.AddColor(rtfdoc.Color{255, 0, 0, "Red"})
-	ct.AddColor(rtfdoc.Color{0, 255, 0, "Green"})
-	ct.AddColor(rtfdoc.Color{0, 0, 255, "Blue"})
+	ct.AddColor(rtfdoc.Color{Red: 255, Green: 0, Blue: 0, Code: "Red"})
+	ct.AddColor(rtfdoc.Color{Red: 0, Green: 255, Blue: 0, Code: "Green"})
+	ct.AddColor(rtfdoc.Color{Red: 0, Green: 0, Blue: 255, Code: "Blue"})
 
 	d.SetColorTable(ct)
 	// ...
