@@ -20,16 +20,16 @@ func (text Text) compose() string {
 func (p *Paragraph) AddText(text string, fontSize int, fontCode string, colorCode string) *Text {
 	// Выясняем, какой шрифт имеет код fontcode
 	fn := 0
-	for i := range p.ft {
-		if p.ft[i].Code == fontCode {
+	for i, f := range *p.generalSettings.ft {
+		if f.Code == fontCode {
 			// Присваиваем тексту порядковый номер шрифта
 			fn = i
 		}
 	}
 	// то-же самое с цветом
 	fc := 0
-	for i := range p.ct {
-		if p.ct[i].name == colorCode {
+	for i, c := range *p.generalSettings.ct {
+		if c.name == colorCode {
 			// Присваиваем тексту порядковый номер шрифта
 			fc = i + 1
 		}
@@ -39,8 +39,10 @@ func (p *Paragraph) AddText(text string, fontSize int, fontCode string, colorCod
 		fontCode:  fn,
 		colorCode: fc,
 		text:      text,
-		ct:        p.ct,
-		ft:        p.ft,
+		generalSettings: generalSettings{
+			ct: p.ct,
+			ft: p.ft,
+		},
 	}
 	p.content = append(p.content, &txt)
 	return &txt

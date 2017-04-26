@@ -14,13 +14,17 @@ type CellItem interface {
 	InCell()
 }
 
+type generalSettings struct {
+	ft *FontTable
+	ct *ColorTable // Основные цветовые схемы. обращение в документе к ним с помощью управляющих слов \cfN, где N - порядковый номер цветовой схемы.
+}
+
 // Header - document header struct
-type Header struct {
-	Version string // Версия RTF, по-умолчанию, 1.5
-	CharSet string // кодировка. Возможные варианты: ansi, mac, pc, pca
+type header struct {
+	version string // RTF Version, default: 1.5
+	charSet string // available options: ansi, mac, pc, pca
 	Deff    string
-	ft      FontTable
-	ct      ColorTable // Основные цветовые схемы. обращение в документе к ним с помощью управляющих слов \cfN, где N - порядковый номер цветовой схемы.
+	generalSettings
 	//FileTBL    string
 	//StyleSheet string
 	//ListTables string
@@ -35,7 +39,7 @@ type Color struct {
 
 // Document - main document struct
 type Document struct {
-	Header
+	header
 	orientation string
 	documentSettings
 	content []DocumentItem
@@ -76,19 +80,7 @@ type margins struct {
 	bottom int
 }
 
-//=================Table=======
-
-// TableCell interface
-// type TableCell interface {
-// 	cellCompose() string
-// 	getCellWidth() int
-// 	getBorders() string
-// 	getVerticalMergedProperty() string
-// 	getCellMargins() string
-// 	getCellTextVAlign() string
-// }
-
-// Table - структура с таблицей
+// Table is a struct for table.
 type Table struct {
 	data []*TableRow
 	tableProperties
@@ -98,8 +90,7 @@ type tableProperties struct {
 	width   int
 	align   string
 	margins string
-	ft      FontTable
-	ct      ColorTable
+	generalSettings
 }
 
 // CellProperties define cell properties struct
@@ -109,8 +100,7 @@ type cellProperties struct {
 	VerticalMerged string
 	margins        string
 	vTextAlign     string
-	ct             ColorTable
-	ft             FontTable
+	generalSettings
 }
 
 // TableCell defines cell properties
@@ -122,8 +112,7 @@ type TableCell struct {
 // TableRow definces Table Row struct
 type TableRow struct {
 	cells []*TableCell
-	ft    FontTable
-	ct    ColorTable
+	generalSettings
 }
 
 // ============End of Table structs===========
@@ -133,8 +122,7 @@ type Paragraph struct {
 	align   string
 	indent  string
 	content []*Text
-	ct      ColorTable
-	ft      FontTable
+	generalSettings
 }
 
 // Text defines Text instances
@@ -144,6 +132,5 @@ type Text struct {
 	colorCode int
 	emphasis  string
 	text      string
-	ct        ColorTable
-	ft        FontTable
+	generalSettings
 }

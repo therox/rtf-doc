@@ -14,20 +14,17 @@ func main() {
 	d := rtfdoc.NewDocument()
 	// Настроить хедер
 	// Таблица цветов
-	ct := rtfdoc.ColorTable{}
+	ct := d.NewColorTable()
 
 	ct.AddColor(color.RGBA{R: 255, G: 0, B: 0, A: 255}, "Red")
 	ct.AddColor(color.RGBA{R: 0, G: 255, B: 0, A: 255}, "Green")
 	ct.AddColor(color.RGBA{R: 0, G: 0, B: 255, A: 255}, "Blue")
 
-	d.SetColorTable(ct)
-
-	fontTable := rtfdoc.NewFontTable()
+	fontTable := d.NewFontTable()
 	fontTable.AddFont("roman", 0, 0, "Times New Roman", "tnr")
 	fontTable.AddFont("swiss", 0, 0, "Arial", "ari")
 	fontTable.AddFont("swiss", 0, 0, "Comic Sans MS", "cs")
 	d.SetOrientation("landscape")
-	d.SetFontTable(fontTable)
 
 	p := d.AddParagraph()
 	p.AddText("Green first string (Times New Roman)", 48, "tnr", "Green")
@@ -82,5 +79,6 @@ func main() {
 	txt.SetEmphasis(false, true, false, false, false, false, false)
 
 	fmt.Println(string(d.Export()))
+	// ct.PrintInfo()
 
 }

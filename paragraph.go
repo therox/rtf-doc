@@ -17,8 +17,10 @@ func (doc *Document) AddParagraph() *Paragraph {
 		align:   "l",
 		indent:  "\\fl360",
 		content: nil,
-		ct:      doc.ct,
-		ft:      doc.ft,
+		generalSettings: generalSettings{
+			ct: doc.ct,
+			ft: doc.ft,
+		},
 	}
 	doc.content = append(doc.content, &p)
 	return &p

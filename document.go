@@ -1,12 +1,15 @@
 package rtfdoc
 
-import "fmt"
+import (
+	"fmt"
+	"image/color"
+)
 
 // NewDocument returns new rtf document instance
 func NewDocument() *Document {
 	doc := Document{
 		orientation: "portrait",
-		Header:      getDefaultHeader(),
+		header:      getDefaultHeader(),
 		documentSettings: documentSettings{
 			margins: margins{720, 720, 720, 720},
 		},
@@ -14,11 +17,6 @@ func NewDocument() *Document {
 	}
 	doc.SetFormat("A4")
 	return &doc
-}
-
-// SetColorTable - set color table in document instance
-func (doc *Document) SetColorTable(ct ColorTable) {
-	doc.Header.ct = ct
 }
 
 func (doc *Document) getMargins() string {
@@ -34,7 +32,7 @@ func (doc *Document) getMargins() string {
 
 func (doc *Document) compose() string {
 	result := "{"
-	result += doc.Header.compose()
+	result += doc.header.compose()
 	if doc.orientation != "" {
 		result += fmt.Sprintf("\n%s", doc.orientation)
 	}
@@ -70,10 +68,10 @@ func (doc *Document) SetFormat(format string) {
 // SetOrientation - sets page orientation (portrait, landscape)
 func (doc *Document) SetOrientation(orientation string) {
 
-	if orientation == "landscape" {
+	if orientation == formatLandscape {
 		doc.orientation = "\\landscape"
 		if doc.pageFormat != "" {
-			size, err := getSize(doc.pageFormat, "landscape")
+			size, err := getSize(doc.pageFormat, formatLandscape)
 			if err == nil {
 				doc.pagesize = size
 			}
@@ -81,17 +79,12 @@ func (doc *Document) SetOrientation(orientation string) {
 	} else {
 		doc.orientation = ""
 		if doc.pageFormat != "" {
-			size, err := getSize(doc.pageFormat, "portrait")
+			size, err := getSize(doc.pageFormat, formatPortrait)
 			if err == nil {
 				doc.pagesize = size
 			}
 		}
 	}
-}
-
-// SetFontTable - sets font table in document instance
-func (doc *Document) SetFontTable(ft *FontTable) {
-	doc.Header.ft = *ft
 }
 
 // GetDocumentWidth - returns document width
@@ -112,14 +105,16 @@ func (doc *Document) SetMargins(left, top, right, bottom int) {
 // NewColorTable returns new color table
 func (doc *Document) NewColorTable() *ColorTable {
 	ct := ColorTable{}
-	doc.Header.ct = ct
+	blackColor := color.RGBA{R: 0, G: 0, B: 0}
+	ct.AddColor(blackColor, "Black")
+	doc.header.ct = &ct
 	return &ct
 }
 
 // NewFontTable returns new font table
 func (doc *Document) NewFontTable() *FontTable {
 	ft := FontTable{}
-	doc.Header.ft = ft
+	doc.header.ft = &ft
 	return &ft
 }
 

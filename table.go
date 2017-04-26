@@ -77,8 +77,10 @@ func (t Table) compose() string {
 // AddTableRow returns new table row instance
 func (t *Table) AddTableRow() *TableRow {
 	tr := TableRow{
-		ft: t.ft,
-		ct: t.ct,
+		generalSettings: generalSettings{
+			ft: t.ft,
+			ct: t.ct,
+		},
 	}
 	t.data = append(t.data, &tr)
 	return &tr
@@ -136,8 +138,10 @@ func (dc *TableCell) AddParagraph() *Paragraph {
 	p := Paragraph{
 		align:  "l",
 		indent: "\\fl360",
-		ct:     dc.ct,
-		ft:     dc.ft,
+		generalSettings: generalSettings{
+			ct: dc.ct,
+			ft: dc.ft,
+		},
 	}
 	dc.content = append(dc.content, &p)
 	return &p

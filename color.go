@@ -21,11 +21,8 @@ func (cTbl ColorTable) encode() string {
 // AddColor adds color to color table
 func (cTbl *ColorTable) AddColor(c color.RGBA, name string) {
 	*cTbl = append(*cTbl, Color{c, name})
-
 }
 
-// SetColor - clears color table and sets color
-func (cTbl *ColorTable) SetColor(c color.RGBA, name string) {
-	*cTbl = []Color{Color{c, name}}
-
+func (cTbl *ColorTable) PrintInfo() {
+	fmt.Printf("%+v", cTbl)
 }
