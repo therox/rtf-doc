@@ -16,20 +16,21 @@ func (text Text) compose() string {
 	return res
 }
 
-func (p *Paragraph) NewText(text string, fontSize int, fontCode string, colorCode string) Text {
-	// Выясняем, какой шрифт имеет код fontcode
+// AddText returns new text instance
+func (p *Paragraph) AddText(text string, fontSize int, fontCode string, colorCode string) *Text {
+
 	fn := 0
-	for i := range p.ft {
-		if p.ft[i].Code == fontCode {
-			// Присваиваем тексту порядковый номер шрифта
+	for i, f := range *p.generalSettings.ft {
+		if f.Code == fontCode {
+
 			fn = i
 		}
 	}
-	// то-же самое с цветом
+
 	fc := 0
-	for i := range p.ct {
-		if p.ct[i].Code == colorCode {
-			// Присваиваем тексту порядковый номер шрифта
+	for i, c := range *p.generalSettings.ct {
+		if c.name == colorCode {
+
 			fc = i + 1
 		}
 	}
@@ -38,13 +39,24 @@ func (p *Paragraph) NewText(text string, fontSize int, fontCode string, colorCod
 		fontCode:  fn,
 		colorCode: fc,
 		text:      text,
-		ct:        p.ct,
-		ft:        p.ft,
+		generalSettings: generalSettings{
+			ct: p.ct,
+			ft: p.ft,
+		},
 	}
-
-	return txt
+	p.content = append(p.content, &txt)
+	return &txt
 }
 
+//AddNewLine adds new line into paragraph text
+func (p *Paragraph) AddNewLine() {
+	txt := Text{
+		text: "\\line",
+	}
+	p.content = append(p.content, &txt)
+}
+
+// SetEmphasis - sets text emphasis
 func (text *Text) SetEmphasis(bold, italic, underlining, super, sub, scaps, strike bool) {
 	text.emphasis = ""
 	if bold {
@@ -74,10 +86,11 @@ func (text *Text) getEmphasis() string {
 	return text.emphasis
 }
 
+// SetColor sets text color
 func (text *Text) SetColor(colorCode string, ct ColorTable) {
 	fc := 0
 	for i := range ct {
-		if ct[i].Code == colorCode {
+		if ct[i].name == colorCode {
 			// Присваиваем тексту порядковый номер шрифта
 			fc = i + 1
 		}

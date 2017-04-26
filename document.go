@@ -1,22 +1,22 @@
 package rtfdoc
 
-import "fmt"
+import (
+	"fmt"
+	"image/color"
+)
 
-func NewDocument() Document {
+// NewDocument returns new rtf document instance
+func NewDocument() *Document {
 	doc := Document{
 		orientation: "portrait",
-		Header:      getDefaultHeader(),
-		DocumentSettings: DocumentSettings{
+		header:      getDefaultHeader(),
+		documentSettings: documentSettings{
 			margins: margins{720, 720, 720, 720},
 		},
 		content: nil,
 	}
 	doc.SetFormat("A4")
-	return doc
-}
-
-func (doc *Document) SetColorTable(ct ColorTable) {
-	doc.Header.ct = ct
+	return &doc
 }
 
 func (doc *Document) getMargins() string {
@@ -32,11 +32,11 @@ func (doc *Document) getMargins() string {
 
 func (doc *Document) compose() string {
 	result := "{"
-	result += doc.Header.compose()
+	result += doc.header.compose()
 	if doc.orientation != "" {
 		result += fmt.Sprintf("\n%s", doc.orientation)
 	}
-	if doc.pagesize != (Size{}) {
+	if doc.pagesize != (size{}) {
 		result += fmt.Sprintf("\n\\paperw%d\\paperh%d", doc.pagesize.width, doc.pagesize.height)
 	}
 
@@ -49,10 +49,7 @@ func (doc *Document) compose() string {
 	return result
 }
 
-func (doc *Document) AddContent(content DocumentItem) {
-	doc.content = append(doc.content, content)
-}
-
+// SetFormat sets page format (A2, A3, A4)
 func (doc *Document) SetFormat(format string) {
 	doc.pageFormat = format
 	if doc.orientation != "" {
@@ -63,12 +60,13 @@ func (doc *Document) SetFormat(format string) {
 	}
 }
 
+// SetOrientation - sets page orientation (portrait, landscape)
 func (doc *Document) SetOrientation(orientation string) {
 
-	if orientation == "landscape" {
+	if orientation == formatLandscape {
 		doc.orientation = "\\landscape"
 		if doc.pageFormat != "" {
-			size, err := getSize(doc.pageFormat, "landscape")
+			size, err := getSize(doc.pageFormat, formatLandscape)
 			if err == nil {
 				doc.pagesize = size
 			}
@@ -76,7 +74,7 @@ func (doc *Document) SetOrientation(orientation string) {
 	} else {
 		doc.orientation = ""
 		if doc.pageFormat != "" {
-			size, err := getSize(doc.pageFormat, "portrait")
+			size, err := getSize(doc.pageFormat, formatPortrait)
 			if err == nil {
 				doc.pagesize = size
 			}
@@ -84,14 +82,12 @@ func (doc *Document) SetOrientation(orientation string) {
 	}
 }
 
-func (doc *Document) SetFontTable(ft FontTable) {
-	doc.Header.ft = ft
-}
-
+// GetDocumentWidth - returns document width
 func (doc *Document) GetDocumentWidth() int {
 	return doc.pagesize.width
 }
 
+// SetMargins - sets document margins
 func (doc *Document) SetMargins(left, top, right, bottom int) {
 	doc.margins = margins{
 		left,
@@ -101,22 +97,28 @@ func (doc *Document) SetMargins(left, top, right, bottom int) {
 	}
 }
 
-//func (doc *Document) getLeftMargin() int {
-//	return doc.Margins.left
-//}
-//func (doc *Document) getRightMargin() int {
-//	return doc.Margins.right
-//}
-//func (doc *Document) getTopMargin() int {
-//	return doc.Margins.top
-//}
-//func (doc *Document) getBottomMargin() int {
-//	return doc.Margins.bottom
-//}
+// NewColorTable returns new color table
+func (doc *Document) NewColorTable() *ColorTable {
+	ct := ColorTable{}
+	blackColor := color.RGBA{R: 0, G: 0, B: 0}
+	ct.AddColor(blackColor, "Black")
+	doc.header.ct = &ct
+	return &ct
+}
 
+// NewFontTable returns new font table
+func (doc *Document) NewFontTable() *FontTable {
+	ft := FontTable{}
+	doc.header.ft = &ft
+	return &ft
+}
+
+// GetMaxContentWidth - returns maximum content width
 func (doc *Document) GetMaxContentWidth() int {
 	return doc.pagesize.width - doc.margins.right - doc.margins.left
 }
+
+// GetTableCellWidthByRatio - returns slice of cells width from cells ratios
 func (doc *Document) GetTableCellWidthByRatio(tableWidth int, ratio ...float64) []int {
 	tw := tableWidth
 	if tw > doc.GetMaxContentWidth() {
@@ -133,6 +135,7 @@ func (doc *Document) GetTableCellWidthByRatio(tableWidth int, ratio ...float64) 
 	return cellWidth
 }
 
+// Export exports document
 func (doc *Document) Export() []byte {
 	return []byte(doc.compose())
 }

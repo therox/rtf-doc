@@ -2,11 +2,12 @@ package rtfdoc
 
 import "fmt"
 
-func NewFont(family string, cs int, prq int, name string, code string) Font {
-	return Font{Family: family, Charset: cs, Prq: prq, Name: name, Code: code}
+// AddFont returns font instance
+func (ft *FontTable) AddFont(family string, cs int, prq int, name string, code string) {
+	*ft = append(*ft, Font{Family: family, Charset: cs, Prq: prq, Name: name, Code: code})
 }
 
-func (f Font) Compose() string {
+func (f *Font) encode() string {
 	var prq, charset string
 	if f.Prq != 0 {
 		prq = fmt.Sprintf("\\fprq%d", f.Prq)
@@ -20,20 +21,16 @@ func (f Font) Compose() string {
 
 // FontTable
 
-func NewFontTable() FontTable {
-	return FontTable{}
+// NewFontTable - returns new font table
+func NewFontTable() *FontTable {
+	return &FontTable{}
 }
 
-func (ft FontTable) compose() string {
+func (ft FontTable) encode() string {
 	var fontInfo string
 	for i := range ft {
-		fontInfo += fmt.Sprintf("{\\f%d%s}", i, ft[i].Compose())
+		fontInfo += fmt.Sprintf("{\\f%d%s}", i, ft[i].encode())
 
 	}
 	return fontInfo
-}
-
-func (ft *FontTable) AddFont(font Font) int {
-	*ft = append(*ft, font)
-	return len(*ft)
 }

@@ -2,30 +2,22 @@ package rtfdoc
 
 import "fmt"
 
-func getDefaultHeader() Header {
-	ct := ColorTable{}
-	ct.SetColor(Color{0, 0, 0, "Black"})
-	return Header{
-		Version: "1",
-		CharSet: "ansi",
+func getDefaultHeader() header {
+	return header{
+		version: "1",
+		charSet: "ansi",
 		Deff:    "0",
-		ft:      nil,
-		ct:      ct,
-		//FileTBL:    "",
-		//StyleSheet: "",
-		//ListTables: "",
-		//RevTBL:     "",
 	}
 }
 
-func (h Header) compose() string {
-	res := fmt.Sprintf("\\rtf%s\\%s\\deff%s", h.Version, h.CharSet, h.Deff)
+func (h header) compose() string {
+	res := fmt.Sprintf("\\rtf%s\\%s\\deff%s", h.version, h.charSet, h.Deff)
 
 	if h.ft != nil {
-		res += fmt.Sprintf("\n{\\fonttbl;%s}", h.ft.compose())
+		res += fmt.Sprintf("\n{\\fonttbl;%s}", h.ft.encode())
 	}
 	if h.ct != nil {
-		res += fmt.Sprintf("\n{\\colortbl;%s}", h.ct.Compose())
+		res += fmt.Sprintf("\n{\\colortbl;%s}", h.ct.encode())
 	}
 	return res
 }
