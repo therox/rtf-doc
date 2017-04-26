@@ -7,10 +7,6 @@ func getDefaultHeader() header {
 		version: "1",
 		charSet: "ansi",
 		Deff:    "0",
-		//FileTBL:    "",
-		//StyleSheet: "",
-		//ListTables: "",
-		//RevTBL:     "",
 	}
 }
 

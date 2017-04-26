@@ -18,19 +18,19 @@ func (text Text) compose() string {
 
 // AddText returns new text instance
 func (p *Paragraph) AddText(text string, fontSize int, fontCode string, colorCode string) *Text {
-	// Выясняем, какой шрифт имеет код fontcode
+
 	fn := 0
 	for i, f := range *p.generalSettings.ft {
 		if f.Code == fontCode {
-			// Присваиваем тексту порядковый номер шрифта
+
 			fn = i
 		}
 	}
-	// то-же самое с цветом
+
 	fc := 0
 	for i, c := range *p.generalSettings.ct {
 		if c.name == colorCode {
-			// Присваиваем тексту порядковый номер шрифта
+
 			fc = i + 1
 		}
 	}

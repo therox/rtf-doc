@@ -49,11 +49,6 @@ func (doc *Document) compose() string {
 	return result
 }
 
-// AddContent adds new content to document instance
-// func (doc *Document) AddContent(content *DocumentItem) {
-// 	doc.content = append(doc.content, content)
-// }
-
 // SetFormat sets page format (A2, A3, A4)
 func (doc *Document) SetFormat(format string) {
 	doc.pageFormat = format

@@ -2,15 +2,6 @@ package rtfdoc
 
 import "fmt"
 
-// NewParagraph return new instance of Paragraph
-// func NewParagraph() *Paragraph {
-// 	return &Paragraph{
-// 		align:   "l",
-// 		indent:  "\\fl720",
-// 		content: nil,
-// 	}
-// }
-
 // AddParagraph return new instance of Paragraph
 func (doc *Document) AddParagraph() *Paragraph {
 	p := Paragraph{
@@ -26,11 +17,6 @@ func (doc *Document) AddParagraph() *Paragraph {
 	return &p
 }
 
-// AddContent adds content
-// func (par *Paragraph) AddContent(c Text) {
-// 	par.content = append(par.content, c)
-// }
-
 func (par Paragraph) compose() string {
 	res := fmt.Sprintf("\n{\\pard %s \\q%s", par.indent, par.align)
 
@@ -40,16 +26,6 @@ func (par Paragraph) compose() string {
 	res += "\n\\par}"
 	return res
 }
-
-// func (par Paragraph) cellCompose() string {
-// 	res := fmt.Sprintf("\n{\\pard %s \\q%s", par.indent, par.align)
-// 	for _, c := range par.content {
-// 		res += c.compose()
-// 	}
-// 	res += "\n}"
-
-// 	return res
-// }
 
 // SetIndent sets indent to paragraph (fl - first line indent, li - left ident, ri - right indent in tweeps)
 func (par *Paragraph) SetIndent(fl, li, ri int) {

@@ -86,11 +86,6 @@ func (t *Table) AddTableRow() *TableRow {
 	return &tr
 }
 
-// AddCell add cell to TableRow
-// func (tr *TableRow) AddCell(cell *TableCell) {
-// 	tr.cells = append(tr.cells, cell)
-// }
-
 func (tr *TableRow) encode() string {
 	res := ""
 	if len(tr.cells) != 0 {
@@ -127,11 +122,6 @@ func (cp *cellProperties) SetProperties(cellWidth int, borders string) {
 	cp.borders = borders
 	return
 }
-
-// SetContent sets paragraph to datacell
-// func (dc *DataCell) SetContent(c Paragraph) {
-// 	dc.content = c
-// }
 
 // AddParagraph return cell's paragraph
 func (dc *TableCell) AddParagraph() *Paragraph {
