@@ -8,7 +8,12 @@ Generates rtf documents
 
 ## Usage
 
+Import package
+
+	import rtfdoc "github.com/therox/rtf-doc"
+
 Create new document instance
+
     d := rtfdoc.NewDocument()
 
 Setting up header information. First set up color table
