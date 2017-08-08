@@ -87,9 +87,9 @@ type Table struct {
 }
 
 type tableProperties struct {
-	width   int
-	align   string
-	margins string
+	width int
+	align string
+	margins
 	generalSettings
 }
 

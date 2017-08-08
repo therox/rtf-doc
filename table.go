@@ -11,28 +11,56 @@ func getDefaultTableProperties() tableProperties {
 }
 
 func (tp *tableProperties) SetTableMargins(left, top, right, bottom int) *tableProperties {
-	margins := ""
-	if left != 0 {
-		margins += fmt.Sprintf(" \\trpaddl%d", left)
-	}
-	if top != 0 {
-		margins += fmt.Sprintf(" \\trpaddt%d", top)
-	}
-	if right != 0 {
-		margins += fmt.Sprintf(" \\trpaddr%d", right)
-	}
-	if bottom != 0 {
-		margins += fmt.Sprintf(" \\trpaddb%d", bottom)
-	}
-	margins += " "
-	tp.margins = margins
+	tp.margins.left = left
+	tp.margins.right = right
+	tp.margins.top = top
+	tp.margins.bottom = bottom
+	//margins := ""
+	//if left != 0 {
+	//	margins += fmt.Sprintf(" \\trpaddl%d", left)
+	//}
+	//if top != 0 {
+	//	margins += fmt.Sprintf(" \\trpaddt%d", top)
+	//}
+	//if right != 0 {
+	//	margins += fmt.Sprintf(" \\trpaddr%d", right)
+	//}
+	//if bottom != 0 {
+	//	margins += fmt.Sprintf(" \\trpaddb%d", bottom)
+	//}
+	//margins += " "
+	//tp.margins = margins
 
 	return tp
 }
 
-func (tp *tableProperties) getMargins() string {
-	return tp.margins
+func (tp *tableProperties) SetLeftMargin(value int) *tableProperties {
+	tp.margins.left = value
+	//tp.margins += fmt.Sprintf(" \\trpaddl%d", value)
+	return tp
 }
+
+func (tp *tableProperties) SetRightMargin(value int) *tableProperties {
+	tp.margins.right = value
+	//tp.margins += fmt.Sprintf(" \\trpaddr%d", value)
+	return tp
+}
+
+func (tp *tableProperties) SetTopMargin(value int) *tableProperties {
+	tp.margins.top = value
+	//tp.margins += fmt.Sprintf(" \\trpaddt%d", value)
+	return tp
+}
+
+func (tp *tableProperties) SetBottomMargin(value int) *tableProperties {
+	tp.margins.bottom = value
+	//tp.margins += fmt.Sprintf(" \\trpaddb%d", value)
+	return tp
+}
+
+//func (tp *tableProperties) getMargins() string {
+//	return tp.margins
+//}
 
 // SetAlign sets table aligning (c/center, l/left, r/right)
 func (tp *tableProperties) SetAlign(align string) *tableProperties {
@@ -70,7 +98,21 @@ func (t Table) compose() string {
 	}
 	for _, tr := range t.data {
 		res += fmt.Sprintf("\n{\\trowd %s", align)
-		res += t.getMargins()
+		// Margins
+		if t.margins.left != 0 {
+			res += fmt.Sprintf(" \\trpaddl%d", t.margins.left)
+		}
+		if t.margins.right != 0 {
+			res += fmt.Sprintf(" \\trpaddr%d", t.margins.right)
+		}
+		if t.margins.top != 0 {
+			res += fmt.Sprintf(" \\trpaddt%d", t.margins.top)
+		}
+		if t.margins.bottom != 0 {
+			res += fmt.Sprintf(" \\trpaddb%d", t.margins.bottom)
+		}
+		res += " "
+		//res += t.getMargins()
 		res += tr.encode()
 		res += "\n\\row}"
 	}
