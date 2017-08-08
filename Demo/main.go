@@ -66,14 +66,12 @@ func main() {
 	dc = tr.AddDataCell(cWidth[1])
 	p = dc.AddParagraph()
 	p.SetAlignt("r")
-	txt := p.AddText("Red text In bottom central cell with right align", 16, "ari", "Red")
-	txt.SetBold()
+	p.AddText("Red text In bottom central cell with right align", 16, "ari", "Red").SetBold()
 
 	dc = tr.AddDataCell(cWidth[2])
 	p = dc.AddParagraph()
 	p.SetAlignt("l")
-	txt = p.AddText("Black text in bottom right cell with left align", 16, "cs", "Black")
-	txt.SetItalic()
+	p.AddText("Black text in bottom right cell with left align", 16, "cs", "Black").SetItalic()
 
 	fmt.Println(string(d.Export()))
 
