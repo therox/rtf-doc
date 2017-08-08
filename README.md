@@ -100,9 +100,9 @@ And one more paragraph
 Add last cell for current row
 
 	dc = tr.AddDataCell(cWidth[1])
-	p = dc.AddParagraph()
+	p = dc.AddParagraph().SetAlignt("c")
 	p.AddText("Green text In top right cell with center align", 16, "cs", "Green")
-	p.SetAlignt("c")
+
 
 Second row    
 
@@ -120,21 +120,19 @@ Second row
 Second cell
 
 	dc = tr.AddDataCell(cWidth[1])
-	p = dc.AddParagraph()
-	p.SetAlignt("r")
+	p = dc.AddParagraph().SetAlignt("r")
 	txt := p.AddText("Red text In bottom central cell with right align", 16, "ari", "Red")
 
  with bold emphasis
 
-	txt.SetEmphasis(true, false, false, false, false, false, false)
+	txt.SetBold()
 
 Third cell
 
 	dc = tr.AddDataCell(cWidth[2])
-	p = dc.AddParagraph()
-	p.SetAlignt("l")
+	p = dc.AddParagraph().SetAlignt("l")
 	txt = p.AddText("Black text in bottom right cell with left align", 16, "cs", "Black")
 
  with italic emphasis
  
-	txt.SetEmphasis(false, true, false, false, false, false, false)
+	txt.SetItalic()
