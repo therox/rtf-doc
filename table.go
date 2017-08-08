@@ -99,22 +99,22 @@ func (t Table) compose() string {
 	for _, tr := range t.data {
 		res += fmt.Sprintf("\n{\\trowd %s", align)
 		// Margins
-		if t.margins.left != 0 {
-			res += fmt.Sprintf(" \\trpaddl%d", t.margins.left)
-		}
-		if t.margins.right != 0 {
-			res += fmt.Sprintf(" \\trpaddr%d", t.margins.right)
-		}
-		if t.margins.top != 0 {
-			res += fmt.Sprintf(" \\trpaddt%d", t.margins.top)
-		}
-		if t.margins.bottom != 0 {
-			res += fmt.Sprintf(" \\trpaddb%d", t.margins.bottom)
-		}
-		res += " "
+		//if t.margins.left != 0 {
+		//	res += fmt.Sprintf(" \\trpaddl%d", t.margins.left)
+		//}
+		//if t.margins.right != 0 {
+		//	res += fmt.Sprintf(" \\trpaddr%d", t.margins.right)
+		//}
+		//if t.margins.top != 0 {
+		//	res += fmt.Sprintf(" \\trpaddt%d", t.margins.top)
+		//}
+		//if t.margins.bottom != 0 {
+		//	res += fmt.Sprintf(" \\trpaddb%d", t.margins.bottom)
+		//}
+		res += fmt.Sprintf(" \\trpaddl%d \\trpaddr%d \\trpaddt%d \\trpaddb%d\n", t.margins.left, t.margins.right, t.margins.top, t.margins.bottom)
 		//res += t.getMargins()
 		res += tr.encode()
-		res += "\n\\row}"
+		res += "\\row}"
 	}
 	return res
 }
@@ -195,7 +195,8 @@ func (dc TableCell) getCellWidth() int {
 	return dc.CellWidth
 }
 
-// SetBorders sets borders to datacell
+// SetBorders sets borders to
+// datacell
 func (dc *TableCell) SetBorders(left, top, right, bottom bool) *TableCell {
 	b := ""
 	bTemplStr := "\\clbrdr%s\\brdrw15\\brdrs"
