@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"image/color"
 
-	rtfdoc "github.com/therox/rtf-doc"
+	"github.com/therox/rtf-doc"
 )
 
 func main() {
