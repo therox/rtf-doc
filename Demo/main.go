@@ -12,20 +12,19 @@ func main() {
 	// Создаем новый чистый, незамутнённый документ
 
 	d := rtfdoc.NewDocument()
-	// Настроить хедер
-	// Таблица цветов
-	ct := d.NewColorTable()
 
-	ct.AddColor(color.RGBA{R: 255, G: 0, B: 0, A: 255}, "Red")
-	ct.AddColor(color.RGBA{R: 0, G: 255, B: 0, A: 255}, "Green")
-	ct.AddColor(color.RGBA{R: 0, G: 0, B: 255, A: 255}, "Blue")
-
-	fontTable := d.NewFontTable()
-	fontTable.AddFont("roman", 0, 0, "Times New Roman", "tnr")
-	fontTable.AddFont("swiss", 0, 0, "Arial", "ari")
-	fontTable.AddFont("swiss", 0, 0, "Comic Sans MS", "cs")
 	d.SetOrientation("landscape")
 	d.SetFormat("A4")
+
+	// Настроить хедер
+	// Таблица цветов
+	d.NewColorTable().AddColor(color.RGBA{R: 255, G: 0, B: 0, A: 255}, "Red").
+		AddColor(color.RGBA{R: 0, G: 255, B: 0, A: 255}, "Green").
+		AddColor(color.RGBA{R: 0, G: 0, B: 255, A: 255}, "Blue")
+
+	d.NewFontTable().AddFont("roman", 0, 0, "Times New Roman", "tnr").
+		AddFont("swiss", 0, 0, "Arial", "ari").
+		AddFont("swiss", 0, 0, "Comic Sans MS", "cs")
 
 	p := d.AddParagraph()
 	p.AddText("Green first string (Times New Roman)", 48, "tnr", "Green")
@@ -33,9 +32,9 @@ func main() {
 	d.AddParagraph().AddText("Red Third string (Comic Sans)", 48, "cs", "Red")
 
 	// Таблица
-	t := d.AddTable()
+	t := d.AddTable().SetWidth(10000)
 	t.SetTableMargins(50, 50, 50, 50)
-	t.SetWidth(10000)
+
 	// // строка таблицы
 	tr := t.AddTableRow()
 
@@ -51,15 +50,12 @@ func main() {
 	p.AddNewLine()
 	p.AddText("Голубой кириллический текст с переносом строки внутри параграфа", 16, "cs", "Blue")
 	p.SetAlignt("j")
-	p = dc.AddParagraph()
+	p = dc.AddParagraph().SetIndent(40, 0, 0).SetAlignt("c")
 	p.AddText("Another paragraph in vertical cell", 16, "cs", "Blue")
-	p.SetIndent(40, 0, 0)
-	p.SetAlignt("c")
 
 	dc = tr.AddDataCell(cWidth[1])
-	p = dc.AddParagraph()
+	p = dc.AddParagraph().SetAlignt("c")
 	p.AddText("Green text In top right cell with center align", 16, "cs", "Green")
-	p.SetAlignt("c")
 	tr = t.AddTableRow()
 
 	cWidth = t.GetTableCellWidthByRatio(1, 1.5, 1.5)
@@ -71,13 +67,13 @@ func main() {
 	p = dc.AddParagraph()
 	p.SetAlignt("r")
 	txt := p.AddText("Red text In bottom central cell with right align", 16, "ari", "Red")
-	txt.SetEmphasis(true, false, false, false, false, false, false)
+	txt.SetBold()
 
 	dc = tr.AddDataCell(cWidth[2])
 	p = dc.AddParagraph()
 	p.SetAlignt("l")
 	txt = p.AddText("Black text in bottom right cell with left align", 16, "cs", "Black")
-	txt.SetEmphasis(false, true, false, false, false, false, false)
+	txt.SetItalic()
 
 	fmt.Println(string(d.Export()))
 

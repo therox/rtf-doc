@@ -7,12 +7,12 @@ func (text Text) compose() string {
 	var emphasisBegin string
 	var EmphasisEnd string
 	if text.emphasis != "" {
-		emphasisBegin = "{" + text.getEmphasis()
+		emphasisBegin = "{" + text.getEmphasis() + " "
 		EmphasisEnd = "}"
 	}
 	PreparedText := convertCyrillicToUTF16(text.text)
 
-	res += fmt.Sprintf("\n\\fs%d\\f%d \\cf%d %s%s%s\\f0", text.fontSize*2, text.fontCode, text.colorCode, emphasisBegin, PreparedText, EmphasisEnd)
+	res += fmt.Sprintf("\n\\fs%d\\f%d \\cf%d %s%s %s\\f0", text.fontSize*2, text.fontCode, text.colorCode, emphasisBegin, PreparedText, EmphasisEnd)
 	return res
 }
 
