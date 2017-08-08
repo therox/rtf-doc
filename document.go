@@ -50,7 +50,7 @@ func (doc *Document) compose() string {
 }
 
 // SetFormat sets page format (A2, A3, A4)
-func (doc *Document) SetFormat(format string) {
+func (doc *Document) SetFormat(format string) *Document {
 	doc.pageFormat = format
 	if doc.orientation != "" {
 		size, err := getSize(format, doc.orientation)
@@ -58,10 +58,11 @@ func (doc *Document) SetFormat(format string) {
 			doc.pagesize = size
 		}
 	}
+	return doc
 }
 
 // SetOrientation - sets page orientation (portrait, landscape)
-func (doc *Document) SetOrientation(orientation string) {
+func (doc *Document) SetOrientation(orientation string) *Document {
 
 	if orientation == formatLandscape {
 		doc.orientation = "\\landscape"
@@ -80,6 +81,8 @@ func (doc *Document) SetOrientation(orientation string) {
 			}
 		}
 	}
+
+	return doc
 }
 
 // GetDocumentWidth - returns document width
@@ -88,13 +91,34 @@ func (doc *Document) GetDocumentWidth() int {
 }
 
 // SetMargins - sets document margins
-func (doc *Document) SetMargins(left, top, right, bottom int) {
+func (doc *Document) SetMargins(left, top, right, bottom int) *Document {
 	doc.margins = margins{
 		left,
 		right,
 		top,
 		bottom,
 	}
+	return doc
+}
+
+func (doc *Document) SetLeftMargin(value int) *Document {
+	doc.margins.left = value
+	return doc
+}
+
+func (doc *Document) SetRightMargin(value int) *Document {
+	doc.margins.right = value
+	return doc
+}
+
+func (doc *Document) SetTopMargin(value int) *Document {
+	doc.margins.top = value
+	return doc
+}
+
+func (doc *Document) SetBottomMargin(value int) *Document {
+	doc.margins.bottom = value
+	return doc
 }
 
 // NewColorTable returns new color table

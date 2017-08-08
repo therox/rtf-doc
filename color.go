@@ -19,6 +19,7 @@ func (cTbl ColorTable) encode() string {
 }
 
 // AddColor adds color to color table
-func (cTbl *ColorTable) AddColor(c color.RGBA, name string) {
+func (cTbl *ColorTable) AddColor(c color.RGBA, name string) *ColorTable {
 	*cTbl = append(*cTbl, Color{c, name})
+	return cTbl
 }

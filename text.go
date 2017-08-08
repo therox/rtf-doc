@@ -49,15 +49,16 @@ func (p *Paragraph) AddText(text string, fontSize int, fontCode string, colorCod
 }
 
 //AddNewLine adds new line into paragraph text
-func (p *Paragraph) AddNewLine() {
+func (p *Paragraph) AddNewLine() *Paragraph {
 	txt := Text{
 		text: "\\line",
 	}
 	p.content = append(p.content, &txt)
+	return p
 }
 
 // SetEmphasis - sets text emphasis
-func (text *Text) SetEmphasis(bold, italic, underlining, super, sub, scaps, strike bool) {
+func (text *Text) SetEmphasis(bold, italic, underlining, super, sub, scaps, strike bool) *Text {
 	text.emphasis = ""
 	if bold {
 		text.emphasis += " \\b"
@@ -80,6 +81,42 @@ func (text *Text) SetEmphasis(bold, italic, underlining, super, sub, scaps, stri
 	if strike {
 		text.emphasis += " \\strike"
 	}
+	return text
+}
+
+func (text *Text) SetBold() *Text {
+	text.emphasis += " \\b"
+	return text
+}
+
+func (text *Text) SetItalic() *Text {
+	text.emphasis += " \\i"
+	return text
+}
+
+func (text *Text) SetUnderlining() *Text {
+	text.emphasis += " \\ul"
+	return text
+}
+
+func (text *Text) SetSuper() *Text {
+	text.emphasis += " \\super"
+	return text
+}
+
+func (text *Text) SetSub() *Text {
+	text.emphasis += " \\sub"
+	return text
+}
+
+func (text *Text) SetScaps() *Text {
+	text.emphasis += " \\scaps"
+	return text
+}
+
+func (text *Text) SetStrike() *Text {
+	text.emphasis += " \\strike"
+	return text
 }
 
 func (text *Text) getEmphasis() string {
@@ -87,7 +124,7 @@ func (text *Text) getEmphasis() string {
 }
 
 // SetColor sets text color
-func (text *Text) SetColor(colorCode string, ct ColorTable) {
+func (text *Text) SetColor(colorCode string, ct ColorTable) *Text {
 	fc := 0
 	for i := range ct {
 		if ct[i].name == colorCode {
@@ -96,4 +133,6 @@ func (text *Text) SetColor(colorCode string, ct ColorTable) {
 		}
 	}
 	text.colorCode = fc
+
+	return text
 }

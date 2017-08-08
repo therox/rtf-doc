@@ -10,7 +10,7 @@ func getDefaultTableProperties() tableProperties {
 	return tp
 }
 
-func (tp *tableProperties) SetTableMargins(left, top, right, bottom int) {
+func (tp *tableProperties) SetTableMargins(left, top, right, bottom int) *tableProperties {
 	margins := ""
 	if left != 0 {
 		margins += fmt.Sprintf(" \\trpaddl%d", left)
@@ -26,6 +26,8 @@ func (tp *tableProperties) SetTableMargins(left, top, right, bottom int) {
 	}
 	margins += " "
 	tp.margins = margins
+
+	return tp
 }
 
 func (tp *tableProperties) getMargins() string {
@@ -33,7 +35,7 @@ func (tp *tableProperties) getMargins() string {
 }
 
 // SetAlign sets table aligning (c/center, l/left, r/right)
-func (tp *tableProperties) SetAlign(align string) {
+func (tp *tableProperties) SetAlign(align string) *tableProperties {
 	switch align {
 	case "c", "center":
 		tp.align = "c"
@@ -44,6 +46,7 @@ func (tp *tableProperties) SetAlign(align string) {
 	default:
 		tp.align = ""
 	}
+	return tp
 }
 
 func (tp *tableProperties) GetAlign() string {
@@ -117,10 +120,10 @@ func (tr *TableRow) AddDataCell(width int) *TableCell {
 }
 
 // SetProperties sets cell properties
-func (cp *cellProperties) SetProperties(cellWidth int, borders string) {
+func (cp *cellProperties) SetProperties(cellWidth int, borders string) *cellProperties {
 	cp.CellWidth = cellWidth
 	cp.borders = borders
-	return
+	return cp
 }
 
 // AddParagraph return cell's paragraph
@@ -151,7 +154,7 @@ func (dc TableCell) getCellWidth() int {
 }
 
 // SetBorders sets borders to datacell
-func (dc *TableCell) SetBorders(left, top, right, bottom bool) {
+func (dc *TableCell) SetBorders(left, top, right, bottom bool) *TableCell {
 	b := ""
 	bTemplStr := "\\clbrdr%s\\brdrw15\\brdrs"
 	if left {
@@ -167,6 +170,7 @@ func (dc *TableCell) SetBorders(left, top, right, bottom bool) {
 		b += fmt.Sprintf(bTemplStr, "b")
 	}
 	dc.borders = b
+	return dc
 }
 
 func (dc TableCell) getBorders() string {
@@ -188,13 +192,14 @@ func (t *Table) GetTableCellWidthByRatio(ratio ...float64) []int {
 }
 
 // SetVerticalMerged verticalMergedCell
-func (dc *TableCell) SetVerticalMerged(isFirst, isNext bool) {
+func (dc *TableCell) SetVerticalMerged(isFirst, isNext bool) *TableCell {
 	if isFirst {
 		dc.VerticalMerged = "\\clvmgf"
 	}
 	if isNext {
 		dc.VerticalMerged = "\\clvmrg"
 	}
+	return dc
 }
 
 func (dc TableCell) getVerticalMergedProperty() string {
@@ -202,7 +207,7 @@ func (dc TableCell) getVerticalMergedProperty() string {
 }
 
 // SetCellMargins sets cell margins
-func (dc *TableCell) SetCellMargins(left, top, right, bottom int) {
+func (dc *TableCell) SetCellMargins(left, top, right, bottom int) *TableCell {
 	m := ""
 	if left != 0 {
 		m += fmt.Sprintf("\\clpadl%d", left)
@@ -217,6 +222,8 @@ func (dc *TableCell) SetCellMargins(left, top, right, bottom int) {
 		m += fmt.Sprintf("\\clpadb%d", bottom)
 	}
 	dc.margins = m
+
+	return dc
 }
 
 func (dc TableCell) getCellMargins() string {
@@ -224,7 +231,7 @@ func (dc TableCell) getCellMargins() string {
 }
 
 // SetVAlign sets align (c/center, t/top, b/bottom)
-func (dc *TableCell) SetVAlign(valign string) {
+func (dc *TableCell) SetVAlign(valign string) *TableCell {
 	switch valign {
 	case "c", "center":
 		dc.vTextAlign = "\\clvertalc"
@@ -235,6 +242,7 @@ func (dc *TableCell) SetVAlign(valign string) {
 	default:
 		dc.vTextAlign = ""
 	}
+	return dc
 }
 
 func (dc TableCell) getCellTextVAlign() string {
@@ -242,6 +250,7 @@ func (dc TableCell) getCellTextVAlign() string {
 }
 
 // SetWidth sets width of Table
-func (t *Table) SetWidth(width int) {
+func (t *Table) SetWidth(width int) *Table {
 	t.width = width
+	return t
 }

@@ -28,7 +28,7 @@ func (par Paragraph) compose() string {
 }
 
 // SetIndent sets indent to paragraph (fl - first line indent, li - left ident, ri - right indent in tweeps)
-func (par *Paragraph) SetIndent(fl, li, ri int) {
+func (par *Paragraph) SetIndent(fl, li, ri int) *Paragraph {
 	par.indent = ""
 
 	if fl != 0 {
@@ -40,10 +40,11 @@ func (par *Paragraph) SetIndent(fl, li, ri int) {
 	if ri != 0 {
 		par.indent += fmt.Sprintf(" \\ri%d", fl)
 	}
+	return par
 }
 
 // SetAlignt sets paragraph align (c/center, l/left, r/right, j/justify)
-func (par *Paragraph) SetAlignt(align string) {
+func (par *Paragraph) SetAlignt(align string) *Paragraph {
 	al := "l"
 	switch align {
 	case "c", "center":
@@ -56,4 +57,5 @@ func (par *Paragraph) SetAlignt(align string) {
 		al = "j"
 	}
 	par.align = al
+	return par
 }
