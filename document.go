@@ -8,26 +8,24 @@ import (
 // NewDocument returns new rtf document instance
 func NewDocument() *Document {
 	doc := Document{
-		orientation: "portrait",
-		header:      getDefaultHeader(),
-		documentSettings: documentSettings{
-			margins: margins{720, 720, 720, 720},
-		},
-		content: nil,
+		orientation:  "portrait",
+		header:       getDefaultHeader(),
+		marginLeft:   720,
+		marginRight:  720,
+		marginTop:    720,
+		marginBottom: 720,
+		content:      nil,
 	}
 	doc.SetFormat("A4")
 	return &doc
 }
 
 func (doc *Document) getMargins() string {
-	if doc.margins != (margins{}) {
-		return fmt.Sprintf("\n\\margl%d\\margr%d\\margt%d\\margb%d",
-			doc.margins.left,
-			doc.margins.right,
-			doc.margins.top,
-			doc.margins.bottom)
-	}
-	return ""
+	return fmt.Sprintf("\n\\margl%d\\margr%d\\margt%d\\margb%d",
+		doc.marginLeft,
+		doc.marginRight,
+		doc.marginTop,
+		doc.marginBottom)
 }
 
 func (doc *Document) compose() string {
@@ -90,34 +88,23 @@ func (doc *Document) GetDocumentWidth() int {
 	return doc.pagesize.width
 }
 
-// SetMargins - sets document margins
-func (doc *Document) SetMargins(left, top, right, bottom int) *Document {
-	doc.margins = margins{
-		left,
-		right,
-		top,
-		bottom,
-	}
+func (doc *Document) SetMarginLeft(value int) *Document {
+	doc.marginLeft = value
 	return doc
 }
 
-func (doc *Document) SetLeftMargin(value int) *Document {
-	doc.margins.left = value
+func (doc *Document) SetMarginRight(value int) *Document {
+	doc.marginRight = value
 	return doc
 }
 
-func (doc *Document) SetRightMargin(value int) *Document {
-	doc.margins.right = value
+func (doc *Document) SetMarginTop(value int) *Document {
+	doc.marginTop = value
 	return doc
 }
 
-func (doc *Document) SetTopMargin(value int) *Document {
-	doc.margins.top = value
-	return doc
-}
-
-func (doc *Document) SetBottomMargin(value int) *Document {
-	doc.margins.bottom = value
+func (doc *Document) SetMarginBottom(value int) *Document {
+	doc.marginBottom = value
 	return doc
 }
 
@@ -139,7 +126,7 @@ func (doc *Document) NewFontTable() *FontTable {
 
 // GetMaxContentWidth - returns maximum content width
 func (doc *Document) GetMaxContentWidth() int {
-	return doc.pagesize.width - doc.margins.right - doc.margins.left
+	return doc.pagesize.width - doc.marginRight - doc.marginLeft
 }
 
 // GetTableCellWidthByRatio - returns slice of cells width from cells ratios

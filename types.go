@@ -40,16 +40,14 @@ type Color struct {
 // Document - main document struct
 type Document struct {
 	header
-	orientation string
-	documentSettings
-	content []DocumentItem
-}
-
-// DocumentSettings - struct for document settings
-type documentSettings struct {
-	pageFormat string
-	pagesize   size
-	margins
+	orientation  string
+	pageFormat   string
+	pagesize     size
+	marginLeft   int
+	marginRight  int
+	marginTop    int
+	marginBottom int
+	content      []DocumentItem
 }
 
 // ColorTable defines color table
@@ -73,24 +71,16 @@ type size struct {
 	height int
 }
 
-type margins struct {
-	left   int
-	right  int
-	top    int
-	bottom int
-}
-
 // Table is a struct for table.
 type Table struct {
-	data []*TableRow
-	tableProperties
-}
-
-type tableProperties struct {
-	width int
-	align string
-	margins
+	width        int
+	align        string
+	marginLeft   int
+	marginRight  int
+	marginTop    int
+	marginBottom int
 	generalSettings
+	data []*TableRow
 }
 
 // CellProperties define cell properties struct
@@ -134,3 +124,12 @@ type Text struct {
 	text      string
 	generalSettings
 }
+
+const (
+	ALIGNCENTER  = "c"
+	ALIGNLEFT    = "l"
+	ALIGNRIGHT   = "r"
+	VALIGNTOP    = "t"
+	VALIGNBOTTOM = "b"
+	VALIGNMIDDLE = "m"
+)

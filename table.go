@@ -2,60 +2,25 @@ package rtfdoc
 
 import "fmt"
 
-func getDefaultTableProperties() tableProperties {
-	tp := tableProperties{
-		align: "c",
-	}
-	tp.SetTableMargins(100, 100, 100, 100)
-	return tp
+func (t *Table) SetMarginLeft(value int) *Table {
+	t.marginLeft = value
+	return t
 }
 
-func (tp *tableProperties) SetTableMargins(left, top, right, bottom int) *tableProperties {
-	tp.margins.left = left
-	tp.margins.right = right
-	tp.margins.top = top
-	tp.margins.bottom = bottom
-	//margins := ""
-	//if left != 0 {
-	//	margins += fmt.Sprintf(" \\trpaddl%d", left)
-	//}
-	//if top != 0 {
-	//	margins += fmt.Sprintf(" \\trpaddt%d", top)
-	//}
-	//if right != 0 {
-	//	margins += fmt.Sprintf(" \\trpaddr%d", right)
-	//}
-	//if bottom != 0 {
-	//	margins += fmt.Sprintf(" \\trpaddb%d", bottom)
-	//}
-	//margins += " "
-	//tp.margins = margins
-
-	return tp
+func (t *Table) SetMarginRight(value int) *Table {
+	t.marginRight = value
+	return t
 }
 
-func (tp *tableProperties) SetLeftMargin(value int) *tableProperties {
-	tp.margins.left = value
-	//tp.margins += fmt.Sprintf(" \\trpaddl%d", value)
-	return tp
+func (t *Table) SetMarginTop(value int) *Table {
+	t.marginTop = value
+	return t
 }
 
-func (tp *tableProperties) SetRightMargin(value int) *tableProperties {
-	tp.margins.right = value
-	//tp.margins += fmt.Sprintf(" \\trpaddr%d", value)
-	return tp
-}
-
-func (tp *tableProperties) SetTopMargin(value int) *tableProperties {
-	tp.margins.top = value
-	//tp.margins += fmt.Sprintf(" \\trpaddt%d", value)
-	return tp
-}
-
-func (tp *tableProperties) SetBottomMargin(value int) *tableProperties {
-	tp.margins.bottom = value
+func (t *Table) SetMarginBottom(value int) *Table {
+	t.marginBottom = value
 	//tp.margins += fmt.Sprintf(" \\trpaddb%d", value)
-	return tp
+	return t
 }
 
 //func (tp *tableProperties) getMargins() string {
@@ -63,27 +28,26 @@ func (tp *tableProperties) SetBottomMargin(value int) *tableProperties {
 //}
 
 // SetAlign sets table aligning (c/center, l/left, r/right)
-func (tp *tableProperties) SetAlign(align string) *tableProperties {
-	switch align {
-	case "c", "center":
-		tp.align = "c"
-	case "l", "left":
-		tp.align = "l"
-	case "r", "right":
-		tp.align = "r"
-	default:
-		tp.align = ""
+func (t *Table) SetAlign(align string) *Table {
+	for _, i := range []string{ALIGNCENTER, ALIGNLEFT, ALIGNRIGHT} {
+		if i == align {
+			t.align = i
+		}
 	}
-	return tp
+	return t
 }
 
-func (tp *tableProperties) GetAlign() string {
-	return tp.align
+func (t *Table) GetAlign() string {
+	return t.align
 }
 
 // AddTable returns Table instance
 func (doc *Document) AddTable() *Table {
-	t := Table{tableProperties: getDefaultTableProperties()}
+	t := Table{
+		align: ALIGNCENTER,
+	}
+	t.SetMarginLeft(100).SetMarginRight(100).SetMarginTop(100).SetMarginBottom(100)
+
 	t.ct = doc.ct
 	t.ft = doc.ft
 	doc.content = append(doc.content, &t)
@@ -111,7 +75,7 @@ func (t Table) compose() string {
 		//if t.margins.bottom != 0 {
 		//	res += fmt.Sprintf(" \\trpaddb%d", t.margins.bottom)
 		//}
-		res += fmt.Sprintf(" \\trpaddl%d \\trpaddr%d \\trpaddt%d \\trpaddb%d\n", t.margins.left, t.margins.right, t.margins.top, t.margins.bottom)
+		res += fmt.Sprintf(" \\trpaddl%d \\trpaddr%d \\trpaddt%d \\trpaddb%d\n", t.marginLeft, t.marginRight, t.marginTop, t.marginBottom)
 		//res += t.getMargins()
 		res += tr.encode()
 		res += "\\row}"
