@@ -121,7 +121,7 @@ type TableRow struct {
 type Paragraph struct {
 	align   string
 	indent  string
-	content []*Text
+	content []DocumentItem
 	generalSettings
 }
 

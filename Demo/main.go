@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"image/color"
+	"os"
 
 	"github.com/therox/rtf-doc"
 )
@@ -73,6 +74,15 @@ func main() {
 	p = dc.AddParagraph()
 	p.SetAlignt("l")
 	p.AddText("Black text in bottom right cell with left align", 16, "cs", "Black").SetItalic()
+
+	f, err := os.Open("pic.jpg")
+	if err != nil {
+		fmt.Println(err)
+	}
+	pPic := d.AddParagraph()
+	pPic.AddPicture(f, rtfdoc.JPGFORMAT)
+	pPic.SetAlignt("c")
+	// pic.SetWidth(200).SetHeight(150)
 
 	fmt.Println(string(d.Export()))
 
