@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/therox/rtf-doc"
 )
@@ -35,7 +34,7 @@ func main() {
 
 	// ячейка таблицы
 	dc := tr.AddDataCell(cWidth[0])
-	dc.SetVerticalMerged(true, false)
+	dc.SetVerticalMergedFirst()
 	p = dc.AddParagraph()
 	// текст
 	p.AddText("Blue text with cyrillic support with multiline", 16, rtfdoc.FONT_COMIC_SANS_MS, rtfdoc.COLOR_BLUE)
@@ -53,7 +52,7 @@ func main() {
 	cWidth = t.GetTableCellWidthByRatio(1, 1.5, 1.5)
 	// // Это соединенная с верхней ячейка. Текст в ней возьмется из первой ячейки.
 	dc = tr.AddDataCell(cWidth[0])
-	dc.SetVerticalMerged(false, true)
+	dc.SetVerticalMergedNext()
 
 	dc = tr.AddDataCell(cWidth[1])
 	p = dc.AddParagraph()
@@ -65,13 +64,13 @@ func main() {
 	p.SetAlignt(rtfdoc.ALIGN_LEFT)
 	p.AddText("Black text in bottom right cell with left align", 16, rtfdoc.FONT_COMIC_SANS_MS, rtfdoc.COLOR_BLACK).SetItalic()
 
-	f, err := os.Open("pic.jpg")
-	if err != nil {
-		fmt.Println(err)
-	}
-	pPic := d.AddParagraph()
-	pPic.AddPicture(f, rtfdoc.JPGFORMAT)
-	pPic.SetAlignt(rtfdoc.ALIGN_CENTER)
+	// f, err := os.Open("pic.jpg")
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// pPic := d.AddParagraph()
+	// pPic.AddPicture(f, rtfdoc.JPGFORMAT)
+	// pPic.SetAlignt(rtfdoc.ALIGN_CENTER)
 	// pic.SetWidth(200).SetHeight(150)
 
 	fmt.Println(string(d.Export()))

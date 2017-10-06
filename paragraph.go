@@ -19,6 +19,9 @@ func (doc *Document) AddParagraph() *Paragraph {
 
 func (par Paragraph) compose() string {
 	res := fmt.Sprintf("\n{\\pard %s \\q%s", par.indent, par.align)
+	if par.isTable {
+		res += "\\intbl"
+	}
 
 	for _, c := range par.content {
 		res += c.compose()

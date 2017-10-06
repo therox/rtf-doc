@@ -40,14 +40,11 @@ type Color struct {
 // Document - main document struct
 type Document struct {
 	header
-	orientation  string
-	pageFormat   string
-	pagesize     size
-	marginLeft   int
-	marginRight  int
-	marginTop    int
-	marginBottom int
-	content      []DocumentItem
+	orientation string
+	pageFormat  string
+	pagesize    size
+	margins
+	content []DocumentItem
 }
 
 // ColorTable defines color table
@@ -73,35 +70,45 @@ type size struct {
 
 // Table is a struct for table.
 type Table struct {
-	width        int
-	align        string
-	marginLeft   int
-	marginRight  int
-	marginTop    int
-	marginBottom int
+	width int
+	align string
+	margins
 	generalSettings
 	data []*TableRow
 }
 
-// CellProperties define cell properties struct
-type cellProperties struct {
-	borders        string
-	CellWidth      int
-	VerticalMerged string
-	margins        string
-	vTextAlign     string
-	generalSettings
-}
-
 // TableCell defines cell properties
 type TableCell struct {
-	cellProperties
+	borders
+	cellWidth      int
+	verticalMerged string
+	margins
+	vTextAlign string
+	generalSettings
 	content []*Paragraph
+}
+
+type borders struct {
+	borderLeft   bool
+	borderRight  bool
+	borderTop    bool
+	borderBottom bool
+	borderStyle  string
+	borderWidth  int
+	borderColor  string
+}
+
+type margins struct {
+	marginLeft   int
+	marginRight  int
+	marginTop    int
+	marginBottom int
 }
 
 // TableRow definces Table Row struct
 type TableRow struct {
 	cells []*TableCell
+	borders
 	generalSettings
 }
 
@@ -109,6 +116,7 @@ type TableRow struct {
 
 // Paragraph defines paragraph instances
 type Paragraph struct {
+	isTable bool
 	align   string
 	indent  string
 	content []DocumentItem
@@ -126,11 +134,47 @@ type Text struct {
 }
 
 const (
+	ORIENTATION_PORTRAIT  = "orientation_portrait"
+	ORIENTATION_LANDSCAPE = "orientation_landscape"
+
+	FORMAT_A5 = "format_A5"
+	FORMAT_A4 = "format_A4"
+	FORMAT_A3 = "format_A3"
+	FORMAT_A2 = "format_A2"
+
 	ALIGN_CENTER  = "c"
 	ALIGN_LEFT    = "l"
 	ALIGN_RIGHT   = "r"
 	ALIGN_JUSTIFY = "j"
+
 	VALIGN_TOP    = "t"
 	VALIGN_BOTTOM = "b"
 	VALIGN_MIDDLE = "m"
+
+	BORDER_SINGLE_THICKNESS       = "s"
+	BORDER_DOUBLE_THICKNESS       = "th"
+	BORDER_SHADOWED               = "sh"
+	BORDER_DOUBLE                 = "db"
+	BORDER_DOTTED                 = "dot"
+	BORDER_DASHED                 = "dash"
+	BORDER_HAIRLINE               = "hair"
+	BORDER_INSET                  = "inset"
+	BORDER_DASH_SMALL             = "dashsm"
+	BORDER_DOT_DASH               = "dashd"
+	BORDER_DOT_DOT_DASH           = "dashdd"
+	BORDER_OUTSET                 = "outset"
+	BORDER_TRIPLE                 = "triple"
+	BORDER_THICK_THIN_SMALL       = "tnthsg"
+	BORDER_THIN_THICK_SMALL       = "thtnsg"
+	BORDER_THICK_THIN_MEDIUM      = "tnthmg"
+	BORDER_THIN_THICK_MEDIUM      = "thtnmg"
+	BORDER_THIN_THICK_THIN_MEDIUM = "tnthtnmg"
+	BORDER_THICK_THIN_LARGE       = "tnthlg"
+	BORDER_THIN_THICK_LARGE       = "thtnlg"
+	BORDER_THIN_THICK_THIN_LARGE  = "tnthtnlg"
+	BORDER_WAVY                   = "wavy"
+	BORDER_WAVY_DOUBLE            = "wavydb"
+	BORDER_STRIPPED               = "dashdotstr"
+	BORDER_EMBOSS                 = "emboss"
+	BORDER_ENGRAVE                = "engrave"
 )

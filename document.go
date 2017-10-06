@@ -5,28 +5,19 @@ import (
 	"image/color"
 )
 
-const (
-	ORIENTATION_PORTRAIT  = "orientation_portrait"
-	ORIENTATION_LANDSCAPE = "orientation_landscape"
-
-	FORMAT_A5 = "format_A5"
-	FORMAT_A4 = "format_A4"
-	FORMAT_A3 = "format_A3"
-	FORMAT_A2 = "format_A2"
-)
-
 // NewDocument returns new rtf document instance
 func NewDocument() *Document {
 	doc := Document{
-		orientation:  "portrait",
-		header:       getDefaultHeader(),
-		marginLeft:   720,
-		marginRight:  720,
-		marginTop:    720,
-		marginBottom: 720,
-		content:      nil,
+		orientation: ORIENTATION_PORTRAIT,
+		header:      getDefaultHeader(),
+		content:     nil,
 	}
-	doc.SetFormat("A4")
+	doc.marginLeft = 720
+	doc.marginRight = 720
+	doc.marginTop = 720
+	doc.marginBottom = 720
+
+	doc.SetFormat(FORMAT_A4)
 	doc.SetOrientation(ORIENTATION_PORTRAIT)
 
 	// Default fonts
@@ -69,8 +60,8 @@ func (doc *Document) getMargins() string {
 func (doc *Document) compose() string {
 	result := "{"
 	result += doc.header.compose()
-	if doc.orientation != "" {
-		result += fmt.Sprintf("\n%s", doc.orientation)
+	if doc.orientation == ORIENTATION_LANDSCAPE {
+		result += fmt.Sprintf("\n\\landscape")
 	}
 	if doc.pagesize != (size{}) {
 		result += fmt.Sprintf("\n\\paperw%d\\paperh%d", doc.pagesize.width, doc.pagesize.height)
@@ -159,8 +150,6 @@ func (doc *Document) SetMarginBottom(value int) *Document {
 // NewColorTable returns new color table
 func (doc *Document) NewColorTable() *ColorTable {
 	ct := ColorTable{}
-	blackColor := color.RGBA{R: 0, G: 0, B: 0}
-	ct.AddColor(blackColor, "Black")
 	doc.header.ct = &ct
 	return &ct
 }
