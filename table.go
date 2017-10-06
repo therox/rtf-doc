@@ -29,7 +29,7 @@ func (t *Table) SetMarginBottom(value int) *Table {
 
 // SetAlign sets table aligning (c/center, l/left, r/right)
 func (t *Table) SetAlign(align string) *Table {
-	for _, i := range []string{ALIGNCENTER, ALIGNLEFT, ALIGNRIGHT} {
+	for _, i := range []string{ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT} {
 		if i == align {
 			t.align = i
 		}
@@ -44,7 +44,7 @@ func (t *Table) GetAlign() string {
 // AddTable returns Table instance
 func (doc *Document) AddTable() *Table {
 	t := Table{
-		align: ALIGNCENTER,
+		align: ALIGN_CENTER,
 	}
 	t.SetMarginLeft(100).SetMarginRight(100).SetMarginTop(100).SetMarginBottom(100)
 

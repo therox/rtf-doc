@@ -21,7 +21,7 @@ func (p *Paragraph) AddText(text string, fontSize int, fontCode string, colorCod
 
 	fn := 0
 	for i, f := range *p.generalSettings.ft {
-		if f.Code == fontCode {
+		if f.code == fontCode {
 
 			fn = i
 		}

@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"image/color"
 	"os"
 
 	"github.com/therox/rtf-doc"
@@ -14,23 +13,14 @@ func main() {
 
 	d := rtfdoc.NewDocument()
 
+	// Настроить хедер
 	d.SetOrientation("landscape")
 	d.SetFormat("A4")
 
-	// Настроить хедер
-	// Таблица цветов
-	d.NewColorTable().AddColor(color.RGBA{R: 255, G: 0, B: 0, A: 255}, "Red").
-		AddColor(color.RGBA{R: 0, G: 255, B: 0, A: 255}, "Green").
-		AddColor(color.RGBA{R: 0, G: 0, B: 255, A: 255}, "Blue")
-
-	d.NewFontTable().AddFont("roman", 0, 0, "Times New Roman", "tnr").
-		AddFont("swiss", 0, 0, "Arial", "ari").
-		AddFont("swiss", 0, 0, "Comic Sans MS", "cs")
-
 	p := d.AddParagraph()
-	p.AddText("Green first string (Times New Roman)", 48, "tnr", "Green")
-	d.AddParagraph().AddText("Blue second string (Arial)", 48, "ari", "Blue")
-	d.AddParagraph().AddText("Red Third string (Comic Sans)", 48, "cs", "Red")
+	p.AddText("Green first string (Times New Roman)", 48, rtfdoc.FONT_TIMES_NEW_ROMAN, rtfdoc.COLOR_GREEN)
+	d.AddParagraph().AddText("Blue second string (Arial)", 48, rtfdoc.FONT_ARIAL, rtfdoc.COLOR_BLUE)
+	d.AddParagraph().AddText("Red Third string (Comic Sans)", 48, rtfdoc.FONT_COMIC_SANS_MS, rtfdoc.COLOR_RED)
 
 	// Таблица
 	t := d.AddTable().SetWidth(10000)
@@ -48,16 +38,16 @@ func main() {
 	dc.SetVerticalMerged(true, false)
 	p = dc.AddParagraph()
 	// текст
-	p.AddText("Blue text with cyrillic support with multiline", 16, "cs", "Blue")
+	p.AddText("Blue text with cyrillic support with multiline", 16, rtfdoc.FONT_COMIC_SANS_MS, rtfdoc.COLOR_BLUE)
 	p.AddNewLine()
-	p.AddText("Голубой кириллический текст с переносом строки внутри параграфа", 16, "cs", "Blue")
-	p.SetAlignt("j")
-	p = dc.AddParagraph().SetIndent(40, 0, 0).SetAlignt("c")
-	p.AddText("Another paragraph in vertical cell", 16, "cs", "Blue")
+	p.AddText("Голубой кириллический текст с переносом строки внутри параграфа", 16, rtfdoc.FONT_COMIC_SANS_MS, rtfdoc.COLOR_BLUE)
+	p.SetAlignt(rtfdoc.ALIGN_JUSTIFY)
+	p = dc.AddParagraph().SetIndent(40, 0, 0).SetAlignt(rtfdoc.ALIGN_CENTER)
+	p.AddText("Another paragraph in vertical cell", 16, rtfdoc.FONT_COMIC_SANS_MS, rtfdoc.COLOR_BLUE)
 
 	dc = tr.AddDataCell(cWidth[1])
-	p = dc.AddParagraph().SetAlignt("c")
-	p.AddText("Green text In top right cell with center align", 16, "cs", "Green")
+	p = dc.AddParagraph().SetAlignt(rtfdoc.ALIGN_CENTER)
+	p.AddText("Green text In top right cell with center align", 16, rtfdoc.FONT_COMIC_SANS_MS, rtfdoc.COLOR_GREEN)
 	tr = t.AddTableRow()
 
 	cWidth = t.GetTableCellWidthByRatio(1, 1.5, 1.5)
@@ -67,13 +57,13 @@ func main() {
 
 	dc = tr.AddDataCell(cWidth[1])
 	p = dc.AddParagraph()
-	p.SetAlignt("r")
-	p.AddText("Red text In bottom central cell with right align", 16, "ari", "Red").SetBold()
+	p.SetAlignt(rtfdoc.ALIGN_RIGHT)
+	p.AddText("Red text In bottom central cell with right align", 16, rtfdoc.FONT_ARIAL, rtfdoc.COLOR_RED).SetBold()
 
 	dc = tr.AddDataCell(cWidth[2])
 	p = dc.AddParagraph()
-	p.SetAlignt("l")
-	p.AddText("Black text in bottom right cell with left align", 16, "cs", "Black").SetItalic()
+	p.SetAlignt(rtfdoc.ALIGN_LEFT)
+	p.AddText("Black text in bottom right cell with left align", 16, rtfdoc.FONT_COMIC_SANS_MS, rtfdoc.COLOR_BLACK).SetItalic()
 
 	f, err := os.Open("pic.jpg")
 	if err != nil {
@@ -81,7 +71,7 @@ func main() {
 	}
 	pPic := d.AddParagraph()
 	pPic.AddPicture(f, rtfdoc.JPGFORMAT)
-	pPic.SetAlignt("c")
+	pPic.SetAlignt(rtfdoc.ALIGN_CENTER)
 	// pic.SetWidth(200).SetHeight(150)
 
 	fmt.Println(string(d.Export()))

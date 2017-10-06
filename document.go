@@ -17,6 +17,33 @@ func NewDocument() *Document {
 		content:      nil,
 	}
 	doc.SetFormat("A4")
+
+	// Default fonts
+	ft := doc.NewFontTable()
+	ft.AddFont("roman", 0, 2, "Times New Roman", FONT_TIMES_NEW_ROMAN)
+	ft.AddFont("roman", 2, 2, "Symbol", FONT_SYMBOL)
+	ft.AddFont("swiss", 0, 2, "Arial", FONT_ARIAL)
+	ft.AddFont("swiss", 0, 2, "Comic Sans MS", FONT_COMIC_SANS_MS)
+
+	// Default colortable
+	ct := doc.NewColorTable()
+	ct.AddColor(color.RGBA{R: 0, G: 0, B: 0, A: 255}, COLOR_BLACK)
+	ct.AddColor(color.RGBA{R: 0, G: 0, B: 255, A: 255}, COLOR_BLUE)
+	ct.AddColor(color.RGBA{R: 0, G: 255, B: 255, A: 255}, COLOR_AQUA)
+	ct.AddColor(color.RGBA{R: 0, G: 255, B: 0, A: 255}, COLOR_LIME)
+	ct.AddColor(color.RGBA{R: 0, G: 128, B: 0, A: 255}, COLOR_GREEN)
+	ct.AddColor(color.RGBA{R: 255, G: 0, B: 255, A: 255}, COLOR_MAGENTA)
+	ct.AddColor(color.RGBA{R: 255, G: 0, B: 0, A: 255}, COLOR_RED)
+	ct.AddColor(color.RGBA{R: 255, G: 255, B: 0, A: 255}, COLOR_YELLOW)
+	ct.AddColor(color.RGBA{R: 255, G: 255, B: 255, A: 255}, COLOR_WHITE)
+	ct.AddColor(color.RGBA{R: 0, G: 0, B: 128, A: 255}, COLOR_NAVY)
+	ct.AddColor(color.RGBA{R: 0, G: 128, B: 128, A: 255}, COLOR_TEAL)
+	ct.AddColor(color.RGBA{R: 128, G: 0, B: 128, A: 255}, COLOR_PURPLE)
+	ct.AddColor(color.RGBA{R: 128, G: 0, B: 0, A: 255}, COLOR_MAROON)
+	ct.AddColor(color.RGBA{R: 128, G: 128, B: 0, A: 255}, COLOR_OLIVE)
+	ct.AddColor(color.RGBA{R: 128, G: 128, B: 128, A: 255}, COLOR_GRAY)
+	ct.AddColor(color.RGBA{R: 192, G: 192, B: 192, A: 255}, COLOR_SILVER)
+
 	return &doc
 }
 

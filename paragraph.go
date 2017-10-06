@@ -5,7 +5,7 @@ import "fmt"
 // AddParagraph return new instance of Paragraph
 func (doc *Document) AddParagraph() *Paragraph {
 	p := Paragraph{
-		align:   ALIGNCENTER,
+		align:   ALIGN_CENTER,
 		indent:  "\\fl360",
 		content: nil,
 		generalSettings: generalSettings{
@@ -45,7 +45,7 @@ func (par *Paragraph) SetIndent(fl, li, ri int) *Paragraph {
 
 // SetAlignt sets paragraph align (c/center, l/left, r/right, j/justify)
 func (par *Paragraph) SetAlignt(align string) *Paragraph {
-	for _, i := range []string{ALIGNCENTER, ALIGNLEFT, ALIGNRIGHT} {
+	for _, i := range []string{ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT} {
 		if i == align {
 			par.align = i
 		}

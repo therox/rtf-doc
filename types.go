@@ -55,11 +55,11 @@ type ColorTable []Color
 
 // Font defines font struct
 type Font struct {
-	Family  string // nil, roman, swiss, modern, script, decor, tech, bidi
-	Charset int    // Specifies the character set of a font in the font table. Values for N are defined by Windows header files, and in the file RTFDEFS.H accompanying this document.
-	Prq     int    // Specifies the pitch of a font in the font table.
-	Name    string
-	Code    string
+	family  string // nil, roman, swiss, modern, script, decor, tech, bidi
+	charset int    // Specifies the character set of a font in the font table. Values for N are defined by Windows header files, and in the file RTFDEFS.H accompanying this document.
+	prq     int    // Specifies the pitch of a font in the font table.
+	name    string
+	code    string
 }
 
 // FontTable defines font table
@@ -126,10 +126,11 @@ type Text struct {
 }
 
 const (
-	ALIGNCENTER  = "c"
-	ALIGNLEFT    = "l"
-	ALIGNRIGHT   = "r"
-	VALIGNTOP    = "t"
-	VALIGNBOTTOM = "b"
-	VALIGNMIDDLE = "m"
+	ALIGN_CENTER  = "c"
+	ALIGN_LEFT    = "l"
+	ALIGN_RIGHT   = "r"
+	ALIGN_JUSTIFY = "j"
+	VALIGN_TOP    = "t"
+	VALIGN_BOTTOM = "b"
+	VALIGN_MIDDLE = "m"
 )

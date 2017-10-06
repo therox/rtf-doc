@@ -2,21 +2,24 @@ package rtfdoc
 
 import "fmt"
 
+const (
+	FONT_TIMES_NEW_ROMAN = "font_times_new_roman"
+	FONT_SYMBOL          = "font_symbol"
+	FONT_ARIAL           = "font_arial"
+	FONT_COMIC_SANS_MS   = "font_comic_sans_ms"
+)
+
 // AddFont returns font instance
 func (ft *FontTable) AddFont(family string, cs int, prq int, name string, code string) *FontTable {
-	*ft = append(*ft, Font{Family: family, Charset: cs, Prq: prq, Name: name, Code: code})
+	if prq == 0 {
+		prq = 2
+	}
+	*ft = append(*ft, Font{family: family, charset: cs, prq: prq, name: name, code: code})
 	return ft
 }
 
 func (f *Font) encode() string {
-	var prq, charset string
-	if f.Prq != 0 {
-		prq = fmt.Sprintf("\\fprq%d", f.Prq)
-	}
-	if f.Charset != 0 {
-		charset = fmt.Sprintf("\\fcharset%d", f.Charset)
-	}
-	return fmt.Sprintf("\\f%s%s%s %s;", f.Family, prq, charset, f.Name)
+	return fmt.Sprintf("\\f%s\\fprq%d\\fcharset%d %s;", f.family, f.prq, f.charset, f.name)
 
 }
 
