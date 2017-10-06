@@ -5,6 +5,16 @@ import (
 	"image/color"
 )
 
+const (
+	ORIENTATION_PORTRAIT  = "orientation_portrait"
+	ORIENTATION_LANDSCAPE = "orientation_landscape"
+
+	FORMAT_A5 = "format_A5"
+	FORMAT_A4 = "format_A4"
+	FORMAT_A3 = "format_A3"
+	FORMAT_A2 = "format_A2"
+)
+
 // NewDocument returns new rtf document instance
 func NewDocument() *Document {
 	doc := Document{
@@ -17,6 +27,7 @@ func NewDocument() *Document {
 		content:      nil,
 	}
 	doc.SetFormat("A4")
+	doc.SetOrientation(ORIENTATION_PORTRAIT)
 
 	// Default fonts
 	ft := doc.NewFontTable()
@@ -89,23 +100,33 @@ func (doc *Document) SetFormat(format string) *Document {
 // SetOrientation - sets page orientation (portrait, landscape)
 func (doc *Document) SetOrientation(orientation string) *Document {
 
-	if orientation == formatLandscape {
-		doc.orientation = "\\landscape"
-		if doc.pageFormat != "" {
-			size, err := getSize(doc.pageFormat, formatLandscape)
-			if err == nil {
-				doc.pagesize = size
-			}
-		}
-	} else {
-		doc.orientation = ""
-		if doc.pageFormat != "" {
-			size, err := getSize(doc.pageFormat, formatPortrait)
-			if err == nil {
-				doc.pagesize = size
-			}
+	for _, i := range []string{ORIENTATION_LANDSCAPE, ORIENTATION_PORTRAIT} {
+		if orientation == i {
+			doc.orientation = i
 		}
 	}
+	size, err := getSize(doc.pageFormat, doc.orientation)
+	if err != nil {
+		doc.pagesize = size
+	}
+
+	// if orientation == formatLandscape {
+	// 	// doc.orientation = "\\landscape"
+	// 	if doc.pageFormat != "" {
+	// 		size, err := getSize(doc.pageFormat, formatLandscape)
+	// 		if err == nil {
+	// 			doc.pagesize = size
+	// 		}
+	// 	}
+	// } else {
+	// 	doc.orientation = ""
+	// 	if doc.pageFormat != "" {
+	// 		size, err := getSize(doc.pageFormat, formatPortrait)
+	// 		if err == nil {
+	// 			doc.pagesize = size
+	// 		}
+	// 	}
+	// }
 
 	return doc
 }
