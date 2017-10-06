@@ -50,6 +50,13 @@ func (doc *Document) AddTable() *Table {
 
 	t.ct = doc.ct
 	t.ft = doc.ft
+	t.SetBorderLeft(true).
+		SetBorderRight(true).
+		SetBorderTop(true).
+		SetBorderBottom(true).
+		SetBorderStyle(BORDER_SINGLE_THICKNESS).
+		SetBorderColor(COLOR_BLACK).
+		SetBorderWidth(15)
 	doc.content = append(doc.content, &t)
 	return &t
 }
@@ -79,16 +86,78 @@ func (t *Table) AddTableRow() *TableRow {
 			ct: t.ct,
 		},
 	}
-	tr.SetBorderLeft(true).
-		SetBorderRight(true).
-		SetBorderTop(true).
-		SetBorderBottom(true).
-		SetBorderStyle(BORDER_SINGLE_THICKNESS).
-		SetBorderColor(COLOR_BLACK).
-		SetBorderWidth(15)
-
+	tr.SetBorderLeft(t.borderLeft).
+		SetBorderRight(t.borderRight).
+		SetBorderTop(t.borderTop).
+		SetBorderBottom(t.borderBottom).
+		SetBorderStyle(t.borderStyle).
+		SetBorderColor(t.borderColor).
+		SetBorderWidth(t.borderWidth)
 	t.data = append(t.data, &tr)
 	return &tr
+}
+
+func (t *Table) SetBorderLeft(isBorder bool) *Table {
+	t.borderLeft = isBorder
+	return t
+}
+func (t *Table) SetBorderRight(isBorder bool) *Table {
+	t.borderRight = isBorder
+	return t
+}
+func (t *Table) SetBorderTop(isBorder bool) *Table {
+	t.borderTop = isBorder
+	return t
+}
+func (t *Table) SetBorderBottom(isBorder bool) *Table {
+	t.borderBottom = isBorder
+	return t
+}
+
+func (t *Table) SetBorderStyle(bStyle string) *Table {
+	for _, i := range []string{
+		BORDER_DASH_SMALL,
+		BORDER_DASHED,
+		BORDER_DOT_DASH,
+		BORDER_DOT_DOT_DASH,
+		BORDER_DOTTED,
+		BORDER_DOUBLE,
+		BORDER_DOUBLE_THICKNESS,
+		BORDER_WAVY_DOUBLE,
+		BORDER_EMBOSS,
+		BORDER_ENGRAVE,
+		BORDER_HAIRLINE,
+		BORDER_INSET,
+		BORDER_OUTSET,
+		BORDER_SHADOWED,
+		BORDER_SINGLE_THICKNESS,
+		BORDER_STRIPPED,
+		BORDER_THICK_THIN_LARGE,
+		BORDER_THICK_THIN_MEDIUM,
+		BORDER_THICK_THIN_SMALL,
+		BORDER_THIN_THICK_LARGE,
+		BORDER_THIN_THICK_MEDIUM,
+		BORDER_THIN_THICK_SMALL,
+		BORDER_THIN_THICK_THIN_LARGE,
+		BORDER_THIN_THICK_THIN_MEDIUM,
+		BORDER_TRIPLE,
+		BORDER_WAVY,
+	} {
+		if bStyle == i {
+			t.borderStyle = i
+			break
+		}
+	}
+	return t
+}
+
+func (t *Table) SetBorderColor(color string) *Table {
+	t.borderColor = color
+	return t
+}
+func (t *Table) SetBorderWidth(value int) *Table {
+	t.borderWidth = value
+	return t
 }
 
 func (tr *TableRow) SetBorderLeft(isBorder bool) *TableRow {
@@ -160,7 +229,7 @@ func (tr *TableRow) encode() string {
 	bTempl := "\n \\trbrdr%s\\brdrw%d\\brdr%s"
 	for c := range *tr.ct {
 		if ((*tr.ct)[c]).name == tr.borderColor {
-			bTempl += fmt.Sprintf("\\brdrcf%d", c)
+			bTempl += fmt.Sprintf("\\brdrcf%d", c+1)
 		}
 
 	}
@@ -185,12 +254,6 @@ func (tr *TableRow) encode() string {
 			cellLengthPosition += tc.getCellWidth()
 			res += tc.cellComposeProperties()
 			res += fmt.Sprintf("\\cellx%d", cellLengthPosition)
-			// res += fmt.Sprintf("\n%s%s%s%s\\cellx%v",
-			// 	tc.getVerticalMergedProperty(),
-			// 	tc.getCellMargins(),
-			// 	tc.getBorders(),
-			// 	tc.getCellTextVAlign(),
-			// 	cellStartPosition)
 
 		}
 		res += "\n"
@@ -208,14 +271,13 @@ func (tr *TableRow) AddDataCell(width int) *TableCell {
 	}
 	dc.ft = tr.ft
 	dc.ct = tr.ct
-	dc.SetBorderLeft(true).
-		SetBorderRight(true).
-		SetBorderTop(true).
-		SetBorderBottom(true).
-		SetBorderStyle(BORDER_SINGLE_THICKNESS).
-		SetBorderWidth(15).
-		SetVAlign(VALIGN_TOP).
-		SetBorderColor(COLOR_BLACK)
+	dc.SetBorderLeft(tr.borderLeft).
+		SetBorderRight(tr.borderRight).
+		SetBorderTop(tr.borderTop).
+		SetBorderBottom(tr.borderBottom).
+		SetBorderStyle(tr.borderStyle).
+		SetBorderColor(tr.borderColor).
+		SetBorderWidth(tr.borderWidth)
 
 	tr.cells = append(tr.cells, &dc)
 	return &dc
@@ -246,7 +308,7 @@ func (dc TableCell) cellComposeProperties() string {
 	bTempl := "\n \\clbrdr%s\\brdrw%d\\brdr%s"
 	for c := range *dc.ct {
 		if ((*dc.ct)[c]).name == dc.borderColor {
-			bTempl += fmt.Sprintf("\\brdrcf%d", c)
+			bTempl += fmt.Sprintf("\\brdrcf%d", c+1)
 		}
 
 	}

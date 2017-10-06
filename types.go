@@ -73,6 +73,7 @@ type Table struct {
 	width int
 	align string
 	margins
+	borders
 	generalSettings
 	data []*TableRow
 }

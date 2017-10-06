@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/therox/rtf-doc"
 )
@@ -25,6 +26,7 @@ func main() {
 	t := d.AddTable().SetWidth(10000)
 	//t.SetLeftMargin(50).SetRightMargin(50).SetTopMargin(50).SetBottomMargin(50)
 	t.SetMarginLeft(50).SetMarginRight(50).SetMarginTop(50).SetMarginBottom(50)
+	t.SetBorderColor(rtfdoc.COLOR_AQUA)
 
 	// // строка таблицы
 	tr := t.AddTableRow()
@@ -64,13 +66,13 @@ func main() {
 	p.SetAlignt(rtfdoc.ALIGN_LEFT)
 	p.AddText("Black text in bottom right cell with left align", 16, rtfdoc.FONT_COMIC_SANS_MS, rtfdoc.COLOR_BLACK).SetItalic()
 
-	// f, err := os.Open("pic.jpg")
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-	// pPic := d.AddParagraph()
-	// pPic.AddPicture(f, rtfdoc.JPGFORMAT)
-	// pPic.SetAlignt(rtfdoc.ALIGN_CENTER)
+	f, err := os.Open("pic.jpg")
+	if err != nil {
+		fmt.Println(err)
+	}
+	pPic := d.AddParagraph()
+	pPic.AddPicture(f, rtfdoc.JPGFORMAT)
+	pPic.SetAlignt(rtfdoc.ALIGN_CENTER)
 	// pic.SetWidth(200).SetHeight(150)
 
 	fmt.Println(string(d.Export()))
