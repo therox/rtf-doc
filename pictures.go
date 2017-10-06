@@ -14,7 +14,7 @@ import (
 
 const (
 	// JPGFORMAT - jpeg format
-	JPGFORMAT = "jpg"
+	JPEGFORMAT = "jpeg"
 	// PNGFORMAT - png format
 	PNGFORMAT = "png"
 )
@@ -39,7 +39,7 @@ func (par *Paragraph) AddPicture(source io.Reader, format string) *Picture {
 	var err error
 
 	formatFound := false
-	for _, i := range []string{JPGFORMAT, PNGFORMAT} {
+	for _, i := range []string{JPEGFORMAT, PNGFORMAT} {
 		if format == i {
 			formatFound = true
 			break
@@ -110,7 +110,7 @@ func (pic *Picture) SetCropBottom(cropB int) *Picture {
 }
 
 func (pic *Picture) compose() string {
-	res := fmt.Sprintf("\n{ \\pict\\picscalex%d\\picscaley%d\\piccropl%d\\piccropr%d\\piccropt%d\\piccropb%d\\picw%d\\pich%d\\picwgoal%d\\pichgoal%d\\%sblip",
+	res := fmt.Sprintf("\n{\\*\\shppict{ \\pict\\picscalex%d\\picscaley%d\\piccropl%d\\piccropr%d\\piccropt%d\\piccropb%d\\picw%d\\pich%d\\picwgoal%d\\pichgoal%d\\%sblip",
 		pic.scaleX, pic.scaleY,
 		pic.cropL, pic.cropR, pic.cropT, pic.cropB,
 		pic.width, pic.height,
@@ -119,7 +119,7 @@ func (pic *Picture) compose() string {
 	)
 
 	res += "\n" + hex.EncodeToString(pic.src)
-	res += "\n}"
+	res += "\n}}"
 	return res
 }
 
