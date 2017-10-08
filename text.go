@@ -57,63 +57,43 @@ func (p *Paragraph) AddNewLine() *Paragraph {
 	return p
 }
 
-// SetEmphasis - sets text emphasis
-func (text *Text) SetEmphasis(bold, italic, underlining, super, sub, scaps, strike bool) *Text {
-	text.emphasis = ""
-	if bold {
-		text.emphasis += " \\b"
-	}
-	if italic {
-		text.emphasis += " \\i"
-	}
-	if underlining {
-		text.emphasis += " \\ul"
-	}
-	if super {
-		text.emphasis += " \\super"
-	}
-	if sub {
-		text.emphasis += " \\sub"
-	}
-	if scaps {
-		text.emphasis += " \\scaps"
-	}
-	if strike {
-		text.emphasis += " \\strike"
-	}
-	return text
-}
-
+// SetBold function sets text to Bold
 func (text *Text) SetBold() *Text {
 	text.emphasis += " \\b"
 	return text
 }
 
+// SetItalic function sets text to Italic
 func (text *Text) SetItalic() *Text {
 	text.emphasis += " \\i"
 	return text
 }
 
+// SetUnderlining function sets text to Underlining
 func (text *Text) SetUnderlining() *Text {
 	text.emphasis += " \\ul"
 	return text
 }
 
+// SetSuper function sets text to Super
 func (text *Text) SetSuper() *Text {
 	text.emphasis += " \\super"
 	return text
 }
 
+// SetSub function sets text to Sub
 func (text *Text) SetSub() *Text {
 	text.emphasis += " \\sub"
 	return text
 }
 
+// SetScaps function sets text to Scaps
 func (text *Text) SetScaps() *Text {
 	text.emphasis += " \\scaps"
 	return text
 }
 
+// SetStrike function sets text to Strike
 func (text *Text) SetStrike() *Text {
 	text.emphasis += " \\strike"
 	return text
@@ -124,15 +104,13 @@ func (text *Text) getEmphasis() string {
 }
 
 // SetColor sets text color
-func (text *Text) SetColor(colorCode string, ct ColorTable) *Text {
-	fc := 0
-	for i := range ct {
-		if ct[i].name == colorCode {
+func (text *Text) SetColor(colorCode string) *Text {
+	for i := range *text.ct {
+		if (*text.ct)[i].name == colorCode {
 			// Присваиваем тексту порядковый номер шрифта
-			fc = i + 1
+			text.colorCode = i + 1
 		}
 	}
-	text.colorCode = fc
 
 	return text
 }
