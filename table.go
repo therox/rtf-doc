@@ -29,7 +29,7 @@ func (t *Table) SetMarginBottom(value int) *Table {
 
 // SetAlign sets table aligning (c/center, l/left, r/right)
 func (t *Table) SetAlign(align string) *Table {
-	for _, i := range []string{ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT} {
+	for _, i := range []string{AlignCenter, AlignLeft, AlignRight} {
 		if i == align {
 			t.align = i
 		}
@@ -44,7 +44,7 @@ func (t *Table) GetAlign() string {
 // AddTable returns Table instance
 func (doc *Document) AddTable() *Table {
 	t := Table{
-		align: ALIGN_CENTER,
+		align: AlignCenter,
 	}
 	t.SetMarginLeft(100).SetMarginRight(100).SetMarginTop(100).SetMarginBottom(100)
 
@@ -54,8 +54,8 @@ func (doc *Document) AddTable() *Table {
 		SetBorderRight(true).
 		SetBorderTop(true).
 		SetBorderBottom(true).
-		SetBorderStyle(BORDER_SINGLE_THICKNESS).
-		SetBorderColor(COLOR_BLACK).
+		SetBorderStyle(BorderSingleThickness).
+		SetBorderColor(ColorBlack).
 		SetBorderWidth(15)
 	doc.content = append(doc.content, &t)
 	return &t
@@ -116,32 +116,32 @@ func (t *Table) SetBorderBottom(isBorder bool) *Table {
 
 func (t *Table) SetBorderStyle(bStyle string) *Table {
 	for _, i := range []string{
-		BORDER_DASH_SMALL,
-		BORDER_DASHED,
-		BORDER_DOT_DASH,
-		BORDER_DOT_DOT_DASH,
-		BORDER_DOTTED,
-		BORDER_DOUBLE,
-		BORDER_DOUBLE_THICKNESS,
-		BORDER_WAVY_DOUBLE,
-		BORDER_EMBOSS,
-		BORDER_ENGRAVE,
-		BORDER_HAIRLINE,
-		BORDER_INSET,
-		BORDER_OUTSET,
-		BORDER_SHADOWED,
-		BORDER_SINGLE_THICKNESS,
-		BORDER_STRIPPED,
-		BORDER_THICK_THIN_LARGE,
-		BORDER_THICK_THIN_MEDIUM,
-		BORDER_THICK_THIN_SMALL,
-		BORDER_THIN_THICK_LARGE,
-		BORDER_THIN_THICK_MEDIUM,
-		BORDER_THIN_THICK_SMALL,
-		BORDER_THIN_THICK_THIN_LARGE,
-		BORDER_THIN_THICK_THIN_MEDIUM,
-		BORDER_TRIPLE,
-		BORDER_WAVY,
+		BorderDashSmall,
+		BorderDashed,
+		BorderDotDash,
+		BorderDotDotDash,
+		BorderDotted,
+		BorderDouble,
+		BorderDoubleThickness,
+		BorderWavyDouble,
+		BorderEmboss,
+		BorderEngrave,
+		BorderHairline,
+		BorderInset,
+		BorderOutset,
+		BorderShadowed,
+		BorderSingleThickness,
+		BorderStripped,
+		BorderThickThinLarge,
+		BorderThickThinMedium,
+		BorderThickThinSmall,
+		BorderThinThickLarge,
+		BorderThinThickMedium,
+		BorderThinThickSmall,
+		BorderThinThickThinLarge,
+		BorderThinThickThinMedium,
+		BorderTriple,
+		BorderWavy,
 	} {
 		if bStyle == i {
 			t.borderStyle = i
@@ -179,32 +179,32 @@ func (tr *TableRow) SetBorderBottom(isBorder bool) *TableRow {
 
 func (tr *TableRow) SetBorderStyle(bStyle string) *TableRow {
 	for _, i := range []string{
-		BORDER_DASH_SMALL,
-		BORDER_DASHED,
-		BORDER_DOT_DASH,
-		BORDER_DOT_DOT_DASH,
-		BORDER_DOTTED,
-		BORDER_DOUBLE,
-		BORDER_DOUBLE_THICKNESS,
-		BORDER_WAVY_DOUBLE,
-		BORDER_EMBOSS,
-		BORDER_ENGRAVE,
-		BORDER_HAIRLINE,
-		BORDER_INSET,
-		BORDER_OUTSET,
-		BORDER_SHADOWED,
-		BORDER_SINGLE_THICKNESS,
-		BORDER_STRIPPED,
-		BORDER_THICK_THIN_LARGE,
-		BORDER_THICK_THIN_MEDIUM,
-		BORDER_THICK_THIN_SMALL,
-		BORDER_THIN_THICK_LARGE,
-		BORDER_THIN_THICK_MEDIUM,
-		BORDER_THIN_THICK_SMALL,
-		BORDER_THIN_THICK_THIN_LARGE,
-		BORDER_THIN_THICK_THIN_MEDIUM,
-		BORDER_TRIPLE,
-		BORDER_WAVY,
+		BorderDashSmall,
+		BorderDashed,
+		BorderDotDash,
+		BorderDotDotDash,
+		BorderDotted,
+		BorderDouble,
+		BorderDoubleThickness,
+		BorderWavyDouble,
+		BorderEmboss,
+		BorderEngrave,
+		BorderHairline,
+		BorderInset,
+		BorderOutset,
+		BorderShadowed,
+		BorderSingleThickness,
+		BorderStripped,
+		BorderThickThinLarge,
+		BorderThickThinMedium,
+		BorderThickThinSmall,
+		BorderThinThickLarge,
+		BorderThinThickMedium,
+		BorderThinThickSmall,
+		BorderThinThickThinLarge,
+		BorderThinThickThinMedium,
+		BorderTriple,
+		BorderWavy,
 	} {
 		if bStyle == i {
 			tr.borderStyle = i
@@ -385,32 +385,32 @@ func (dc *TableCell) SetBorderWidth(value int) *TableCell {
 
 func (dc *TableCell) SetBorderStyle(bStyle string) *TableCell {
 	for _, i := range []string{
-		BORDER_DASH_SMALL,
-		BORDER_DASHED,
-		BORDER_DOT_DASH,
-		BORDER_DOT_DOT_DASH,
-		BORDER_DOTTED,
-		BORDER_DOUBLE,
-		BORDER_DOUBLE_THICKNESS,
-		BORDER_WAVY_DOUBLE,
-		BORDER_EMBOSS,
-		BORDER_ENGRAVE,
-		BORDER_HAIRLINE,
-		BORDER_INSET,
-		BORDER_OUTSET,
-		BORDER_SHADOWED,
-		BORDER_SINGLE_THICKNESS,
-		BORDER_STRIPPED,
-		BORDER_THICK_THIN_LARGE,
-		BORDER_THICK_THIN_MEDIUM,
-		BORDER_THICK_THIN_SMALL,
-		BORDER_THIN_THICK_LARGE,
-		BORDER_THIN_THICK_MEDIUM,
-		BORDER_THIN_THICK_SMALL,
-		BORDER_THIN_THICK_THIN_LARGE,
-		BORDER_THIN_THICK_THIN_MEDIUM,
-		BORDER_TRIPLE,
-		BORDER_WAVY,
+		BorderDashSmall,
+		BorderDashed,
+		BorderDotDash,
+		BorderDotDotDash,
+		BorderDotted,
+		BorderDouble,
+		BorderDoubleThickness,
+		BorderWavyDouble,
+		BorderEmboss,
+		BorderEngrave,
+		BorderHairline,
+		BorderInset,
+		BorderOutset,
+		BorderShadowed,
+		BorderSingleThickness,
+		BorderStripped,
+		BorderThickThinLarge,
+		BorderThickThinMedium,
+		BorderThickThinSmall,
+		BorderThinThickLarge,
+		BorderThinThickMedium,
+		BorderThinThickSmall,
+		BorderThinThickThinLarge,
+		BorderThinThickThinMedium,
+		BorderTriple,
+		BorderWavy,
 	} {
 		if bStyle == i {
 			dc.borderStyle = i
@@ -496,7 +496,7 @@ func (dc *TableCell) SetMarginBottom(value int) *TableCell {
 
 // SetVAlign sets align (c/center, t/top, b/bottom)
 func (dc *TableCell) SetVAlign(valign string) *TableCell {
-	for _, i := range []string{VALIGN_BOTTOM, VALIGN_MIDDLE, VALIGN_TOP} {
+	for _, i := range []string{VAlignBottom, VAlignMiddle, VAlignTop} {
 		if valign == i {
 			dc.vTextAlign = i
 		}

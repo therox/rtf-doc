@@ -4,8 +4,8 @@ import "image/color"
 
 // http://www.biblioscape.com/rtf15_spec.htm#Heading2
 
-// DocumentItem composing interface
-type DocumentItem interface {
+// documentItem composing interface
+type documentItem interface {
 	compose() string
 }
 
@@ -44,7 +44,7 @@ type Document struct {
 	pageFormat  string
 	pagesize    size
 	margins
-	content []DocumentItem
+	content []documentItem
 }
 
 // ColorTable defines color table
@@ -120,7 +120,7 @@ type Paragraph struct {
 	isTable bool
 	align   string
 	indent  string
-	content []DocumentItem
+	content []documentItem
 	generalSettings
 }
 
@@ -134,48 +134,92 @@ type Text struct {
 	generalSettings
 }
 
+// Common paper orientation formats
 const (
-	ORIENTATION_PORTRAIT  = "orientation_portrait"
-	ORIENTATION_LANDSCAPE = "orientation_landscape"
+	OrientationPortrait  = "orientation_portrait"
+	OrientationLandscape = "orientation_landscape"
+)
 
-	FORMAT_A5 = "format_A5"
-	FORMAT_A4 = "format_A4"
-	FORMAT_A3 = "format_A3"
-	FORMAT_A2 = "format_A2"
+// Commont paper formats
+const (
+	FormatA5 = "format_A5"
+	FormatA4 = "format_A4"
+	FormatA3 = "format_A3"
+	FormatA2 = "format_A2"
+)
 
-	ALIGN_CENTER  = "c"
-	ALIGN_LEFT    = "l"
-	ALIGN_RIGHT   = "r"
-	ALIGN_JUSTIFY = "j"
+// Aligning properties
+const (
+	AlignCenter  = "c"
+	AlignLeft    = "l"
+	AlignRight   = "r"
+	AlignJustify = "j"
 
-	VALIGN_TOP    = "t"
-	VALIGN_BOTTOM = "b"
-	VALIGN_MIDDLE = "m"
+	VAlignTop    = "t"
+	VAlignBottom = "b"
+	VAlignMiddle = "m"
+)
 
-	BORDER_SINGLE_THICKNESS       = "s"
-	BORDER_DOUBLE_THICKNESS       = "th"
-	BORDER_SHADOWED               = "sh"
-	BORDER_DOUBLE                 = "db"
-	BORDER_DOTTED                 = "dot"
-	BORDER_DASHED                 = "dash"
-	BORDER_HAIRLINE               = "hair"
-	BORDER_INSET                  = "inset"
-	BORDER_DASH_SMALL             = "dashsm"
-	BORDER_DOT_DASH               = "dashd"
-	BORDER_DOT_DOT_DASH           = "dashdd"
-	BORDER_OUTSET                 = "outset"
-	BORDER_TRIPLE                 = "triple"
-	BORDER_THICK_THIN_SMALL       = "tnthsg"
-	BORDER_THIN_THICK_SMALL       = "thtnsg"
-	BORDER_THICK_THIN_MEDIUM      = "tnthmg"
-	BORDER_THIN_THICK_MEDIUM      = "thtnmg"
-	BORDER_THIN_THICK_THIN_MEDIUM = "tnthtnmg"
-	BORDER_THICK_THIN_LARGE       = "tnthlg"
-	BORDER_THIN_THICK_LARGE       = "thtnlg"
-	BORDER_THIN_THICK_THIN_LARGE  = "tnthtnlg"
-	BORDER_WAVY                   = "wavy"
-	BORDER_WAVY_DOUBLE            = "wavydb"
-	BORDER_STRIPPED               = "dashdotstr"
-	BORDER_EMBOSS                 = "emboss"
-	BORDER_ENGRAVE                = "engrave"
+// Common styles of border
+const (
+	BorderSingleThickness     = "s"
+	BorderDoubleThickness     = "th"
+	BorderShadowed            = "sh"
+	BorderDouble              = "db"
+	BorderDotted              = "dot"
+	BorderDashed              = "dash"
+	BorderHairline            = "hair"
+	BorderInset               = "inset"
+	BorderDashSmall           = "dashsm"
+	BorderDotDash             = "dashd"
+	BorderDotDotDash          = "dashdd"
+	BorderOutset              = "outset"
+	BorderTriple              = "triple"
+	BorderThickThinSmall      = "tnthsg"
+	BorderThinThickSmall      = "thtnsg"
+	BorderThickThinMedium     = "tnthmg"
+	BorderThinThickMedium     = "thtnmg"
+	BorderThinThickThinMedium = "tnthtnmg"
+	BorderThickThinLarge      = "tnthlg"
+	BorderThinThickLarge      = "thtnlg"
+	BorderThinThickThinLarge  = "tnthtnlg"
+	BorderWavy                = "wavy"
+	BorderWavyDouble          = "wavydb"
+	BorderStripped            = "dashdotstr"
+	BorderEmboss              = "emboss"
+	BorderEngrave             = "engrave"
+)
+
+// Common image formats
+const (
+	ImageFormatJpeg = "jpeg"
+	ImageFormatPng  = "png"
+)
+
+// List of common colors
+const (
+	ColorBlack   = "color_black"
+	ColorBlue    = "color_blue"
+	ColorAqua    = "color_aqua"
+	ColorLime    = "color_lime"
+	ColorGreen   = "color_green"
+	ColorMagenta = "color_magenta"
+	ColorRed     = "color_red"
+	ColorYellow  = "color_yellow"
+	ColorWhite   = "color_white"
+	ColorNavy    = "color_navy"
+	ColorTeal    = "color_teal"
+	ColorPurple  = "color_purple"
+	ColorMaroon  = "color_maroon"
+	ColorOlive   = "color_olive"
+	ColorGray    = "color_gray"
+	ColorSilver  = "color_silver"
+)
+
+// Common fonts
+const (
+	FontTimesNewRoman = "font_times_new_roman"
+	FontSymbol        = "font_symbol"
+	FontArial         = "font_arial"
+	FontComicSansMS   = "font_comic_sans_ms"
 )

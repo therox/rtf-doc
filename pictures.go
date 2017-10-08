@@ -12,13 +12,6 @@ import (
 	_ "image/png"
 )
 
-const (
-	// JPGFORMAT - jpeg format
-	JPEGFORMAT = "jpeg"
-	// PNGFORMAT - png format
-	PNGFORMAT = "png"
-)
-
 // Main Picture struct
 type Picture struct {
 	format string // EMF, PNG, JPEG
@@ -39,7 +32,7 @@ func (par *Paragraph) AddPicture(source io.Reader, format string) *Picture {
 	var err error
 
 	formatFound := false
-	for _, i := range []string{JPEGFORMAT, PNGFORMAT} {
+	for _, i := range []string{ImageFormatJpeg, ImageFormatPng} {
 		if format == i {
 			formatFound = true
 			break

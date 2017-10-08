@@ -2,13 +2,6 @@ package rtfdoc
 
 import "fmt"
 
-const (
-	FONT_TIMES_NEW_ROMAN = "font_times_new_roman"
-	FONT_SYMBOL          = "font_symbol"
-	FONT_ARIAL           = "font_arial"
-	FONT_COMIC_SANS_MS   = "font_comic_sans_ms"
-)
-
 // AddFont returns font instance
 func (ft *FontTable) AddFont(family string, cs int, prq int, name string, code string) *FontTable {
 	if prq == 0 {
