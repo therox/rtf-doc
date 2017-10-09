@@ -8,7 +8,7 @@ import (
 
 // convertTextToUTF16 функция берет на вход строку и возвращает обратно строку,
 // в которой русские буквы заменяются на эквиваленты в кодировке UTF-16
-func convertCyrillicToUTF16(text string) string {
+func convertNonASCIIToUTF16(text string) string {
 	res := ""
 	for _, r := range text {
 		// if isCyrillicLetter(r) {

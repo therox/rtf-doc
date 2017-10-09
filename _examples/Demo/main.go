@@ -15,7 +15,7 @@ func main() {
 
 	// Настроить хедер
 	d.SetOrientation(rtfdoc.OrientationLandscape)
-	d.SetFormat("A4")
+	d.SetFormat(rtfdoc.FormatA4)
 
 	p := d.AddParagraph()
 	p.AddText("Green first string (Times New Roman)", 48, rtfdoc.FontTimesNewRoman, rtfdoc.ColorGreen)

@@ -32,7 +32,7 @@ func (text Text) compose() string {
 		emphasisBegin = "{" + emphText + " "
 		emphasisEnd = "}"
 	}
-	PreparedText := convertCyrillicToUTF16(text.text)
+	PreparedText := convertNonASCIIToUTF16(text.text)
 
 	res += fmt.Sprintf("\n\\fs%d\\f%d \\cf%d %s%s %s\\f0", text.fontSize*2, text.fontCode, text.colorCode, emphasisBegin, PreparedText, emphasisEnd)
 	return res
