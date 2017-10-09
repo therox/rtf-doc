@@ -164,7 +164,7 @@ const (
 
 	VAlignTop    = "t"
 	VAlignBottom = "b"
-	VAlignMiddle = "m"
+	VAlignMiddle = "c"
 )
 
 // Common styles of border
