@@ -14,7 +14,7 @@ func main() {
 	d := rtfdoc.NewDocument()
 
 	// Настроить хедер
-	d.SetOrientation("landscape")
+	d.SetOrientation(rtfdoc.OrientationLandscape)
 	d.SetFormat("A4")
 
 	p := d.AddParagraph()

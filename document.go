@@ -101,7 +101,7 @@ func (doc *Document) SetOrientation(orientation string) *Document {
 		}
 	}
 	size, err := getSize(doc.pageFormat, doc.orientation)
-	if err != nil {
+	if err == nil {
 		doc.pagesize = size
 	}
 

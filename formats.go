@@ -1,6 +1,8 @@
 package rtfdoc
 
-import "errors"
+import (
+	"errors"
+)
 
 func getSize(format string, layout string) (size, error) {
 	switch format {
