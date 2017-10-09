@@ -42,7 +42,7 @@ func (text Text) compose() string {
 func (p *Paragraph) AddText(text string, fontSize int, fontCode string, colorCode string) *Text {
 
 	fn := 0
-	for i, f := range *p.generalSettings.ft {
+	for i, f := range *p.generalSettings.fontColor {
 		if f.code == fontCode {
 
 			fn = i
@@ -50,7 +50,7 @@ func (p *Paragraph) AddText(text string, fontSize int, fontCode string, colorCod
 	}
 
 	fc := 0
-	for i, c := range *p.generalSettings.ct {
+	for i, c := range *p.generalSettings.colorTable {
 		if c.name == colorCode {
 
 			fc = i + 1
@@ -62,8 +62,8 @@ func (p *Paragraph) AddText(text string, fontSize int, fontCode string, colorCod
 		colorCode: fc,
 		text:      text,
 		generalSettings: generalSettings{
-			ct: p.ct,
-			ft: p.ft,
+			colorTable: p.colorTable,
+			fontColor:  p.fontColor,
 		},
 	}
 	p.content = append(p.content, &txt)
@@ -127,8 +127,8 @@ func (text *Text) getEmphasis() string {
 
 // SetColor sets text color
 func (text *Text) SetColor(colorCode string) *Text {
-	for i := range *text.ct {
-		if (*text.ct)[i].name == colorCode {
+	for i := range *text.colorTable {
+		if (*text.colorTable)[i].name == colorCode {
 			// Присваиваем тексту порядковый номер шрифта
 			text.colorCode = i + 1
 		}

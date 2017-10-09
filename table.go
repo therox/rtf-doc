@@ -48,8 +48,8 @@ func (doc *Document) AddTable() *Table {
 	}
 	t.SetMarginLeft(100).SetMarginRight(100).SetMarginTop(100).SetMarginBottom(100)
 
-	t.ct = doc.ct
-	t.ft = doc.ft
+	t.colorTable = doc.colorTable
+	t.fontColor = doc.fontColor
 	t.SetBorderLeft(true).
 		SetBorderRight(true).
 		SetBorderTop(true).
@@ -82,8 +82,8 @@ func (t Table) compose() string {
 func (t *Table) AddTableRow() *TableRow {
 	tr := TableRow{
 		generalSettings: generalSettings{
-			ft: t.ft,
-			ct: t.ct,
+			fontColor:  t.fontColor,
+			colorTable: t.colorTable,
 		},
 	}
 	tr.SetBorderLeft(t.borderLeft).
@@ -273,8 +273,8 @@ func (tr *TableRow) encode() string {
 	res := ""
 	// Border settings
 	bTempl := "\n \\trbrdr%s\\brdrw%d\\brdr%s"
-	for c := range *tr.ct {
-		if ((*tr.ct)[c]).name == tr.borderColor {
+	for c := range *tr.colorTable {
+		if ((*tr.colorTable)[c]).name == tr.borderColor {
 			bTempl += fmt.Sprintf("\\brdrcf%d", c+1)
 		}
 
@@ -315,8 +315,8 @@ func (tr *TableRow) AddDataCell(width int) *TableCell {
 	dc := TableCell{
 		cellWidth: width,
 	}
-	dc.ft = tr.ft
-	dc.ct = tr.ct
+	dc.fontColor = tr.fontColor
+	dc.colorTable = tr.colorTable
 	dc.SetBorderLeft(tr.borderLeft).
 		SetBorderRight(tr.borderRight).
 		SetBorderTop(tr.borderTop).
@@ -342,8 +342,8 @@ func (dc *TableCell) AddParagraph() *Paragraph {
 		align:   "l",
 		indent:  "\\fl360",
 		generalSettings: generalSettings{
-			ct: dc.ct,
-			ft: dc.ft,
+			colorTable: dc.colorTable,
+			fontColor:  dc.fontColor,
 		},
 	}
 	dc.content = append(dc.content, &p)
@@ -354,8 +354,8 @@ func (dc TableCell) cellComposeProperties() string {
 	res := ""
 	// Тута свойства ячейки (границы, все дела...)
 	bTempl := "\n \\clbrdr%s\\brdrw%d\\brdr%s"
-	for c := range *dc.ct {
-		if ((*dc.ct)[c]).name == dc.borderColor {
+	for c := range *dc.colorTable {
+		if ((*dc.colorTable)[c]).name == dc.borderColor {
 			bTempl += fmt.Sprintf("\\brdrcf%d", c+1)
 		}
 

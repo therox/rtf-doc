@@ -9,8 +9,8 @@ func (doc *Document) AddParagraph() *Paragraph {
 		indent:  "\\fl360",
 		content: nil,
 		generalSettings: generalSettings{
-			ct: doc.ct,
-			ft: doc.ft,
+			colorTable: doc.colorTable,
+			fontColor:  doc.fontColor,
 		},
 	}
 	doc.content = append(doc.content, &p)

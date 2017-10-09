@@ -6,18 +6,18 @@ func getDefaultHeader() header {
 	return header{
 		version: "1",
 		charSet: "ansi",
-		Deff:    "0",
+		deff:    "0",
 	}
 }
 
 func (h header) compose() string {
-	res := fmt.Sprintf("\\rtf%s\\%s\\deff%s", h.version, h.charSet, h.Deff)
+	res := fmt.Sprintf("\\rtf%s\\%s\\deff%s", h.version, h.charSet, h.deff)
 
-	if h.ft != nil {
-		res += fmt.Sprintf("\n{\\fonttbl;%s}", h.ft.encode())
+	if h.fontColor != nil {
+		res += fmt.Sprintf("\n{\\fonttbl;%s}", h.fontColor.encode())
 	}
-	if h.ct != nil {
-		res += fmt.Sprintf("\n{\\colortbl;%s}", h.ct.encode())
+	if h.colorTable != nil {
+		res += fmt.Sprintf("\n{\\colortbl;%s}", h.colorTable.encode())
 	}
 	return res
 }

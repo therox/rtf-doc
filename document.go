@@ -139,16 +139,16 @@ func (doc *Document) SetMarginBottom(value int) *Document {
 }
 
 // NewColorTable returns new color table for document
-func (doc *Document) NewColorTable() *ColorTable {
-	ct := ColorTable{}
-	doc.header.ct = &ct
+func (doc *Document) NewColorTable() *colorTable {
+	ct := colorTable{}
+	doc.header.colorTable = &ct
 	return &ct
 }
 
 // NewFontTable returns new font table for document
-func (doc *Document) NewFontTable() *FontTable {
-	ft := FontTable{}
-	doc.header.ft = &ft
+func (doc *Document) NewFontTable() *fontTable {
+	ft := fontTable{}
+	doc.header.fontColor = &ft
 	return &ft
 }
 
@@ -177,4 +177,16 @@ func (doc *Document) GetTableCellWidthByRatio(tableWidth int, ratio ...float64) 
 // Export exports document
 func (doc *Document) Export() []byte {
 	return []byte(doc.compose())
+}
+
+// AddFont function adds font to document header
+func (doc *Document) AddFont(family string, charset int, prq int, name string, code string) *Document {
+	doc.fontColor.AddFont(family, charset, prq, name, code)
+	return doc
+}
+
+// AddColor function adds colot to document color table
+func (doc *Document) AddColor(c color.RGBA, name string) *Document {
+	doc.colorTable.AddColor(c, name)
+	return doc
 }

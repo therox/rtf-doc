@@ -9,21 +9,21 @@ type documentItem interface {
 	compose() string
 }
 
-// CellItem cellizing interface
-type CellItem interface {
-	InCell()
+// cellItem cellizing interface
+type cellItem interface {
+	inCell()
 }
 
 type generalSettings struct {
-	ft *FontTable
-	ct *ColorTable // Основные цветовые схемы. обращение в документе к ним с помощью управляющих слов \cfN, где N - порядковый номер цветовой схемы.
+	fontColor  *fontTable
+	colorTable *colorTable // Основные цветовые схемы. обращение в документе к ним с помощью управляющих слов \cfN, где N - порядковый номер цветовой схемы.
 }
 
 // Header - document header struct
 type header struct {
 	version string // RTF Version, default: 1.5
 	charSet string // available options: ansi, mac, pc, pca
-	Deff    string
+	deff    string
 	generalSettings
 	//FileTBL    string
 	//StyleSheet string
@@ -47,8 +47,8 @@ type Document struct {
 	content []documentItem
 }
 
-// ColorTable defines color table
-type ColorTable []Color
+// colorTable defines color table
+type colorTable []Color
 
 // Font defines font struct
 type Font struct {
@@ -59,8 +59,8 @@ type Font struct {
 	code    string
 }
 
-// FontTable defines font table
-type FontTable []Font
+// fontTable defines font table
+type fontTable []Font
 
 // Size struct
 type size struct {

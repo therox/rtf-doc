@@ -10,7 +10,7 @@ func (color Color) encode() string {
 	return fmt.Sprintf("\\red%d\\green%d\\blue%d;", r/256, g/256, b/256)
 }
 
-func (cTbl ColorTable) encode() string {
+func (cTbl colorTable) encode() string {
 	var res string
 	for i := range cTbl {
 		res += cTbl[i].encode()
@@ -19,7 +19,7 @@ func (cTbl ColorTable) encode() string {
 }
 
 // AddColor adds color to color table
-func (cTbl *ColorTable) AddColor(c color.RGBA, name string) *ColorTable {
+func (cTbl *colorTable) AddColor(c color.RGBA, name string) *colorTable {
 	*cTbl = append(*cTbl, Color{c, name})
 	return cTbl
 }
