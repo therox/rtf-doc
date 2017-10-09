@@ -532,7 +532,7 @@ func (dc *TableCell) SetMarginBottom(value int) *TableCell {
 	return dc
 }
 
-SetVAlign sets align
+// SetVAlign sets align
 func (dc *TableCell) SetVAlign(valign string) *TableCell {
 	for _, i := range []string{VAlignBottom, VAlignMiddle, VAlignTop} {
 		if valign == i {
