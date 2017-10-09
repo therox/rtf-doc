@@ -50,7 +50,8 @@ Get slice of cell widths for current row
 
 	cWidth := t.GetTableCellWidthByRatio(1, 3)
 
-First cell ...
+First cell
+
 	dc := tr.AddDataCell(cWidth[0])
 
 will be vertical for 2 rows
