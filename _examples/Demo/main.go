@@ -43,8 +43,10 @@ func main() {
 	p.AddNewLine()
 	p.AddText("Голубой кириллический текст с переносом строки внутри параграфа", 16, rtfdoc.FontComicSansMS, rtfdoc.ColorBlue)
 	p.SetAlignt(rtfdoc.AlignJustify)
-	p = dc.AddParagraph().SetIndent(40, 0, 0).SetAlignt(rtfdoc.AlignCenter)
-	p.AddText("Another paragraph in vertical cell", 16, rtfdoc.FontComicSansMS, rtfdoc.ColorBlue)
+	p = dc.AddParagraph().
+		SetIndentFirstLine(40).
+		SetAlignt(rtfdoc.AlignCenter)
+	p.AddText("Another paragraph in vertical cell", 16, rtfdoc.FontCourierNew, rtfdoc.ColorBlue)
 
 	dc = tr.AddDataCell(cWidth[1])
 	p = dc.AddParagraph().SetAlignt(rtfdoc.AlignCenter)

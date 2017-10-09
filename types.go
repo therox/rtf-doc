@@ -117,10 +117,13 @@ type TableRow struct {
 
 // Paragraph defines paragraph instances
 type Paragraph struct {
-	isTable bool
-	align   string
-	indent  string
-	content []documentItem
+	isTable           bool
+	align             string
+	indent            string
+	indentFirstLine   int
+	indentLeftIndent  int
+	indentRightIndent int
+	content           []documentItem
 	generalSettings
 }
 
@@ -157,14 +160,16 @@ const (
 
 // Aligning properties
 const (
-	AlignCenter  = "c"
-	AlignLeft    = "l"
-	AlignRight   = "r"
-	AlignJustify = "j"
+	AlignCenter     = "c"
+	AlignLeft       = "l"
+	AlignRight      = "r"
+	AlignJustify    = "j"
+	AlignDistribute = "d"
 
-	VAlignTop    = "t"
-	VAlignBottom = "b"
-	VAlignMiddle = "c"
+	VAlignTop     = "t"
+	VAlignBottom  = "b"
+	VAlignMiddle  = "c"
+	VAlignJustify = "j"
 )
 
 // Common styles of border
@@ -229,4 +234,5 @@ const (
 	FontSymbol        = "font_symbol"
 	FontArial         = "font_arial"
 	FontComicSansMS   = "font_comic_sans_ms"
+	FontCourierNew    = "font_courier_new"
 )

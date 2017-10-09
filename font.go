@@ -3,11 +3,11 @@ package rtfdoc
 import "fmt"
 
 // AddFont returns font instance
-func (ft *FontTable) AddFont(family string, cs int, prq int, name string, code string) *FontTable {
+func (ft *FontTable) AddFont(family string, charset int, prq int, name string, code string) *FontTable {
 	if prq == 0 {
 		prq = 2
 	}
-	*ft = append(*ft, Font{family: family, charset: cs, prq: prq, name: name, code: code})
+	*ft = append(*ft, Font{family: family, charset: charset, prq: prq, name: name, code: code})
 	return ft
 }
 

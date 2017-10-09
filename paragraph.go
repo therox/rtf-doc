@@ -18,7 +18,11 @@ func (doc *Document) AddParagraph() *Paragraph {
 }
 
 func (par Paragraph) compose() string {
-	res := fmt.Sprintf("\n{\\pard %s \\q%s", par.indent, par.align)
+	indentStr := fmt.Sprintf(" \\fi%d \\li%d \\ri%d",
+		par.indentFirstLine,
+		par.indentLeftIndent,
+		par.indentRightIndent)
+	res := fmt.Sprintf("\n{\\pard %s \\q%s", indentStr, par.align)
 	if par.isTable {
 		res += "\\intbl"
 	}
@@ -30,19 +34,21 @@ func (par Paragraph) compose() string {
 	return res
 }
 
-// SetIndent sets indent to paragraph (fl - first line indent, li - left ident, ri - right indent in tweeps)
-func (par *Paragraph) SetIndent(fl, li, ri int) *Paragraph {
-	par.indent = ""
+// SetIndentFirstLine function sets first line indent in twips
+func (par *Paragraph) SetIndentFirstLine(value int) *Paragraph {
+	par.indentFirstLine = value
+	return par
+}
 
-	if fl != 0 {
-		par.indent += fmt.Sprintf(" \\fi%d", fl)
-	}
-	if li != 0 {
-		par.indent += fmt.Sprintf(" \\li%d", fl)
-	}
-	if ri != 0 {
-		par.indent += fmt.Sprintf(" \\ri%d", fl)
-	}
+// SetIndentRight function sets right indent in twips
+func (par *Paragraph) SetIndentRight(value int) *Paragraph {
+	par.indentRightIndent = value
+	return par
+}
+
+// SetIndentLeft function sets left indent in twips
+func (par *Paragraph) SetIndentLeft(value int) *Paragraph {
+	par.indentLeftIndent = value
 	return par
 }
 

@@ -30,6 +30,7 @@ func NewDocument() *Document {
 	ft.AddFont("roman", 2, 2, "Symbol", FontSymbol)
 	ft.AddFont("swiss", 0, 2, "Arial", FontArial)
 	ft.AddFont("swiss", 0, 2, "Comic Sans MS", FontComicSansMS)
+	ft.AddFont("modern", 128, 1, "Curier New", FontCourierNew)
 
 	// Default colortable
 	ct := doc.NewColorTable()
