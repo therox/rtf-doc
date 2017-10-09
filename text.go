@@ -5,14 +5,36 @@ import "fmt"
 func (text Text) compose() string {
 	var res string
 	var emphasisBegin string
-	var EmphasisEnd string
-	if text.emphasis != "" {
-		emphasisBegin = "{" + text.getEmphasis() + " "
-		EmphasisEnd = "}"
+	var emphasisEnd string
+	var emphText string
+	if text.isBold {
+		emphText += " \\b"
+	}
+	if text.isItalic {
+		emphText += " \\i"
+	}
+	if text.isScaps {
+		emphText += " \\scaps"
+	}
+	if text.isStrike {
+		emphText += " \\strike"
+	}
+	if text.isSub {
+		emphText += " \\sub"
+	}
+	if text.isSuper {
+		emphText += " \\super"
+	}
+	if text.isUnderlining {
+		emphText += " \\ul"
+	}
+	if emphText != "" {
+		emphasisBegin = "{" + emphText + " "
+		emphasisEnd = "}"
 	}
 	PreparedText := convertCyrillicToUTF16(text.text)
 
-	res += fmt.Sprintf("\n\\fs%d\\f%d \\cf%d %s%s %s\\f0", text.fontSize*2, text.fontCode, text.colorCode, emphasisBegin, PreparedText, EmphasisEnd)
+	res += fmt.Sprintf("\n\\fs%d\\f%d \\cf%d %s%s %s\\f0", text.fontSize*2, text.fontCode, text.colorCode, emphasisBegin, PreparedText, emphasisEnd)
 	return res
 }
 
@@ -59,43 +81,43 @@ func (p *Paragraph) AddNewLine() *Paragraph {
 
 // SetBold function sets text to Bold
 func (text *Text) SetBold() *Text {
-	text.emphasis += " \\b"
+	text.isBold = true
 	return text
 }
 
 // SetItalic function sets text to Italic
 func (text *Text) SetItalic() *Text {
-	text.emphasis += " \\i"
+	text.isItalic = true
 	return text
 }
 
 // SetUnderlining function sets text to Underlining
 func (text *Text) SetUnderlining() *Text {
-	text.emphasis += " \\ul"
+	text.isUnderlining = true
 	return text
 }
 
 // SetSuper function sets text to Super
 func (text *Text) SetSuper() *Text {
-	text.emphasis += " \\super"
+	text.isSuper = true
 	return text
 }
 
 // SetSub function sets text to Sub
 func (text *Text) SetSub() *Text {
-	text.emphasis += " \\sub"
+	text.isSub = true
 	return text
 }
 
 // SetScaps function sets text to Scaps
 func (text *Text) SetScaps() *Text {
-	text.emphasis += " \\scaps"
+	text.isScaps = true
 	return text
 }
 
 // SetStrike function sets text to Strike
 func (text *Text) SetStrike() *Text {
-	text.emphasis += " \\strike"
+	text.isBold = true
 	return text
 }
 

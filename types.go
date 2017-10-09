@@ -126,11 +126,18 @@ type Paragraph struct {
 
 // Text defines Text instances
 type Text struct {
-	fontSize  int
-	fontCode  int //code for font in font Table
-	colorCode int
-	emphasis  string
-	text      string
+	fontSize      int
+	fontCode      int //code for font in font Table
+	colorCode     int
+	isBold        bool
+	isItalic      bool
+	isUnderlining bool
+	isScaps       bool
+	isSuper       bool
+	isSub         bool
+	isStrike      bool
+	emphasis      string
+	text          string
 	generalSettings
 }
 

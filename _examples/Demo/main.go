@@ -26,7 +26,7 @@ func main() {
 	t := d.AddTable().SetWidth(10000)
 	//t.SetLeftMargin(50).SetRightMargin(50).SetTopMargin(50).SetBottomMargin(50)
 	t.SetMarginLeft(50).SetMarginRight(50).SetMarginTop(50).SetMarginBottom(50)
-	t.SetBorderColor(rtfdoc.ColorGreen)
+	t.SetBorderColor(rtfdoc.ColorSilver)
 
 	// // строка таблицы
 	tr := t.AddTableRow()
