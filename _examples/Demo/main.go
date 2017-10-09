@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"os"
+	"io/ioutil"
 
 	"github.com/therox/rtf-doc"
 )
@@ -68,7 +68,7 @@ func main() {
 
 	p = dc.AddParagraph()
 
-	f, err := os.Open("pic.jpg")
+	f, err := ioutil.ReadFile("pic.jpg")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -76,10 +76,6 @@ func main() {
 	pPic1.SetWidth(100).SetHeight(100)
 	p.SetAlignt(rtfdoc.AlignCenter)
 
-	f, err = os.Open("pic.jpg")
-	if err != nil {
-		fmt.Println(err)
-	}
 	pPic := d.AddParagraph()
 	pPic.AddPicture(f, rtfdoc.ImageFormatJpeg)
 	pPic.SetAlignt(rtfdoc.AlignCenter)

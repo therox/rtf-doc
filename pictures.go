@@ -5,7 +5,6 @@ import (
 	"encoding/hex"
 	"fmt"
 	"image"
-	"io"
 	"log"
 
 	_ "image/jpeg"
@@ -27,7 +26,7 @@ type Picture struct {
 }
 
 // AddPicture adds picture
-func (par *Paragraph) AddPicture(source io.Reader, format string) *Picture {
+func (par *Paragraph) AddPicture(source []byte, format string) *Picture {
 	var pic Picture
 	var err error
 
@@ -43,9 +42,7 @@ func (par *Paragraph) AddPicture(source io.Reader, format string) *Picture {
 		return &pic
 	}
 
-	buf := new(bytes.Buffer)
-	buf.ReadFrom(source)
-	pic.src = buf.Bytes()
+	pic.src = source
 
 	pic.format = format
 
