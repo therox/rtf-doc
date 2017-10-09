@@ -33,7 +33,7 @@ Add first paragraph with string with Times New Roman font ("tnr" as we defined e
 Add more colourful text
 
 	d.AddParagraph().AddText("Blue second string (Arial)", 48, rtfdoc.FontArial, rtfdoc.ColorBlue)	
-    d.AddParagraph().AddText("Red Third string (Comic Sans)", 48, rtfdoc.ComicSansMS, rtfdoc.ColorRed)
+    d.AddParagraph().AddText("Red Third string (Comic Sans)", 48, rtfdoc.FontComicSansMS, rtfdoc.ColorRed)
 
 Add table
 
