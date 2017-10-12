@@ -5,8 +5,8 @@ import (
 	"image/color"
 )
 
-func (color Color) encode() string {
-	r, g, b, _ := color.color.RGBA()
+func (col colorItem) encode() string {
+	r, g, b, _ := col.rgbColor.RGBA()
 	return fmt.Sprintf("\\red%d\\green%d\\blue%d;", r/256, g/256, b/256)
 }
 
@@ -20,6 +20,6 @@ func (cTbl colorTable) encode() string {
 
 // AddColor adds color to color table
 func (cTbl *colorTable) AddColor(c color.RGBA, name string) *colorTable {
-	*cTbl = append(*cTbl, Color{c, name})
+	*cTbl = append(*cTbl, colorItem{c, name})
 	return cTbl
 }

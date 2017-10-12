@@ -3,25 +3,25 @@ package rtfdoc
 import "fmt"
 
 // SetMarginLeft function sets table left margin
-func (t *Table) SetMarginLeft(value int) *Table {
+func (t *table) SetMarginLeft(value int) *table {
 	t.marginLeft = value
 	return t
 }
 
 // SetMarginRight function sets table right margin
-func (t *Table) SetMarginRight(value int) *Table {
+func (t *table) SetMarginRight(value int) *table {
 	t.marginRight = value
 	return t
 }
 
 // SetMarginTop function sets table top margin
-func (t *Table) SetMarginTop(value int) *Table {
+func (t *table) SetMarginTop(value int) *table {
 	t.marginTop = value
 	return t
 }
 
 // SetMarginBottom function sets table bottom margin
-func (t *Table) SetMarginBottom(value int) *Table {
+func (t *table) SetMarginBottom(value int) *table {
 	t.marginBottom = value
 	//tp.margins += fmt.Sprintf(" \\trpaddb%d", value)
 	return t
@@ -32,7 +32,7 @@ func (t *Table) SetMarginBottom(value int) *Table {
 //}
 
 // SetAlign sets table aligning (c/center, l/left, r/right)
-func (t *Table) SetAlign(align string) *Table {
+func (t *table) SetAlign(align string) *table {
 	for _, i := range []string{AlignCenter, AlignLeft, AlignRight} {
 		if i == align {
 			t.align = i
@@ -42,8 +42,8 @@ func (t *Table) SetAlign(align string) *Table {
 }
 
 // AddTable returns Table instance
-func (doc *Document) AddTable() *Table {
-	t := Table{
+func (doc *document) AddTable() *table {
+	t := table{
 		align: AlignCenter,
 	}
 	t.SetMarginLeft(100).SetMarginRight(100).SetMarginTop(100).SetMarginBottom(100)
@@ -61,7 +61,7 @@ func (doc *Document) AddTable() *Table {
 	return &t
 }
 
-func (t Table) compose() string {
+func (t table) compose() string {
 	res := ""
 	var align = ""
 	if t.align != "" {
@@ -79,8 +79,8 @@ func (t Table) compose() string {
 }
 
 // AddTableRow returns new table row instance
-func (t *Table) AddTableRow() *TableRow {
-	tr := TableRow{
+func (t *table) AddTableRow() *tableRow {
+	tr := tableRow{
 		generalSettings: generalSettings{
 			fontColor:  t.fontColor,
 			colorTable: t.colorTable,
@@ -98,31 +98,31 @@ func (t *Table) AddTableRow() *TableRow {
 }
 
 // SetBorderLeft function sets table left border presence
-func (t *Table) SetBorderLeft(isBorder bool) *Table {
+func (t *table) SetBorderLeft(isBorder bool) *table {
 	t.borderLeft = isBorder
 	return t
 }
 
 // SetBorderRight function sets table right border presence
-func (t *Table) SetBorderRight(isBorder bool) *Table {
+func (t *table) SetBorderRight(isBorder bool) *table {
 	t.borderRight = isBorder
 	return t
 }
 
 // SetBorderTop function sets table top border presence
-func (t *Table) SetBorderTop(isBorder bool) *Table {
+func (t *table) SetBorderTop(isBorder bool) *table {
 	t.borderTop = isBorder
 	return t
 }
 
 // SetBorderBottom function sets table bottom border presence
-func (t *Table) SetBorderBottom(isBorder bool) *Table {
+func (t *table) SetBorderBottom(isBorder bool) *table {
 	t.borderBottom = isBorder
 	return t
 }
 
 // SetBorderStyle function sets table left border style
-func (t *Table) SetBorderStyle(bStyle string) *Table {
+func (t *table) SetBorderStyle(bStyle string) *table {
 	for _, i := range []string{
 		BorderDashSmall,
 		BorderDashed,
@@ -163,7 +163,7 @@ func (t *Table) SetBorderStyle(bStyle string) *Table {
 }
 
 // SetBorderColor function sets color of the table's border and it's rows and cells
-func (t *Table) SetBorderColor(color string) *Table {
+func (t *table) SetBorderColor(color string) *table {
 	t.borderColor = color
 	for tr := range t.data {
 		t.data[tr].SetBorderColor(color)
@@ -172,7 +172,7 @@ func (t *Table) SetBorderColor(color string) *Table {
 }
 
 // SetBorderWidth function sets width of the table's border and it's rows and cells
-func (t *Table) SetBorderWidth(value int) *Table {
+func (t *table) SetBorderWidth(value int) *table {
 	t.borderWidth = value
 	for tr := range t.data {
 		t.data[tr].SetBorderWidth(value)
@@ -181,37 +181,37 @@ func (t *Table) SetBorderWidth(value int) *Table {
 }
 
 // SetWidth sets width of Table
-func (t *Table) SetWidth(width int) *Table {
+func (t *table) SetWidth(width int) *table {
 	t.width = width
 	return t
 }
 
 // SetBorderLeft function sets left border presence
-func (tr *TableRow) SetBorderLeft(isBorder bool) *TableRow {
+func (tr *tableRow) SetBorderLeft(isBorder bool) *tableRow {
 	tr.borderLeft = isBorder
 	return tr
 }
 
 // SetBorderRight function sets right border presence
-func (tr *TableRow) SetBorderRight(isBorder bool) *TableRow {
+func (tr *tableRow) SetBorderRight(isBorder bool) *tableRow {
 	tr.borderRight = isBorder
 	return tr
 }
 
 // SetBorderTop function sets top border presence
-func (tr *TableRow) SetBorderTop(isBorder bool) *TableRow {
+func (tr *tableRow) SetBorderTop(isBorder bool) *tableRow {
 	tr.borderTop = isBorder
 	return tr
 }
 
 // SetBorderBottom function sets bottom border presence
-func (tr *TableRow) SetBorderBottom(isBorder bool) *TableRow {
+func (tr *tableRow) SetBorderBottom(isBorder bool) *tableRow {
 	tr.borderBottom = isBorder
 	return tr
 }
 
 // SetBorderStyle function sets border style
-func (tr *TableRow) SetBorderStyle(bStyle string) *TableRow {
+func (tr *tableRow) SetBorderStyle(bStyle string) *tableRow {
 	for _, i := range []string{
 		BorderDashSmall,
 		BorderDashed,
@@ -252,7 +252,7 @@ func (tr *TableRow) SetBorderStyle(bStyle string) *TableRow {
 }
 
 // SetBorderColor sets border color of the row (and recursevely on its cells)
-func (tr *TableRow) SetBorderColor(color string) *TableRow {
+func (tr *tableRow) SetBorderColor(color string) *tableRow {
 	tr.borderColor = color
 	for c := range tr.cells {
 		tr.cells[c].SetBorderColor(color)
@@ -261,7 +261,7 @@ func (tr *TableRow) SetBorderColor(color string) *TableRow {
 }
 
 // SetBorderWidth sets border width (and recursevely on its cells)
-func (tr *TableRow) SetBorderWidth(value int) *TableRow {
+func (tr *tableRow) SetBorderWidth(value int) *tableRow {
 	tr.borderWidth = value
 	for c := range tr.cells {
 		tr.cells[c].SetBorderWidth(value)
@@ -269,7 +269,7 @@ func (tr *TableRow) SetBorderWidth(value int) *TableRow {
 	return tr
 }
 
-func (tr *TableRow) encode() string {
+func (tr *tableRow) encode() string {
 	res := ""
 	// Border settings
 	bTempl := "\n \\trbrdr%s\\brdrw%d\\brdr%s"
@@ -311,8 +311,8 @@ func (tr *TableRow) encode() string {
 }
 
 // AddDataCell returns new DataCell for current table row
-func (tr *TableRow) AddDataCell(width int) *TableCell {
-	dc := TableCell{
+func (tr *tableRow) AddDataCell(width int) *tableCell {
+	dc := tableCell{
 		cellWidth: width,
 	}
 	dc.fontColor = tr.fontColor
@@ -330,14 +330,14 @@ func (tr *TableRow) AddDataCell(width int) *TableCell {
 }
 
 // SetWidth sets width of the cell
-func (dc *TableCell) SetWidth(cellWidth int) *TableCell {
+func (dc *tableCell) SetWidth(cellWidth int) *tableCell {
 	dc.cellWidth = cellWidth
 	return dc
 }
 
 // AddParagraph creates cell's paragraph
-func (dc *TableCell) AddParagraph() *Paragraph {
-	p := Paragraph{
+func (dc *tableCell) AddParagraph() *paragraph {
+	p := paragraph{
 		isTable: true,
 		align:   "l",
 		indent:  "\\fl360",
@@ -350,7 +350,7 @@ func (dc *TableCell) AddParagraph() *Paragraph {
 	return &p
 }
 
-func (dc TableCell) cellComposeProperties() string {
+func (dc tableCell) cellComposeProperties() string {
 	res := ""
 	// Тута свойства ячейки (границы, все дела...)
 	bTempl := "\n \\clbrdr%s\\brdrw%d\\brdr%s"
@@ -390,7 +390,7 @@ func (dc TableCell) cellComposeProperties() string {
 	return res
 }
 
-func (dc TableCell) cellComposeData() string {
+func (dc tableCell) cellComposeData() string {
 	if len(dc.content) == 0 {
 		dc.AddParagraph()
 	}
@@ -402,7 +402,7 @@ func (dc TableCell) cellComposeData() string {
 	return res
 }
 
-func (dc TableCell) getCellWidth() int {
+func (dc tableCell) getCellWidth() int {
 	return dc.cellWidth
 }
 
@@ -410,37 +410,37 @@ func (dc TableCell) getCellWidth() int {
 // datacell
 
 // SetBorderLeft function set left border to be visible
-func (dc *TableCell) SetBorderLeft(value bool) *TableCell {
+func (dc *tableCell) SetBorderLeft(value bool) *tableCell {
 	dc.borderLeft = value
 	return dc
 }
 
 // SetBorderRight function sets right border to be visible
-func (dc *TableCell) SetBorderRight(value bool) *TableCell {
+func (dc *tableCell) SetBorderRight(value bool) *tableCell {
 	dc.borderRight = value
 	return dc
 }
 
 // SetBorderTop function sets top border to be visible
-func (dc *TableCell) SetBorderTop(value bool) *TableCell {
+func (dc *tableCell) SetBorderTop(value bool) *tableCell {
 	dc.borderTop = value
 	return dc
 }
 
 // SetBorderBottom function sets bottom border to be visible
-func (dc *TableCell) SetBorderBottom(value bool) *TableCell {
+func (dc *tableCell) SetBorderBottom(value bool) *tableCell {
 	dc.borderBottom = value
 	return dc
 }
 
 // SetBorderWidth function sets cell's border width px
-func (dc *TableCell) SetBorderWidth(value int) *TableCell {
+func (dc *tableCell) SetBorderWidth(value int) *tableCell {
 	dc.borderWidth = value
 	return dc
 }
 
 // SetBorderStyle function sets cell's border style
-func (dc *TableCell) SetBorderStyle(bStyle string) *TableCell {
+func (dc *tableCell) SetBorderStyle(bStyle string) *tableCell {
 	bStyle = BorderSingleThickness
 	for _, i := range []string{
 		BorderDashSmall,
@@ -479,7 +479,7 @@ func (dc *TableCell) SetBorderStyle(bStyle string) *TableCell {
 }
 
 // GetTableCellWidthByRatio returns slice of cell widths
-func (t *Table) GetTableCellWidthByRatio(ratio ...float64) []int {
+func (t *table) GetTableCellWidthByRatio(ratio ...float64) []int {
 
 	cellRatioSum := 0.0
 	for _, cellRatio := range ratio {
@@ -493,13 +493,13 @@ func (t *Table) GetTableCellWidthByRatio(ratio ...float64) []int {
 }
 
 // SetVerticalMergedFirst sets this cell to be first in vertical merging.
-func (dc *TableCell) SetVerticalMergedFirst() *TableCell {
+func (dc *tableCell) SetVerticalMergedFirst() *tableCell {
 	dc.verticalMerged = "gf"
 	return dc
 }
 
 // SetVerticalMergedNext sets this cell to be not first cell in vertical merging.
-func (dc *TableCell) SetVerticalMergedNext() *TableCell {
+func (dc *tableCell) SetVerticalMergedNext() *tableCell {
 	dc.verticalMerged = "rg"
 	return dc
 }
@@ -509,31 +509,31 @@ func (dc *TableCell) SetVerticalMergedNext() *TableCell {
 // }
 
 // SetMarginLeft function sets this cell's left margin
-func (dc *TableCell) SetMarginLeft(value int) *TableCell {
+func (dc *tableCell) SetMarginLeft(value int) *tableCell {
 	dc.marginLeft = value
 	return dc
 }
 
 // SetMarginRight function sets this cell's right margin
-func (dc *TableCell) SetMarginRight(value int) *TableCell {
+func (dc *tableCell) SetMarginRight(value int) *tableCell {
 	dc.marginRight = value
 	return dc
 }
 
 // SetMarginTop function sets this cell's top margin
-func (dc *TableCell) SetMarginTop(value int) *TableCell {
+func (dc *tableCell) SetMarginTop(value int) *tableCell {
 	dc.marginTop = value
 	return dc
 }
 
 // SetMarginBottom function sets this cell's bottom margin
-func (dc *TableCell) SetMarginBottom(value int) *TableCell {
+func (dc *tableCell) SetMarginBottom(value int) *tableCell {
 	dc.marginBottom = value
 	return dc
 }
 
 // SetVAlign sets align
-func (dc *TableCell) SetVAlign(valign string) *TableCell {
+func (dc *tableCell) SetVAlign(valign string) *tableCell {
 	for _, i := range []string{VAlignBottom, VAlignMiddle, VAlignTop} {
 		if valign == i {
 			dc.vTextAlign = i
@@ -543,7 +543,7 @@ func (dc *TableCell) SetVAlign(valign string) *TableCell {
 }
 
 // SetBorderColor function sets cell's border color
-func (dc *TableCell) SetBorderColor(color string) *TableCell {
+func (dc *tableCell) SetBorderColor(color string) *tableCell {
 	dc.borderColor = color
 	return dc
 }

@@ -10,8 +10,8 @@ import (
 )
 
 // NewDocument returns new rtf document instance
-func NewDocument() *Document {
-	doc := Document{
+func NewDocument() *document {
+	doc := document{
 		orientation: OrientationPortrait,
 		header:      getDefaultHeader(),
 		content:     nil,
@@ -54,7 +54,7 @@ func NewDocument() *Document {
 	return &doc
 }
 
-func (doc *Document) getMargins() string {
+func (doc *document) getMargins() string {
 	return fmt.Sprintf("\n\\margl%d\\margr%d\\margt%d\\margb%d",
 		doc.marginLeft,
 		doc.marginRight,
@@ -62,7 +62,7 @@ func (doc *Document) getMargins() string {
 		doc.marginBottom)
 }
 
-func (doc *Document) compose() string {
+func (doc *document) compose() string {
 	result := "{"
 	result += doc.header.compose()
 	if doc.orientation == OrientationLandscape {
@@ -82,7 +82,7 @@ func (doc *Document) compose() string {
 }
 
 // SetFormat sets page format (A2, A3, A4)
-func (doc *Document) SetFormat(format string) *Document {
+func (doc *document) SetFormat(format string) *document {
 	doc.pageFormat = format
 	if doc.orientation != "" {
 		size, err := getSize(format, doc.orientation)
@@ -94,7 +94,7 @@ func (doc *Document) SetFormat(format string) *Document {
 }
 
 // SetOrientation - sets page orientation (portrait, landscape)
-func (doc *Document) SetOrientation(orientation string) *Document {
+func (doc *document) SetOrientation(orientation string) *document {
 
 	for _, i := range []string{OrientationLandscape, OrientationPortrait} {
 		if orientation == i {
@@ -115,50 +115,50 @@ func (doc *Document) SetOrientation(orientation string) *Document {
 // }
 
 // SetMarginLeft sets left margin for document work area
-func (doc *Document) SetMarginLeft(value int) *Document {
+func (doc *document) SetMarginLeft(value int) *document {
 	doc.marginLeft = value
 	return doc
 }
 
 // SetMarginRight sets right margin for document work area
-func (doc *Document) SetMarginRight(value int) *Document {
+func (doc *document) SetMarginRight(value int) *document {
 	doc.marginRight = value
 	return doc
 }
 
 // SetMarginTop sets top margin for document work area
-func (doc *Document) SetMarginTop(value int) *Document {
+func (doc *document) SetMarginTop(value int) *document {
 	doc.marginTop = value
 	return doc
 }
 
 // SetMarginBottom sets bottom margin for document work area
-func (doc *Document) SetMarginBottom(value int) *Document {
+func (doc *document) SetMarginBottom(value int) *document {
 	doc.marginBottom = value
 	return doc
 }
 
 // NewColorTable returns new color table for document
-func (doc *Document) NewColorTable() *colorTable {
+func (doc *document) NewColorTable() *colorTable {
 	ct := colorTable{}
 	doc.header.colorTable = &ct
 	return &ct
 }
 
 // NewFontTable returns new font table for document
-func (doc *Document) NewFontTable() *fontTable {
+func (doc *document) NewFontTable() *fontTable {
 	ft := fontTable{}
 	doc.header.fontColor = &ft
 	return &ft
 }
 
 // GetMaxContentWidth - returns maximum content width
-func (doc *Document) GetMaxContentWidth() int {
+func (doc *document) GetMaxContentWidth() int {
 	return doc.pagesize.width - doc.marginRight - doc.marginLeft
 }
 
 // GetTableCellWidthByRatio - returns slice of cell widths from cells ratios
-func (doc *Document) GetTableCellWidthByRatio(tableWidth int, ratio ...float64) []int {
+func (doc *document) GetTableCellWidthByRatio(tableWidth int, ratio ...float64) []int {
 	tw := tableWidth
 	if tw > doc.GetMaxContentWidth() {
 		tw = doc.GetMaxContentWidth()
@@ -175,18 +175,18 @@ func (doc *Document) GetTableCellWidthByRatio(tableWidth int, ratio ...float64) 
 }
 
 // Export exports document
-func (doc *Document) Export() []byte {
+func (doc *document) Export() []byte {
 	return []byte(doc.compose())
 }
 
 // AddFont function adds font to document header
-func (doc *Document) AddFont(family string, charset int, prq int, name string, code string) *Document {
+func (doc *document) AddFont(family string, charset int, prq int, name string, code string) *document {
 	doc.fontColor.AddFont(family, charset, prq, name, code)
 	return doc
 }
 
 // AddColor function adds colot to document color table
-func (doc *Document) AddColor(c color.RGBA, name string) *Document {
+func (doc *document) AddColor(c color.RGBA, name string) *document {
 	doc.colorTable.AddColor(c, name)
 	return doc
 }

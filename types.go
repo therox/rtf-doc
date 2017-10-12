@@ -32,13 +32,13 @@ type header struct {
 }
 
 // Color type for settings
-type Color struct {
-	color color.RGBA
-	name  string
+type colorItem struct {
+	rgbColor color.RGBA
+	name     string
 }
 
-// Document - main document struct
-type Document struct {
+// document - main document struct
+type document struct {
 	header
 	orientation string
 	pageFormat  string
@@ -48,10 +48,10 @@ type Document struct {
 }
 
 // colorTable defines color table
-type colorTable []Color
+type colorTable []colorItem
 
-// Font defines font struct
-type Font struct {
+// font defines font struct
+type font struct {
 	family  string // nil, roman, swiss, modern, script, decor, tech, bidi
 	charset int    // Specifies the character set of a font in the font table. Values for N are defined by Windows header files, and in the file RTFDEFS.H accompanying this document.
 	prq     int    // Specifies the pitch of a font in the font table.
@@ -60,7 +60,7 @@ type Font struct {
 }
 
 // fontTable defines font table
-type fontTable []Font
+type fontTable []font
 
 // Size struct
 type size struct {
@@ -68,25 +68,25 @@ type size struct {
 	height int
 }
 
-// Table is a struct for table.
-type Table struct {
+// table is a struct for table.
+type table struct {
 	width int
 	align string
 	margins
 	borders
 	generalSettings
-	data []*TableRow
+	data []*tableRow
 }
 
-// TableCell defines cell properties
-type TableCell struct {
+// tableCell defines cell properties
+type tableCell struct {
 	borders
 	cellWidth      int
 	verticalMerged string
 	margins
 	vTextAlign string
 	generalSettings
-	content []*Paragraph
+	content []*paragraph
 }
 
 type borders struct {
@@ -106,17 +106,17 @@ type margins struct {
 	marginBottom int
 }
 
-// TableRow definces Table Row struct
-type TableRow struct {
-	cells []*TableCell
+// tableRow definces Table Row struct
+type tableRow struct {
+	cells []*tableCell
 	borders
 	generalSettings
 }
 
 // ============End of Table structs===========
 
-// Paragraph defines paragraph instances
-type Paragraph struct {
+// paragraph defines paragraph instances
+type paragraph struct {
 	isTable           bool
 	align             string
 	indent            string
@@ -128,7 +128,7 @@ type Paragraph struct {
 }
 
 // Text defines Text instances
-type Text struct {
+type text struct {
 	fontSize      int
 	fontCode      int //code for font in font Table
 	colorCode     int
@@ -140,7 +140,7 @@ type Text struct {
 	isSub         bool
 	isStrike      bool
 	emphasis      string
-	text          string
+	content       string
 	generalSettings
 }
 

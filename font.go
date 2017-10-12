@@ -7,11 +7,11 @@ func (ft *fontTable) AddFont(family string, charset int, prq int, name string, c
 	if prq == 0 {
 		prq = 2
 	}
-	*ft = append(*ft, Font{family: family, charset: charset, prq: prq, name: name, code: code})
+	*ft = append(*ft, font{family: family, charset: charset, prq: prq, name: name, code: code})
 	return ft
 }
 
-func (f *Font) encode() string {
+func (f *font) encode() string {
 	return fmt.Sprintf("\\f%s\\fprq%d\\fcharset%d %s;", f.family, f.prq, f.charset, f.name)
 
 }

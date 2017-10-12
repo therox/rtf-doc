@@ -26,7 +26,7 @@ type Picture struct {
 }
 
 // AddPicture adds picture
-func (par *Paragraph) AddPicture(source []byte, format string) *Picture {
+func (par *paragraph) AddPicture(source []byte, format string) *Picture {
 	var pic Picture
 	var err error
 
