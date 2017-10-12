@@ -161,6 +161,10 @@ func (doc *document) getMaxWidth() int {
 	return doc.maxWidth
 }
 
+func (doc *document) GetMaxContentWidth() int {
+	return doc.getMaxWidth()
+}
+
 func (doc *document) updateMaxWidth() {
 	doc.maxWidth = doc.pagesize.width - doc.marginRight - doc.marginLeft
 }
