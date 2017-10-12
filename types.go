@@ -41,10 +41,14 @@ type colorItem struct {
 type document struct {
 	header
 	orientation string
-	pageFormat  string
-	pagesize    size
 	margins
-	content []documentItem
+	docSettings *documentSettings
+	content     []documentItem
+}
+
+type documentSettings struct {
+	pageFormat string
+	pagesize   size
 }
 
 // colorTable defines color table
@@ -75,7 +79,8 @@ type table struct {
 	margins
 	borders
 	generalSettings
-	data []*tableRow
+	docSettings *documentSettings
+	data        []*tableRow
 }
 
 // tableCell defines cell properties
@@ -86,7 +91,8 @@ type tableCell struct {
 	margins
 	vTextAlign string
 	generalSettings
-	content []*paragraph
+	docSettings *documentSettings
+	content     []*paragraph
 }
 
 type borders struct {
@@ -111,6 +117,22 @@ type tableRow struct {
 	cells []*tableCell
 	borders
 	generalSettings
+	docSettings *documentSettings
+}
+
+// Main Picture struct
+type Picture struct {
+	format      string // EMF, PNG, JPEG
+	docSettings *documentSettings
+	src         []byte
+	scaleX      int
+	scaleY      int
+	cropL       int
+	cropR       int
+	cropT       int
+	cropB       int
+	height      int
+	width       int
 }
 
 // ============End of Table structs===========
@@ -124,6 +146,7 @@ type paragraph struct {
 	indentLeftIndent  int
 	indentRightIndent int
 	content           []documentItem
+	docSettings       *documentSettings
 	generalSettings
 }
 

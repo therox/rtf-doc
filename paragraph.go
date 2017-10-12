@@ -12,6 +12,7 @@ func (doc *document) AddParagraph() *paragraph {
 			colorTable: doc.colorTable,
 			fontColor:  doc.fontColor,
 		},
+		docSettings: doc.docSettings,
 	}
 	doc.content = append(doc.content, &p)
 	return &p

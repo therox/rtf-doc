@@ -44,7 +44,8 @@ func (t *table) SetAlign(align string) *table {
 // AddTable returns Table instance
 func (doc *document) AddTable() *table {
 	t := table{
-		align: AlignCenter,
+		align:       AlignCenter,
+		docSettings: doc.docSettings,
 	}
 	t.SetMarginLeft(100).SetMarginRight(100).SetMarginTop(100).SetMarginBottom(100)
 
@@ -85,6 +86,7 @@ func (t *table) AddTableRow() *tableRow {
 			fontColor:  t.fontColor,
 			colorTable: t.colorTable,
 		},
+		docSettings: t.docSettings,
 	}
 	tr.SetBorderLeft(t.borderLeft).
 		SetBorderRight(t.borderRight).
@@ -313,7 +315,8 @@ func (tr *tableRow) encode() string {
 // AddDataCell returns new DataCell for current table row
 func (tr *tableRow) AddDataCell(width int) *tableCell {
 	dc := tableCell{
-		cellWidth: width,
+		cellWidth:   width,
+		docSettings: tr.docSettings,
 	}
 	dc.fontColor = tr.fontColor
 	dc.colorTable = tr.colorTable
@@ -345,6 +348,7 @@ func (dc *tableCell) AddParagraph() *paragraph {
 			colorTable: dc.colorTable,
 			fontColor:  dc.fontColor,
 		},
+		docSettings: dc.docSettings,
 	}
 	dc.content = append(dc.content, &p)
 	return &p

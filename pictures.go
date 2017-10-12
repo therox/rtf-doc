@@ -11,23 +11,11 @@ import (
 	_ "image/png"
 )
 
-// Main Picture struct
-type Picture struct {
-	format string // EMF, PNG, JPEG
-	src    []byte
-	scaleX int
-	scaleY int
-	cropL  int
-	cropR  int
-	cropT  int
-	cropB  int
-	height int
-	width  int
-}
-
 // AddPicture adds picture
 func (par *paragraph) AddPicture(source []byte, format string) *Picture {
-	var pic Picture
+	var pic = Picture{
+		docSettings: par.docSettings,
+	}
 	var err error
 
 	formatFound := false
@@ -54,6 +42,11 @@ func (par *paragraph) AddPicture(source []byte, format string) *Picture {
 	if err != nil {
 		pic.height = 100
 		pic.width = 100
+	}
+	if pic.width > getPixelsFromTwips(pic.docSettings.pagesize.width) {
+		newWidth := getPixelsFromTwips(pic.docSettings.pagesize.width)
+		pic.height = int(float64(pic.height) / (float64(pic.width) / float64(newWidth)))
+		pic.width = newWidth
 	}
 
 	par.content = append(par.content, &pic)

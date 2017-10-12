@@ -15,6 +15,7 @@ func NewDocument() *document {
 		orientation: OrientationPortrait,
 		header:      getDefaultHeader(),
 		content:     nil,
+		docSettings: new(documentSettings),
 	}
 	doc.marginLeft = 720
 	doc.marginRight = 720
@@ -68,8 +69,8 @@ func (doc *document) compose() string {
 	if doc.orientation == OrientationLandscape {
 		result += fmt.Sprintf("\n\\landscape")
 	}
-	if doc.pagesize != (size{}) {
-		result += fmt.Sprintf("\n\\paperw%d\\paperh%d", doc.pagesize.width, doc.pagesize.height)
+	if doc.docSettings.pagesize != (size{}) {
+		result += fmt.Sprintf("\n\\paperw%d\\paperh%d", doc.docSettings.pagesize.width, doc.docSettings.pagesize.height)
 	}
 
 	result += doc.getMargins()
@@ -83,11 +84,11 @@ func (doc *document) compose() string {
 
 // SetFormat sets page format (A2, A3, A4)
 func (doc *document) SetFormat(format string) *document {
-	doc.pageFormat = format
+	doc.docSettings.pageFormat = format
 	if doc.orientation != "" {
 		size, err := getSize(format, doc.orientation)
 		if err == nil {
-			doc.pagesize = size
+			doc.docSettings.pagesize = size
 		}
 	}
 	return doc
@@ -101,9 +102,9 @@ func (doc *document) SetOrientation(orientation string) *document {
 			doc.orientation = i
 		}
 	}
-	size, err := getSize(doc.pageFormat, doc.orientation)
+	size, err := getSize(doc.docSettings.pageFormat, doc.orientation)
 	if err == nil {
-		doc.pagesize = size
+		doc.docSettings.pagesize = size
 	}
 
 	return doc
@@ -154,7 +155,7 @@ func (doc *document) NewFontTable() *fontTable {
 
 // GetMaxContentWidth - returns maximum content width
 func (doc *document) GetMaxContentWidth() int {
-	return doc.pagesize.width - doc.marginRight - doc.marginLeft
+	return doc.docSettings.pagesize.width - doc.marginRight - doc.marginLeft
 }
 
 // GetTableCellWidthByRatio - returns slice of cell widths from cells ratios
