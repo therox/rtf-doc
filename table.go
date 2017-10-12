@@ -44,8 +44,8 @@ func (t *table) SetAlign(align string) *table {
 // AddTable returns Table instance
 func (doc *document) AddTable() *table {
 	t := table{
-		align:       AlignCenter,
-		docSettings: doc.docSettings,
+		align:    AlignCenter,
+		docWidth: doc.maxWidth,
 	}
 	t.SetMarginLeft(100).SetMarginRight(100).SetMarginTop(100).SetMarginBottom(100)
 
@@ -58,8 +58,14 @@ func (doc *document) AddTable() *table {
 		SetBorderStyle(BorderSingleThickness).
 		SetBorderColor(ColorBlack).
 		SetBorderWidth(15)
+	t.updateMaxWidth()
 	doc.content = append(doc.content, &t)
 	return &t
+}
+
+func (t *table) updateMaxWidth() *table {
+	t.maxWidth = t.docWidth - t.marginLeft - t.marginRight
+	return t
 }
 
 func (t table) compose() string {
@@ -86,7 +92,7 @@ func (t *table) AddTableRow() *tableRow {
 			fontColor:  t.fontColor,
 			colorTable: t.colorTable,
 		},
-		docSettings: t.docSettings,
+		tableWidth: t.maxWidth,
 	}
 	tr.SetBorderLeft(t.borderLeft).
 		SetBorderRight(t.borderRight).
@@ -95,8 +101,14 @@ func (t *table) AddTableRow() *tableRow {
 		SetBorderStyle(t.borderStyle).
 		SetBorderColor(t.borderColor).
 		SetBorderWidth(t.borderWidth)
+	t.updateMaxWidth()
 	t.data = append(t.data, &tr)
 	return &tr
+}
+
+func (tr *tableRow) updateMaxWidth() *tableRow {
+	tr.maxWidth = tr.tableWidth
+	return tr
 }
 
 // SetBorderLeft function sets table left border presence
@@ -315,8 +327,8 @@ func (tr *tableRow) encode() string {
 // AddDataCell returns new DataCell for current table row
 func (tr *tableRow) AddDataCell(width int) *tableCell {
 	dc := tableCell{
-		cellWidth:   width,
-		docSettings: tr.docSettings,
+		cellWidth: width,
+		maxWidth:  width,
 	}
 	dc.fontColor = tr.fontColor
 	dc.colorTable = tr.colorTable
@@ -327,9 +339,14 @@ func (tr *tableRow) AddDataCell(width int) *tableCell {
 		SetBorderStyle(tr.borderStyle).
 		SetBorderColor(tr.borderColor).
 		SetBorderWidth(tr.borderWidth)
-
+	dc.updateMaxWidth()
 	tr.cells = append(tr.cells, &dc)
 	return &dc
+}
+
+func (dc *tableCell) updateMaxWidth() *tableCell {
+	dc.maxWidth = dc.cellWidth - dc.marginLeft - dc.marginRight
+	return dc
 }
 
 // SetWidth sets width of the cell
@@ -348,8 +365,9 @@ func (dc *tableCell) AddParagraph() *paragraph {
 			colorTable: dc.colorTable,
 			fontColor:  dc.fontColor,
 		},
-		docSettings: dc.docSettings,
+		allowedWidth: dc.maxWidth,
 	}
+	p.updateMaxWidth()
 	dc.content = append(dc.content, &p)
 	return &p
 }

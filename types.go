@@ -42,13 +42,10 @@ type document struct {
 	header
 	orientation string
 	margins
-	docSettings *documentSettings
-	content     []documentItem
-}
-
-type documentSettings struct {
 	pageFormat string
 	pagesize   size
+	maxWidth   int
+	content    []documentItem
 }
 
 // colorTable defines color table
@@ -74,25 +71,27 @@ type size struct {
 
 // table is a struct for table.
 type table struct {
-	width int
-	align string
+	width    int
+	align    string
+	docWidth int
+	maxWidth int
+	data     []*tableRow
 	margins
 	borders
 	generalSettings
-	docSettings *documentSettings
-	data        []*tableRow
 }
 
 // tableCell defines cell properties
 type tableCell struct {
-	borders
 	cellWidth      int
 	verticalMerged string
+	tableRowWidth  int
+	maxWidth       int
+	vTextAlign     string
+	content        []*paragraph
+	borders
 	margins
-	vTextAlign string
 	generalSettings
-	docSettings *documentSettings
-	content     []*paragraph
 }
 
 type borders struct {
@@ -114,25 +113,27 @@ type margins struct {
 
 // tableRow definces Table Row struct
 type tableRow struct {
-	cells []*tableCell
+	cells      []*tableCell
+	tableWidth int
+	maxWidth   int
 	borders
 	generalSettings
-	docSettings *documentSettings
 }
 
 // Main Picture struct
 type Picture struct {
-	format      string // EMF, PNG, JPEG
-	docSettings *documentSettings
-	src         []byte
-	scaleX      int
-	scaleY      int
-	cropL       int
-	cropR       int
-	cropT       int
-	cropB       int
-	height      int
-	width       int
+	format         string // EMF, PNG, JPEG
+	paragraphWidth int
+	maxWidth       int
+	src            []byte
+	scaleX         int
+	scaleY         int
+	cropL          int
+	cropR          int
+	cropT          int
+	cropB          int
+	height         int
+	width          int
 }
 
 // ============End of Table structs===========
@@ -146,7 +147,8 @@ type paragraph struct {
 	indentLeftIndent  int
 	indentRightIndent int
 	content           []documentItem
-	docSettings       *documentSettings
+	allowedWidth      int
+	maxWidth          int
 	generalSettings
 }
 

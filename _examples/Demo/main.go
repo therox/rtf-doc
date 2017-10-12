@@ -74,8 +74,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	pPic1 := p.AddPicture(f, rtfdoc.ImageFormatJpeg)
-	pPic1.SetWidth(100).SetHeight(100)
+	p.AddPicture(f, rtfdoc.ImageFormatJpeg)
 	p.SetAlignt(rtfdoc.AlignCenter)
 
 	pPic := d.AddParagraph()

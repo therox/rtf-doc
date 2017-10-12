@@ -14,7 +14,7 @@ import (
 // AddPicture adds picture
 func (par *paragraph) AddPicture(source []byte, format string) *Picture {
 	var pic = Picture{
-		docSettings: par.docSettings,
+		paragraphWidth: par.maxWidth,
 	}
 	var err error
 
@@ -29,6 +29,7 @@ func (par *paragraph) AddPicture(source []byte, format string) *Picture {
 		log.Println("Unknown format")
 		return &pic
 	}
+	pic.updateMaxWidth()
 
 	pic.src = source
 
@@ -43,8 +44,8 @@ func (par *paragraph) AddPicture(source []byte, format string) *Picture {
 		pic.height = 100
 		pic.width = 100
 	}
-	if pic.width > getPixelsFromTwips(pic.docSettings.pagesize.width) {
-		newWidth := getPixelsFromTwips(pic.docSettings.pagesize.width)
+	if pic.width > getPixelsFromTwips(pic.maxWidth) {
+		newWidth := getPixelsFromTwips(pic.maxWidth)
 		pic.height = int(float64(pic.height) / (float64(pic.width) / float64(newWidth)))
 		pic.width = newWidth
 	}
@@ -53,7 +54,16 @@ func (par *paragraph) AddPicture(source []byte, format string) *Picture {
 	return &pic
 }
 
+func (pic *Picture) updateMaxWidth() *Picture {
+	pic.maxWidth = pic.paragraphWidth
+	return pic
+}
+
 func (pic *Picture) SetWidth(width int) *Picture {
+	if getTwipsFromPixels(width) > pic.maxWidth {
+		pic.width = getPixelsFromTwips(pic.maxWidth)
+		return pic
+	}
 	pic.width = width
 	return pic
 }

@@ -12,10 +12,16 @@ func (doc *document) AddParagraph() *paragraph {
 			colorTable: doc.colorTable,
 			fontColor:  doc.fontColor,
 		},
-		docSettings: doc.docSettings,
+		allowedWidth: doc.maxWidth,
 	}
+	p.updateMaxWidth()
 	doc.content = append(doc.content, &p)
 	return &p
+}
+
+func (p *paragraph) updateMaxWidth() *paragraph {
+	p.maxWidth = p.allowedWidth
+	return p
 }
 
 func (par paragraph) compose() string {

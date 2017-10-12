@@ -15,7 +15,6 @@ func NewDocument() *document {
 		orientation: OrientationPortrait,
 		header:      getDefaultHeader(),
 		content:     nil,
-		docSettings: new(documentSettings),
 	}
 	doc.marginLeft = 720
 	doc.marginRight = 720
@@ -24,6 +23,8 @@ func NewDocument() *document {
 
 	doc.SetFormat(FormatA4)
 	doc.SetOrientation(OrientationPortrait)
+
+	doc.maxWidth = doc.pagesize.width - doc.marginRight - doc.marginLeft
 
 	// Default fonts
 	ft := doc.NewFontTable()
@@ -69,8 +70,8 @@ func (doc *document) compose() string {
 	if doc.orientation == OrientationLandscape {
 		result += fmt.Sprintf("\n\\landscape")
 	}
-	if doc.docSettings.pagesize != (size{}) {
-		result += fmt.Sprintf("\n\\paperw%d\\paperh%d", doc.docSettings.pagesize.width, doc.docSettings.pagesize.height)
+	if doc.pagesize != (size{}) {
+		result += fmt.Sprintf("\n\\paperw%d\\paperh%d", doc.pagesize.width, doc.pagesize.height)
 	}
 
 	result += doc.getMargins()
@@ -84,13 +85,15 @@ func (doc *document) compose() string {
 
 // SetFormat sets page format (A2, A3, A4)
 func (doc *document) SetFormat(format string) *document {
-	doc.docSettings.pageFormat = format
+	doc.pageFormat = format
 	if doc.orientation != "" {
 		size, err := getSize(format, doc.orientation)
 		if err == nil {
-			doc.docSettings.pagesize = size
+			doc.pagesize = size
 		}
 	}
+	doc.updateMaxWidth()
+
 	return doc
 }
 
@@ -102,10 +105,11 @@ func (doc *document) SetOrientation(orientation string) *document {
 			doc.orientation = i
 		}
 	}
-	size, err := getSize(doc.docSettings.pageFormat, doc.orientation)
+	size, err := getSize(doc.pageFormat, doc.orientation)
 	if err == nil {
-		doc.docSettings.pagesize = size
+		doc.pagesize = size
 	}
+	doc.updateMaxWidth()
 
 	return doc
 }
@@ -153,16 +157,19 @@ func (doc *document) NewFontTable() *fontTable {
 	return &ft
 }
 
-// GetMaxContentWidth - returns maximum content width
-func (doc *document) GetMaxContentWidth() int {
-	return doc.docSettings.pagesize.width - doc.marginRight - doc.marginLeft
+func (doc *document) getMaxWidth() int {
+	return doc.maxWidth
+}
+
+func (doc *document) updateMaxWidth() {
+	doc.maxWidth = doc.pagesize.width - doc.marginRight - doc.marginLeft
 }
 
 // GetTableCellWidthByRatio - returns slice of cell widths from cells ratios
 func (doc *document) GetTableCellWidthByRatio(tableWidth int, ratio ...float64) []int {
 	tw := tableWidth
-	if tw > doc.GetMaxContentWidth() {
-		tw = doc.GetMaxContentWidth()
+	if tw > doc.maxWidth {
+		tw = doc.maxWidth
 	}
 	cellRatioSum := 0.0
 	for _, cellRatio := range ratio {
