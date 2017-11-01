@@ -4,8 +4,6 @@ import "fmt"
 
 func (text text) compose() string {
 	var res string
-	var emphasisBegin string
-	var emphasisEnd string
 	var emphText string
 	if text.isBold {
 		emphText += " \\b"
@@ -31,7 +29,7 @@ func (text text) compose() string {
 
 	PreparedText := convertNonASCIIToUTF16(text.content)
 
-	res += fmt.Sprintf("\n\\fs%d\\f%d \\cf%d {%s %s %s}\\f0", text.fontSize*2, text.fontCode, text.colorCode, emphasisBegin, PreparedText, emphasisEnd)
+	res += fmt.Sprintf("\n\\fs%d\\f%d \\cf%d { %s %s }\\f0", text.fontSize*2, text.fontCode, text.colorCode, emphText, PreparedText)
 	return res
 }
 
