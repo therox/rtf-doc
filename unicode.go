@@ -12,7 +12,7 @@ func convertNonASCIIToUTF16(text string) string {
 	res := ""
 	for _, r := range text {
 		// if isCyrillicLetter(r) {
-		if unicode.Is(unicode.Cyrillic, r) {
+		if unicode.Is(unicode.Cyrillic, r) || r == '№' {
 			res += fmt.Sprintf("\\u%d\\'3f", utf16.Encode([]rune{r})[0])
 		} else {
 			res += string(r)
