@@ -1,35 +1,39 @@
 package rtfdoc
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func (text text) compose() string {
 	var res string
-	var emphText string
+
+	var emphTextSlice []string
 	if text.isBold {
-		emphText += " \\b"
+		emphTextSlice = append(emphTextSlice, "\\b")
 	}
 	if text.isItalic {
-		emphText += " \\i"
+		emphTextSlice = append(emphTextSlice, "\\i")
 	}
 	if text.isScaps {
-		emphText += " \\scaps"
+		emphTextSlice = append(emphTextSlice, "\\scaps")
 	}
 	if text.isStrike {
-		emphText += " \\strike"
+		emphTextSlice = append(emphTextSlice, "\\strike")
 	}
 	if text.isSub {
-		emphText += " \\sub"
+		emphTextSlice = append(emphTextSlice, "\\sub")
 	}
 	if text.isSuper {
-		emphText += " \\super"
+		emphTextSlice = append(emphTextSlice, "\\super")
 	}
 	if text.isUnderlining {
-		emphText += " \\ul"
+		emphTextSlice = append(emphTextSlice, "\\ul")
 	}
 
 	PreparedText := convertNonASCIIToUTF16(text.content)
 
-	res += fmt.Sprintf("\n\\fs%d\\f%d \\cf%d { %s %s }\\f0", text.fontSize*2, text.fontCode, text.colorCode, emphText, PreparedText)
+	res += fmt.Sprintf("\n\\fs%d\\f%d \\cf%d {%s %s}\\f0", text.fontSize*2, text.fontCode, text.colorCode, strings.Join(emphTextSlice, " "), PreparedText)
 	return res
 }
 
