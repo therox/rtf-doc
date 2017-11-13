@@ -112,7 +112,7 @@ func (text *text) SetScaps() *text {
 
 // SetStrike function sets text to Strike
 func (text *text) SetStrike() *text {
-	text.isBold = true
+	text.isStrike = true
 	return text
 }
 
