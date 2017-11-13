@@ -33,7 +33,7 @@ func (text text) compose() string {
 
 	PreparedText := convertNonASCIIToUTF16(text.content)
 
-	res += fmt.Sprintf("\n\\fs%d\\f%d \\cf%d {%s %s}\\f0", text.fontSize*2, text.fontCode, text.colorCode, strings.Join(emphTextSlice, " "), PreparedText)
+	res += fmt.Sprintf("\n\\fs%d\\f%d \\cf%d {%s%s}\\f0", text.fontSize*2, text.fontCode, text.colorCode, strings.Join(emphTextSlice, " "), PreparedText)
 	return res
 }
 
