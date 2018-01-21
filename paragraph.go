@@ -25,7 +25,7 @@ func (p *Paragraph) updateMaxWidth() *Paragraph {
 }
 
 func (par Paragraph) compose() string {
-	indentStr := fmt.Sprintf(" \\fi%d \\li%d \\ri%d",
+	indentStr := fmt.Sprintf("\\fi%d \\li%d \\ri%d",
 		par.indentFirstLine,
 		par.indentLeftIndent,
 		par.indentRightIndent)
