@@ -9,9 +9,9 @@ import (
 	"image/color"
 )
 
-// NewDocument returns new rtf document instance
-func NewDocument() *document {
-	doc := document{
+// NewDocument returns new rtf Document instance
+func NewDocument() *Document {
+	doc := Document{
 		orientation: OrientationPortrait,
 		header:      getDefaultHeader(),
 		content:     nil,
@@ -56,7 +56,7 @@ func NewDocument() *document {
 	return &doc
 }
 
-func (doc *document) getMargins() string {
+func (doc *Document) getMargins() string {
 	return fmt.Sprintf("\n\\margl%d\\margr%d\\margt%d\\margb%d",
 		doc.marginLeft,
 		doc.marginRight,
@@ -64,7 +64,7 @@ func (doc *document) getMargins() string {
 		doc.marginBottom)
 }
 
-func (doc *document) compose() string {
+func (doc *Document) compose() string {
 	result := "{"
 	result += doc.header.compose()
 	if doc.orientation == OrientationLandscape {
@@ -84,7 +84,7 @@ func (doc *document) compose() string {
 }
 
 // SetFormat sets page format (A2, A3, A4)
-func (doc *document) SetFormat(format string) *document {
+func (doc *Document) SetFormat(format string) *Document {
 	doc.pageFormat = format
 	if doc.orientation != "" {
 		size, err := getSize(format, doc.orientation)
@@ -98,7 +98,7 @@ func (doc *document) SetFormat(format string) *document {
 }
 
 // SetOrientation - sets page orientation (portrait, landscape)
-func (doc *document) SetOrientation(orientation string) *document {
+func (doc *Document) SetOrientation(orientation string) *Document {
 
 	for _, i := range []string{OrientationLandscape, OrientationPortrait} {
 		if orientation == i {
@@ -114,63 +114,63 @@ func (doc *document) SetOrientation(orientation string) *document {
 	return doc
 }
 
-// // GetDocumentWidth - returns document width
+// // GetDocumentWidth - returns Document width
 // func (doc *Document) GetDocumentWidth() int {
 // 	return doc.pagesize.width
 // }
 
-// SetMarginLeft sets left margin for document work area
-func (doc *document) SetMarginLeft(value int) *document {
+// SetMarginLeft sets left margin for Document work area
+func (doc *Document) SetMarginLeft(value int) *Document {
 	doc.marginLeft = value
 	return doc
 }
 
-// SetMarginRight sets right margin for document work area
-func (doc *document) SetMarginRight(value int) *document {
+// SetMarginRight sets right margin for Document work area
+func (doc *Document) SetMarginRight(value int) *Document {
 	doc.marginRight = value
 	return doc
 }
 
-// SetMarginTop sets top margin for document work area
-func (doc *document) SetMarginTop(value int) *document {
+// SetMarginTop sets top margin for Document work area
+func (doc *Document) SetMarginTop(value int) *Document {
 	doc.marginTop = value
 	return doc
 }
 
-// SetMarginBottom sets bottom margin for document work area
-func (doc *document) SetMarginBottom(value int) *document {
+// SetMarginBottom sets bottom margin for Document work area
+func (doc *Document) SetMarginBottom(value int) *Document {
 	doc.marginBottom = value
 	return doc
 }
 
-// NewColorTable returns new color table for document
-func (doc *document) NewColorTable() *colorTable {
-	ct := colorTable{}
+// NewColorTable returns new color table for Document
+func (doc *Document) NewColorTable() *ColorTable {
+	ct := ColorTable{}
 	doc.header.colorTable = &ct
 	return &ct
 }
 
-// NewFontTable returns new font table for document
-func (doc *document) NewFontTable() *fontTable {
-	ft := fontTable{}
+// NewFontTable returns new font table for Document
+func (doc *Document) NewFontTable() *FontTable {
+	ft := FontTable{}
 	doc.header.fontColor = &ft
 	return &ft
 }
 
-func (doc *document) getMaxWidth() int {
+func (doc *Document) getMaxWidth() int {
 	return doc.maxWidth
 }
 
-func (doc *document) GetMaxContentWidth() int {
+func (doc *Document) GetMaxContentWidth() int {
 	return doc.getMaxWidth()
 }
 
-func (doc *document) updateMaxWidth() {
+func (doc *Document) updateMaxWidth() {
 	doc.maxWidth = doc.pagesize.width - doc.marginRight - doc.marginLeft
 }
 
 // GetTableCellWidthByRatio - returns slice of cell widths from cells ratios
-func (doc *document) GetTableCellWidthByRatio(tableWidth int, ratio ...float64) []int {
+func (doc *Document) GetTableCellWidthByRatio(tableWidth int, ratio ...float64) []int {
 	tw := tableWidth
 	if tw > doc.maxWidth {
 		tw = doc.maxWidth
@@ -186,19 +186,19 @@ func (doc *document) GetTableCellWidthByRatio(tableWidth int, ratio ...float64) 
 	return cellWidth
 }
 
-// Export exports document
-func (doc *document) Export() []byte {
+// Export exports Document
+func (doc *Document) Export() []byte {
 	return []byte(doc.compose())
 }
 
-// AddFont function adds font to document header
-func (doc *document) AddFont(family string, charset int, prq int, name string, code string) *document {
+// AddFont function adds font to Document header
+func (doc *Document) AddFont(family string, charset int, prq int, name string, code string) *Document {
 	doc.fontColor.AddFont(family, charset, prq, name, code)
 	return doc
 }
 
-// AddColor function adds colot to document color table
-func (doc *document) AddColor(c color.RGBA, name string) *document {
+// AddColor function adds colot to Document color table
+func (doc *Document) AddColor(c color.RGBA, name string) *Document {
 	doc.colorTable.AddColor(c, name)
 	return doc
 }

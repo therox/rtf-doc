@@ -3,7 +3,7 @@ package rtfdoc
 import "fmt"
 
 // AddFont returns font instance
-func (ft *fontTable) AddFont(family string, charset int, prq int, name string, code string) *fontTable {
+func (ft *FontTable) AddFont(family string, charset int, prq int, name string, code string) *FontTable {
 	if prq == 0 {
 		prq = 2
 	}
@@ -19,11 +19,11 @@ func (f *font) encode() string {
 // FontTable
 
 // NewFontTable - returns new font table
-func NewFontTable() *fontTable {
-	return &fontTable{}
+func NewFontTable() *FontTable {
+	return &FontTable{}
 }
 
-func (ft fontTable) encode() string {
+func (ft FontTable) encode() string {
 	var fontInfo string
 	for i := range ft {
 		fontInfo += fmt.Sprintf("{\\f%d%s}", i, ft[i].encode())

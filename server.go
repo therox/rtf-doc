@@ -27,7 +27,7 @@ func rtfHandler(w http.ResponseWriter, r *http.Request) {
 
 		fmt.Println(string(body))
 	} else {
-		w.Write([]byte("Method  is not applicable"))
+		_, _ = w.Write([]byte("Method is not applicable"))
 
 	}
 	return

@@ -15,8 +15,8 @@ type cellItem interface {
 }
 
 type generalSettings struct {
-	fontColor  *fontTable
-	colorTable *colorTable // Основные цветовые схемы. обращение в документе к ним с помощью управляющих слов \cfN, где N - порядковый номер цветовой схемы.
+	fontColor  *FontTable
+	colorTable *ColorTable // Основные цветовые схемы. обращение в документе к ним с помощью управляющих слов \cfN, где N - порядковый номер цветовой схемы.
 }
 
 // Header - document header struct
@@ -37,8 +37,8 @@ type colorItem struct {
 	name     string
 }
 
-// document - main document struct
-type document struct {
+// Document - main document struct
+type Document struct {
 	header
 	orientation string
 	margins
@@ -48,8 +48,8 @@ type document struct {
 	content    []documentItem
 }
 
-// colorTable defines color table
-type colorTable []colorItem
+// ColorTable defines color table
+type ColorTable []colorItem
 
 // font defines font struct
 type font struct {
@@ -60,8 +60,8 @@ type font struct {
 	code    string
 }
 
-// fontTable defines font table
-type fontTable []font
+// FontTable defines font table
+type FontTable []font
 
 // Size struct
 type size struct {
@@ -69,26 +69,26 @@ type size struct {
 	height int
 }
 
-// table is a struct for table.
-type table struct {
+// Table is a struct for Table.
+type Table struct {
 	width    int
 	align    string
 	docWidth int
 	maxWidth int
-	data     []*tableRow
+	data     []*TableRow
 	margins
 	borders
 	generalSettings
 }
 
-// tableCell defines cell properties
-type tableCell struct {
+// TableCell defines cell properties
+type TableCell struct {
 	cellWidth      int
 	verticalMerged string
 	tableRowWidth  int
 	maxWidth       int
 	vTextAlign     string
-	content        []*paragraph
+	content        []*Paragraph
 	borders
 	margins
 	generalSettings
@@ -111,9 +111,9 @@ type margins struct {
 	marginBottom int
 }
 
-// tableRow definces Table Row struct
-type tableRow struct {
-	cells      []*tableCell
+// TableRow definces Table Row struct
+type TableRow struct {
+	cells      []*TableCell
 	tableWidth int
 	maxWidth   int
 	borders
@@ -138,8 +138,8 @@ type Picture struct {
 
 // ============End of Table structs===========
 
-// paragraph defines paragraph instances
-type paragraph struct {
+// Paragraph defines Paragraph instances
+type Paragraph struct {
 	isTable           bool
 	align             string
 	indent            string
@@ -153,7 +153,7 @@ type paragraph struct {
 }
 
 // Text defines Text instances
-type text struct {
+type Text struct {
 	fontSize      int
 	fontCode      int //code for font in font Table
 	colorCode     int
