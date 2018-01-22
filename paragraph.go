@@ -3,8 +3,8 @@ package rtfdoc
 import "fmt"
 
 // AddParagraph return new instance of Paragraph
-func (doc *document) AddParagraph() *paragraph {
-	p := paragraph{
+func (doc *Document) AddParagraph() *Paragraph {
+	p := Paragraph{
 		align:   AlignCenter,
 		indent:  "\\fl360",
 		content: nil,
@@ -19,13 +19,13 @@ func (doc *document) AddParagraph() *paragraph {
 	return &p
 }
 
-func (p *paragraph) updateMaxWidth() *paragraph {
+func (p *Paragraph) updateMaxWidth() *Paragraph {
 	p.maxWidth = p.allowedWidth
 	return p
 }
 
-func (par paragraph) compose() string {
-	indentStr := fmt.Sprintf(" \\fi%d \\li%d \\ri%d",
+func (par Paragraph) compose() string {
+	indentStr := fmt.Sprintf("\\fi%d \\li%d \\ri%d",
 		par.indentFirstLine,
 		par.indentLeftIndent,
 		par.indentRightIndent)
@@ -42,25 +42,25 @@ func (par paragraph) compose() string {
 }
 
 // SetIndentFirstLine function sets first line indent in twips
-func (par *paragraph) SetIndentFirstLine(value int) *paragraph {
+func (par *Paragraph) SetIndentFirstLine(value int) *Paragraph {
 	par.indentFirstLine = value
 	return par
 }
 
 // SetIndentRight function sets right indent in twips
-func (par *paragraph) SetIndentRight(value int) *paragraph {
+func (par *Paragraph) SetIndentRight(value int) *Paragraph {
 	par.indentRightIndent = value
 	return par
 }
 
 // SetIndentLeft function sets left indent in twips
-func (par *paragraph) SetIndentLeft(value int) *paragraph {
+func (par *Paragraph) SetIndentLeft(value int) *Paragraph {
 	par.indentLeftIndent = value
 	return par
 }
 
-// SetAlignt sets paragraph align (c/center, l/left, r/right, j/justify)
-func (par *paragraph) SetAlignt(align string) *paragraph {
+// SetAlignt sets Paragraph align (c/center, l/left, r/right, j/justify)
+func (par *Paragraph) SetAlignt(align string) *Paragraph {
 	for _, i := range []string{
 		AlignCenter,
 		AlignLeft,

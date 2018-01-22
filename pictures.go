@@ -12,7 +12,7 @@ import (
 )
 
 // AddPicture adds picture
-func (par *paragraph) AddPicture(source []byte, format string) *Picture {
+func (par *Paragraph) AddPicture(source []byte, format string) *Picture {
 	var pic = Picture{
 		paragraphWidth: par.maxWidth,
 	}

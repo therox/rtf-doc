@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func (text text) compose() string {
+func (text Text) compose() string {
 	var res string
 
 	var emphTextSlice []string
@@ -38,7 +38,7 @@ func (text text) compose() string {
 }
 
 // AddText returns new text instance
-func (p *paragraph) AddText(textStr string, fontSize int, fontCode string, colorCode string) *text {
+func (p *Paragraph) AddText(textStr string, fontSize int, fontCode string, colorCode string) *Text {
 
 	fn := 0
 	for i, f := range *p.generalSettings.fontColor {
@@ -55,7 +55,7 @@ func (p *paragraph) AddText(textStr string, fontSize int, fontCode string, color
 			fc = i + 1
 		}
 	}
-	txt := text{
+	txt := Text{
 		fontSize:  fontSize,
 		fontCode:  fn,
 		colorCode: fc,
@@ -69,9 +69,9 @@ func (p *paragraph) AddText(textStr string, fontSize int, fontCode string, color
 	return &txt
 }
 
-//AddNewLine adds new line into paragraph text
-func (p *paragraph) AddNewLine() *paragraph {
-	txt := text{
+//AddNewLine adds new line into Paragraph text
+func (p *Paragraph) AddNewLine() *Paragraph {
+	txt := Text{
 		content: "\\line",
 	}
 	p.content = append(p.content, &txt)
@@ -79,53 +79,53 @@ func (p *paragraph) AddNewLine() *paragraph {
 }
 
 // SetBold function sets text to Bold
-func (text *text) SetBold() *text {
+func (text *Text) SetBold() *Text {
 	text.isBold = true
 	return text
 }
 
 // SetItalic function sets text to Italic
-func (text *text) SetItalic() *text {
+func (text *Text) SetItalic() *Text {
 	text.isItalic = true
 	return text
 }
 
 // SetUnderlining function sets text to Underlining
-func (text *text) SetUnderlining() *text {
+func (text *Text) SetUnderlining() *Text {
 	text.isUnderlining = true
 	return text
 }
 
 // SetSuper function sets text to Super
-func (text *text) SetSuper() *text {
+func (text *Text) SetSuper() *Text {
 	text.isSuper = true
 	return text
 }
 
 // SetSub function sets text to Sub
-func (text *text) SetSub() *text {
+func (text *Text) SetSub() *Text {
 	text.isSub = true
 	return text
 }
 
 // SetScaps function sets text to Scaps
-func (text *text) SetScaps() *text {
+func (text *Text) SetScaps() *Text {
 	text.isScaps = true
 	return text
 }
 
 // SetStrike function sets text to Strike
-func (text *text) SetStrike() *text {
+func (text *Text) SetStrike() *Text {
 	text.isStrike = true
 	return text
 }
 
-func (text *text) getEmphasis() string {
+func (text *Text) getEmphasis() string {
 	return text.emphasis
 }
 
 // SetColor sets text color
-func (text *text) SetColor(colorCode string) *text {
+func (text *Text) SetColor(colorCode string) *Text {
 	for i := range *text.colorTable {
 		if (*text.colorTable)[i].name == colorCode {
 			// Присваиваем тексту порядковый номер шрифта
