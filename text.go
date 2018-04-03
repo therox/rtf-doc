@@ -30,6 +30,9 @@ func (text Text) compose() string {
 	if text.isUnderlining {
 		emphTextSlice = append(emphTextSlice, "\\ul")
 	}
+	if text.rotated {
+		emphTextSlice = append(emphTextSlice, "\\horzvert0")
+	}
 
 	PreparedText := convertNonASCIIToUTF16(text.content)
 
@@ -117,6 +120,12 @@ func (text *Text) SetScaps() *Text {
 // SetStrike function sets text to Strike
 func (text *Text) SetStrike() *Text {
 	text.isStrike = true
+	return text
+}
+
+// SetRotate function rotates Text so it flows in a direction opposite to that of the main document (Horizontal in vertical and vertical in horizontal)
+func (text *Text) SetRotate() *Text {
+	text.rotated = true
 	return text
 }
 

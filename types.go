@@ -166,6 +166,7 @@ type Text struct {
 	isStrike      bool
 	emphasis      string
 	content       string
+	rotated       bool
 	generalSettings
 }
 

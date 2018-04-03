@@ -19,7 +19,7 @@ func main() {
 
 	p := d.AddParagraph()
 	p.AddText("Green first string (Times New Roman)", 48, rtfdoc.FontTimesNewRoman, rtfdoc.ColorGreen)
-	d.AddParagraph().AddText("Blue second string (Arial)", 48, rtfdoc.FontArial, rtfdoc.ColorBlue)
+	d.AddParagraph().AddText("Blue second string (Arial, Rotated)", 48, rtfdoc.FontArial, rtfdoc.ColorBlue).SetRotate()
 	d.AddParagraph().AddText("Red Third string (Comic Sans)", 48, rtfdoc.FontComicSansMS, rtfdoc.ColorRed)
 
 	// Таблица
