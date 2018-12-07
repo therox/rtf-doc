@@ -42,14 +42,14 @@ func main() {
 	p.AddText("Blue text with cyrillic support with multiline", 16, rtfdoc.FontComicSansMS, rtfdoc.ColorBlue)
 	p.AddNewLine()
 	p.AddText("Голубой кириллический текст с переносом строки внутри параграфа", 16, rtfdoc.FontComicSansMS, rtfdoc.ColorBlue)
-	p.SetAlignt(rtfdoc.AlignJustify)
+	p.SetAlign(rtfdoc.AlignJustify)
 	p = dc.AddParagraph().
 		SetIndentFirstLine(40).
-		SetAlignt(rtfdoc.AlignCenter)
+		SetAlign(rtfdoc.AlignCenter)
 	p.AddText("Another paragraph in vertical cell", 16, rtfdoc.FontCourierNew, rtfdoc.ColorBlue)
 
 	dc = tr.AddDataCell(cWidth[1])
-	p = dc.AddParagraph().SetAlignt(rtfdoc.AlignCenter)
+	p = dc.AddParagraph().SetAlign(rtfdoc.AlignCenter)
 	p.AddText("Green text In top right cell with center align", 16, rtfdoc.FontComicSansMS, rtfdoc.ColorGreen)
 	tr = t.AddTableRow()
 
@@ -60,12 +60,12 @@ func main() {
 
 	dc = tr.AddDataCell(cWidth[1])
 	p = dc.AddParagraph()
-	p.SetAlignt(rtfdoc.AlignRight)
+	p.SetAlign(rtfdoc.AlignRight)
 	p.AddText("Red text In bottom central cell with right align", 16, rtfdoc.FontArial, rtfdoc.ColorRed).SetBold()
 
 	dc = tr.AddDataCell(cWidth[2])
 	p = dc.AddParagraph()
-	p.SetAlignt(rtfdoc.AlignLeft)
+	p.SetAlign(rtfdoc.AlignLeft)
 	p.AddText("Black text in bottom right cell with left align", 16, rtfdoc.FontComicSansMS, rtfdoc.ColorBlack).SetItalic()
 
 	p = dc.AddParagraph()
@@ -75,11 +75,11 @@ func main() {
 		fmt.Println(err)
 	}
 	p.AddPicture(f, rtfdoc.ImageFormatJpeg)
-	p.SetAlignt(rtfdoc.AlignCenter)
+	p.SetAlign(rtfdoc.AlignCenter)
 
 	pPic := d.AddParagraph()
 	pPic.AddPicture(f, rtfdoc.ImageFormatJpeg)
-	pPic.SetAlignt(rtfdoc.AlignCenter)
+	pPic.SetAlign(rtfdoc.AlignCenter)
 	// pic.SetWidth(200).SetHeight(150)
 
 	fmt.Println(string(d.Export()))

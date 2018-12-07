@@ -59,8 +59,8 @@ func (par *Paragraph) SetIndentLeft(value int) *Paragraph {
 	return par
 }
 
-// SetAlignt sets Paragraph align (c/center, l/left, r/right, j/justify)
-func (par *Paragraph) SetAlignt(align string) *Paragraph {
+// SetAlign sets Paragraph align (c/center, l/left, r/right, j/justify)
+func (par *Paragraph) SetAlign(align string) *Paragraph {
 	for _, i := range []string{
 		AlignCenter,
 		AlignLeft,
