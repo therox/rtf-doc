@@ -410,8 +410,13 @@ func (dc TableCell) cellComposeProperties() string {
 	res += fmt.Sprintf("\\clvertal%s", dc.vTextAlign)
 
 	// Background Color
-	if dc.backgroundColor != 0 {
-		res += fmt.Sprintf("\\clcbpat%d", dc.backgroundColor)
+
+	if dc.backgroundColor != "" {
+		for c := range *dc.colorTable {
+			if ((*dc.colorTable)[c]).name == dc.backgroundColor {
+				res += fmt.Sprintf("\\clcbpat%d", c+1)
+			}
+		}
 	}
 
 	return res
@@ -576,7 +581,7 @@ func (dc *TableCell) SetBorderColor(color string) *TableCell {
 }
 
 // SetBackgroundColor function sets cell's background color
-func (dc *TableCell) SetBackgroundColor(colorNum int) *TableCell {
-	dc.backgroundColor = colorNum
+func (dc *TableCell) SetBackgroundColor(color string) *TableCell {
+	dc.backgroundColor = color
 	return dc
 }

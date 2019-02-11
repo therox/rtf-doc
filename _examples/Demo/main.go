@@ -35,7 +35,7 @@ func main() {
 	cWidth := t.GetTableCellWidthByRatio(1, 3)
 
 	// ячейка таблицы
-	dc := tr.AddDataCell(cWidth[0])
+	dc := tr.AddDataCell(cWidth[0]).SetBackgroundColor(rtfdoc.ColorGreen)
 	dc.SetVerticalMergedFirst()
 	p = dc.AddParagraph()
 	// текст
@@ -46,7 +46,7 @@ func main() {
 	p = dc.AddParagraph().
 		SetIndentFirstLine(40).
 		SetAlign(rtfdoc.AlignCenter)
-	p.AddText("Another paragraph in vertical cell", 16, rtfdoc.FontCourierNew, rtfdoc.ColorBlue).SetBackgroundColor(rtfdoc.ColorGreen)
+	p.AddText("Another paragraph in vertical cell", 16, rtfdoc.FontCourierNew, rtfdoc.ColorBlue)
 
 	dc = tr.AddDataCell(cWidth[1])
 	p = dc.AddParagraph().SetAlign(rtfdoc.AlignCenter)

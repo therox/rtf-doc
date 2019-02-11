@@ -92,7 +92,7 @@ type TableCell struct {
 	borders
 	margins
 	generalSettings
-	backgroundColor int
+	backgroundColor string
 }
 
 type borders struct {
