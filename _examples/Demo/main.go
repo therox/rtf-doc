@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/therox/rtf-doc"
+	rtfdoc "github.com/therox/rtf-doc"
 )
 
 func main() {
@@ -46,7 +46,7 @@ func main() {
 	p = dc.AddParagraph().
 		SetIndentFirstLine(40).
 		SetAlign(rtfdoc.AlignCenter)
-	p.AddText("Another paragraph in vertical cell", 16, rtfdoc.FontCourierNew, rtfdoc.ColorBlue)
+	p.AddText("Another paragraph in vertical cell", 16, rtfdoc.FontCourierNew, rtfdoc.ColorBlue).SetBackgroundColor(rtfdoc.ColorGreen)
 
 	dc = tr.AddDataCell(cWidth[1])
 	p = dc.AddParagraph().SetAlign(rtfdoc.AlignCenter)

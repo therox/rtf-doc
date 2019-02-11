@@ -409,6 +409,11 @@ func (dc TableCell) cellComposeProperties() string {
 	// Aligning insite cell
 	res += fmt.Sprintf("\\clvertal%s", dc.vTextAlign)
 
+	// Background Color
+	if dc.backgroundColor != 0 {
+		res += fmt.Sprintf("\\clcbpat%d", dc.backgroundColor)
+	}
+
 	return res
 }
 
@@ -567,5 +572,11 @@ func (dc *TableCell) SetVAlign(valign string) *TableCell {
 // SetBorderColor function sets cell's border color
 func (dc *TableCell) SetBorderColor(color string) *TableCell {
 	dc.borderColor = color
+	return dc
+}
+
+// SetBackgroundColor function sets cell's background color
+func (dc *TableCell) SetBackgroundColor(colorNum int) *TableCell {
+	dc.backgroundColor = colorNum
 	return dc
 }
