@@ -80,7 +80,7 @@ func (t Table) compose() string {
 		res += fmt.Sprintf("\n \\trpaddl%d \\trpaddr%d \\trpaddt%d \\trpaddb%d\n", t.marginLeft, t.marginRight, t.marginTop, t.marginBottom)
 		//res += t.getMargins()
 		res += tr.encode()
-		res += "\\row}"
+		res += "\\row\\par}"
 	}
 	return res
 }
