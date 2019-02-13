@@ -19,9 +19,9 @@ func (doc *Document) AddParagraph() *Paragraph {
 	return &p
 }
 
-func (p *Paragraph) updateMaxWidth() *Paragraph {
-	p.maxWidth = p.allowedWidth
-	return p
+func (par *Paragraph) updateMaxWidth() *Paragraph {
+	par.maxWidth = par.allowedWidth
+	return par
 }
 
 func (par Paragraph) compose() string {
@@ -29,7 +29,7 @@ func (par Paragraph) compose() string {
 		par.indentFirstLine,
 		par.indentLeftIndent,
 		par.indentRightIndent)
-	res := fmt.Sprintf("\n{\\pard %s \\q%s", indentStr, par.align)
+	res := fmt.Sprintf("\n{\\par\\pard %s \\q%s", indentStr, par.align)
 	if par.isTable {
 		res += "\\intbl"
 	}
@@ -37,7 +37,7 @@ func (par Paragraph) compose() string {
 	for _, c := range par.content {
 		res += c.compose()
 	}
-	res += "\n\\par}"
+	// res += "\n\\par}"
 	return res
 }
 
