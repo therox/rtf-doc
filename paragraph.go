@@ -29,7 +29,7 @@ func (par Paragraph) compose() string {
 		par.indentFirstLine,
 		par.indentLeftIndent,
 		par.indentRightIndent)
-	res := fmt.Sprintf("\n{\\pard %s \\q%s", indentStr, par.align)
+	res := fmt.Sprintf("\n{\\par \\pard %s \\q%s", indentStr, par.align)
 	if par.isTable {
 		res += "\\intbl"
 	}
@@ -38,6 +38,7 @@ func (par Paragraph) compose() string {
 		res += c.compose()
 	}
 	// res += "\n\\par}"
+	res += "}"
 	return res
 }
 
