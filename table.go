@@ -430,7 +430,7 @@ func (dc TableCell) cellComposeData() string {
 	for _, p := range dc.content {
 		res += fmt.Sprintf("%s \n", p.compose())
 	}
-	res += "\\cell \\par"
+	res += "\\cell"
 	return res
 }
 
