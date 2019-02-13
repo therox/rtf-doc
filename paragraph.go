@@ -37,8 +37,8 @@ func (par Paragraph) compose() string {
 	for _, c := range par.content {
 		res += c.compose()
 	}
-	res += "\n\\par}"
-	// res += "}"
+	// res += "\n\\par}"
+	res += "\n}"
 	return res
 }
 
