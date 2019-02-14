@@ -29,10 +29,11 @@ func (par Paragraph) compose() string {
 		par.indentFirstLine,
 		par.indentLeftIndent,
 		par.indentRightIndent)
-	res := fmt.Sprintf("\n{\\pard %s \\q%s", indentStr, par.align)
+	res := fmt.Sprintf("\n{\\pard %s ", indentStr)
 	if par.isTable {
 		res += "\\intbl"
 	}
+	res += fmt.Sprintf(" \\q%s", par.align)
 
 	for _, c := range par.content {
 		res += c.compose()
