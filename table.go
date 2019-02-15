@@ -424,7 +424,7 @@ func (dc TableCell) cellComposeProperties() string {
 
 	// Margins
 	res += fmt.Sprintf("\n\\clpadl%d\\clpadr%d\\clpadt%d\\clpadb%d",
-		dc.marginLeft, dc.marginRight, dc.marginTop, dc.marginBottom,
+		dc.paddingLeft, dc.paddingRight, dc.paddingTop, dc.paddingBottom,
 	)
 
 	// Vertical Merged
@@ -588,6 +588,35 @@ func (dc *TableCell) SetMarginTop(value int) *TableCell {
 func (dc *TableCell) SetMarginBottom(value int) *TableCell {
 	dc.marginBottom = value
 	return dc
+}
+
+// SetPaddingLeft function sets this cell's left padding
+func (dc *TableCell) SetPaddingLeft(value int) *TableCell {
+	dc.paddingLeft = value
+	return dc
+}
+
+// SetPaddingRight function sets this cell's right padding
+func (dc *TableCell) SetPaddingRight(value int) *TableCell {
+	dc.paddingRight = value
+	return dc
+}
+
+// SetPaddingTop function sets this cell's top padding
+func (dc *TableCell) SetPaddingTop(value int) *TableCell {
+	dc.paddingTop = value
+	return dc
+}
+
+// SetPaddingBottom function sets this cell's bottom padding
+func (dc *TableCell) SetPaddingBottom(value int) *TableCell {
+	dc.paddingBottom = value
+	return dc
+}
+
+// SetPadding - function sets all paddings to value
+func (dc *TableCell) SetPadding(value int) *TableCell {
+	return dc.SetPaddingBottom(value).SetPaddingLeft(value).SetPaddingRight(value).SetPaddingTop(value)
 }
 
 // SetVAlign sets align

@@ -92,6 +92,7 @@ type TableCell struct {
 	content        []*Paragraph
 	borders
 	margins
+	paddings
 	generalSettings
 	backgroundColor string
 }
