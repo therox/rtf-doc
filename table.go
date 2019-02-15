@@ -161,6 +161,12 @@ func (t *Table) SetBorderBottom(isBorder bool) *Table {
 	return t
 }
 
+// SetBorder function sets Table bottom border presence
+func (t *Table) SetBorder(isBorder bool) *Table {
+	t.borderBottom = isBorder
+	return t.SetBorderBottom(isBorder).SetBorderTop(isBorder).SetBorderLeft(isBorder).SetBorderRight(isBorder)
+}
+
 // SetBorderStyle function sets Table left border style
 func (t *Table) SetBorderStyle(bStyle string) *Table {
 	for _, i := range []string{
@@ -248,6 +254,11 @@ func (tr *TableRow) SetBorderTop(isBorder bool) *TableRow {
 func (tr *TableRow) SetBorderBottom(isBorder bool) *TableRow {
 	tr.borderBottom = isBorder
 	return tr
+}
+
+// SetBorder function sets bottom borders
+func (tr *TableRow) SetBorder(isBorder bool) *TableRow {
+	return tr.SetBorderBottom(isBorder).SetBorderTop(isBorder).SetBorderLeft(isBorder).SetBorderRight(isBorder)
 }
 
 // SetBorderStyle function sets border style
@@ -489,6 +500,11 @@ func (dc *TableCell) SetBorderTop(value bool) *TableCell {
 func (dc *TableCell) SetBorderBottom(value bool) *TableCell {
 	dc.borderBottom = value
 	return dc
+}
+
+// SetBorder function sets bottom borders
+func (dc *TableCell) SetBorder(isBorder bool) *TableCell {
+	return dc.SetBorderBottom(isBorder).SetBorderTop(isBorder).SetBorderLeft(isBorder).SetBorderRight(isBorder)
 }
 
 // SetBorderWidth function sets cell's border width px
