@@ -27,9 +27,35 @@ func (t *Table) SetMarginBottom(value int) *Table {
 	return t
 }
 
-//func (tp *tableProperties) getMargins() string {
-//	return tp.margins
-//}
+// SetPaddingLeft function sets Table left margin
+func (t *Table) SetPaddingLeft(value int) *Table {
+	t.paddingLeft = value
+	return t
+}
+
+// SetPaddingRight function sets Table right padding
+func (t *Table) SetPaddingRight(value int) *Table {
+	t.paddingRight = value
+	return t
+}
+
+// SetPaddingTop function sets Table top padding
+func (t *Table) SetPaddingTop(value int) *Table {
+	t.paddingTop = value
+	return t
+}
+
+// SetPaddingBottom function sets Table bottom padding
+func (t *Table) SetPaddingBottom(value int) *Table {
+	t.paddingBottom = value
+	//tp.paddings += fmt.Sprintf(" \\trpaddb%d", value)
+	return t
+}
+
+// SetPadding function sets all Table paddings
+func (t *Table) SetPadding(value int) *Table {
+	return t.SetPaddingBottom(value).SetPaddingLeft(value).SetPaddingRight(value).SetPaddingTop(value)
+}
 
 // SetAlign sets Table aligning (c/center, l/left, r/right)
 func (t *Table) SetAlign(align string) *Table {
@@ -77,7 +103,7 @@ func (t Table) compose() string {
 	for _, tr := range t.data {
 		res += fmt.Sprintf("\n{\\trowd %s", align)
 
-		res += fmt.Sprintf("\n \\trpaddl%d \\trpaddr%d \\trpaddt%d \\trpaddb%d\n", t.marginLeft, t.marginRight, t.marginTop, t.marginBottom)
+		res += fmt.Sprintf("\n \\trpaddl%d \\trpaddr%d \\trpaddt%d \\trpaddb%d\n", t.paddingLeft, t.paddingRight, t.paddingTop, t.paddingBottom)
 		//res += t.getMargins()
 		res += tr.encode()
 		res += "\\row}"

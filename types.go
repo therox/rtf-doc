@@ -77,6 +77,7 @@ type Table struct {
 	maxWidth int
 	data     []*TableRow
 	margins
+	paddings
 	borders
 	generalSettings
 }
@@ -110,6 +111,13 @@ type margins struct {
 	marginRight  int
 	marginTop    int
 	marginBottom int
+}
+
+type paddings struct {
+	paddingLeft   int
+	paddingRight  int
+	paddingTop    int
+	paddingBottom int
 }
 
 // TableRow definces Table Row struct
