@@ -637,6 +637,7 @@ func (dc *TableCell) SetPadding(value int) *TableCell {
 
 // SetVAlign sets align
 func (dc *TableCell) SetVAlign(valign string) *TableCell {
+	dc.vTextAlign = "t"
 	for _, i := range []string{VAlignBottom, VAlignMiddle, VAlignTop} {
 		if valign == i {
 			dc.vTextAlign = i
