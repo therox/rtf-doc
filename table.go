@@ -103,7 +103,7 @@ func (t Table) compose() string {
 	for _, tr := range t.data {
 		res += fmt.Sprintf("\n{\\trowd %s", align)
 
-		res += fmt.Sprintf("\n \\trpaddl%d \\trpaddr%d \\trpaddt%d \\trpaddb%d\n", t.paddingLeft, t.paddingRight, t.paddingTop, t.paddingBottom)
+		res += fmt.Sprintf("\n\\trpaddl%d \\trpaddr%d \\trpaddt%d \\trpaddb%d\n", t.paddingLeft, t.paddingRight, t.paddingTop, t.paddingBottom)
 		//res += t.getMargins()
 		res += tr.encode()
 		res += "\\row}"
