@@ -323,7 +323,7 @@ func (tr *TableRow) SetBorderWidth(value int) *TableRow {
 func (tr *TableRow) encode() string {
 	res := ""
 	// Border settings
-	bTempl := "\n \\trbrdr%s\\brdrw%d\\brdr%s"
+	bTempl := "\n\\trbrdr%s\\brdrw%d\\brdr%s"
 	for c := range *tr.colorTable {
 		if ((*tr.colorTable)[c]).name == tr.borderColor {
 			bTempl += fmt.Sprintf("\\brdrcf%d", c+1)
@@ -412,7 +412,7 @@ func (dc *TableCell) AddParagraph() *Paragraph {
 func (dc TableCell) cellComposeProperties() string {
 	res := ""
 	// Тута свойства ячейки (границы, все дела...)
-	bTempl := "\n \\clbrdr%s\\brdrw%d\\brdr%s"
+	bTempl := "\n\\clbrdr%s\\brdrw%d\\brdr%s"
 	for c := range *dc.colorTable {
 		if ((*dc.colorTable)[c]).name == dc.borderColor {
 			bTempl += fmt.Sprintf("\\brdrcf%d", c+1)
