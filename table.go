@@ -1,6 +1,9 @@
 package rtfdoc
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 // SetMarginLeft function sets Table left margin
 func (t *Table) SetMarginLeft(value int) *Table {
@@ -95,20 +98,20 @@ func (t *Table) updateMaxWidth() *Table {
 }
 
 func (t Table) compose() string {
-	res := ""
+	var res strings.Builder
 	var align = ""
 	if t.align != "" {
 		align = fmt.Sprintf("\\trq%s", t.align)
 	}
 	for _, tr := range t.data {
-		res += fmt.Sprintf("\n{\\trowd %s", align)
+		res.WriteString(fmt.Sprintf("\n{\\trowd %s", align))
 
-		res += fmt.Sprintf("\n\\trpaddl%d \\trpaddr%d \\trpaddt%d \\trpaddb%d\n", t.paddingLeft, t.paddingRight, t.paddingTop, t.paddingBottom)
+		res.WriteString(fmt.Sprintf("\n\\trpaddl%d \\trpaddr%d \\trpaddt%d \\trpaddb%d\n", t.paddingLeft, t.paddingRight, t.paddingTop, t.paddingBottom))
 		//res += t.getMargins()
-		res += tr.encode()
-		res += "\\row}"
+		res.WriteString(tr.encode())
+		res.WriteString("\\row}")
 	}
-	return res
+	return res.String()
 }
 
 // AddTableRow returns new Table row instance
@@ -321,7 +324,7 @@ func (tr *TableRow) SetBorderWidth(value int) *TableRow {
 }
 
 func (tr *TableRow) encode() string {
-	res := ""
+	var res strings.Builder
 	// Border settings
 	bTempl := "\n\\trbrdr%s\\brdrw%d\\brdr%s"
 	for c := range *tr.colorTable {
@@ -332,16 +335,16 @@ func (tr *TableRow) encode() string {
 	}
 
 	if tr.borderLeft {
-		res += fmt.Sprintf(bTempl, "l", tr.borderWidth, tr.borderStyle)
+		res.WriteString(fmt.Sprintf(bTempl, "l", tr.borderWidth, tr.borderStyle))
 	}
 	if tr.borderRight {
-		res += fmt.Sprintf(bTempl, "r", tr.borderWidth, tr.borderStyle)
+		res.WriteString(fmt.Sprintf(bTempl, "r", tr.borderWidth, tr.borderStyle))
 	}
 	if tr.borderTop {
-		res += fmt.Sprintf(bTempl, "t", tr.borderWidth, tr.borderStyle)
+		res.WriteString(fmt.Sprintf(bTempl, "t", tr.borderWidth, tr.borderStyle))
 	}
 	if tr.borderBottom {
-		res += fmt.Sprintf(bTempl, "b", tr.borderWidth, tr.borderStyle)
+		res.WriteString(fmt.Sprintf(bTempl, "b", tr.borderWidth, tr.borderStyle))
 	}
 
 	if len(tr.cells) != 0 {
@@ -349,16 +352,16 @@ func (tr *TableRow) encode() string {
 		for _, tc := range tr.cells {
 
 			cellLengthPosition += tc.getCellWidth()
-			res += tc.cellComposeProperties()
-			res += fmt.Sprintf("\\cellx%d", cellLengthPosition)
+			res.WriteString(tc.cellComposeProperties())
+			res.WriteString(fmt.Sprintf("\\cellx%d", cellLengthPosition))
 
 		}
-		res += "\n"
+		res.WriteString("\n")
 		for _, tc := range tr.cells {
-			res += tc.cellComposeData()
+			res.WriteString(tc.cellComposeData())
 		}
 	}
-	return res
+	return res.String()
 }
 
 // AddDataCell returns new DataCell for current Table row
@@ -410,7 +413,7 @@ func (dc *TableCell) AddParagraph() *Paragraph {
 }
 
 func (dc TableCell) cellComposeProperties() string {
-	res := ""
+	var res strings.Builder
 	// Тута свойства ячейки (границы, все дела...)
 	bTempl := "\n\\clbrdr%s\\brdrw%d\\brdr%s"
 	for c := range *dc.colorTable {
@@ -421,54 +424,54 @@ func (dc TableCell) cellComposeProperties() string {
 	}
 
 	if dc.borderLeft {
-		res += fmt.Sprintf(bTempl, "l", dc.borderWidth, dc.borderStyle)
+		res.WriteString(fmt.Sprintf(bTempl, "l", dc.borderWidth, dc.borderStyle))
 	}
 	if dc.borderRight {
-		res += fmt.Sprintf(bTempl, "r", dc.borderWidth, dc.borderStyle)
+		res.WriteString(fmt.Sprintf(bTempl, "r", dc.borderWidth, dc.borderStyle))
 	}
 	if dc.borderTop {
-		res += fmt.Sprintf(bTempl, "t", dc.borderWidth, dc.borderStyle)
+		res.WriteString(fmt.Sprintf(bTempl, "t", dc.borderWidth, dc.borderStyle))
 	}
 	if dc.borderBottom {
-		res += fmt.Sprintf(bTempl, "b", dc.borderWidth, dc.borderStyle)
+		res.WriteString(fmt.Sprintf(bTempl, "b", dc.borderWidth, dc.borderStyle))
 	}
 
 	// Margins
-	res += fmt.Sprintf("\n\\clpadl%d\\clpadr%d\\clpadt%d\\clpadb%d",
+	res.WriteString(fmt.Sprintf("\n\\clpadl%d\\clpadr%d\\clpadt%d\\clpadb%d",
 		dc.paddingLeft, dc.paddingRight, dc.paddingTop, dc.paddingBottom,
-	)
+	))
 
 	// Vertical Merged
 	if dc.verticalMerged != "" {
-		res += fmt.Sprintf("\\clvm%s", dc.verticalMerged)
+		res.WriteString(fmt.Sprintf("\\clvm%s", dc.verticalMerged))
 	}
 
 	// Aligning insite cell
-	res += fmt.Sprintf("\\clvertal%s", dc.vTextAlign)
+	res.WriteString(fmt.Sprintf("\\clvertal%s", dc.vTextAlign))
 
 	// Background Color
 
 	if dc.backgroundColor != "" {
 		for c := range *dc.colorTable {
 			if ((*dc.colorTable)[c]).name == dc.backgroundColor {
-				res += fmt.Sprintf("\\clcbpat%d", c+1)
+				res.WriteString(fmt.Sprintf("\\clcbpat%d", c+1))
 			}
 		}
 	}
 
-	return res
+	return res.String()
 }
 
 func (dc TableCell) cellComposeData() string {
+	var res strings.Builder
 	if len(dc.content) == 0 {
 		dc.AddParagraph()
 	}
-	res := ""
 	for _, p := range dc.content {
-		res += fmt.Sprintf("%s \n", p.compose())
+		res.WriteString(fmt.Sprintf("%s \n", p.compose()))
 	}
-	res += "\\cell"
-	return res
+	res.WriteString("\\cell")
+	return res.String()
 }
 
 func (dc TableCell) getCellWidth() int {

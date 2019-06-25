@@ -7,7 +7,10 @@ package rtfdoc
 import (
 	"fmt"
 	"image/color"
+	"strings"
 )
+
+// default compose
 
 // NewDocument returns new rtf Document instance
 func NewDocument() *Document {
@@ -65,22 +68,23 @@ func (doc *Document) getMargins() string {
 }
 
 func (doc *Document) compose() string {
-	result := "{"
-	result += doc.header.compose()
+	var result strings.Builder
+	result.WriteString("{")
+	result.WriteString(doc.header.compose())
 	if doc.orientation == OrientationLandscape {
-		result += fmt.Sprintf("\n\\landscape")
+		result.WriteString(fmt.Sprintf("\n\\landscape"))
 	}
 	if doc.pagesize != (size{}) {
-		result += fmt.Sprintf("\n\\paperw%d\\paperh%d", doc.pagesize.width, doc.pagesize.height)
+		result.WriteString(fmt.Sprintf("\n\\paperw%d\\paperh%d", doc.pagesize.width, doc.pagesize.height))
 	}
 
-	result += doc.getMargins()
+	result.WriteString(doc.getMargins())
 
 	for _, c := range doc.content {
-		result += fmt.Sprintf("\n%s", c.compose())
+		result.WriteString(fmt.Sprintf("\n%s", c.compose()))
 	}
-	result += "\n}"
-	return result
+	result.WriteString("\n}")
+	return result.String()
 }
 
 // SetFormat sets page format (A2, A3, A4)

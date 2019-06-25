@@ -1,6 +1,9 @@
 package rtfdoc
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 // AddParagraph return new instance of Paragraph
 func (doc *Document) AddParagraph() *Paragraph {
@@ -25,25 +28,26 @@ func (par *Paragraph) updateMaxWidth() *Paragraph {
 }
 
 func (par Paragraph) compose() string {
+	var res strings.Builder
 	indentStr := fmt.Sprintf("\\fi%d \\li%d \\ri%d",
 		par.indentFirstLine,
 		par.indentLeftIndent,
 		par.indentRightIndent)
-	res := fmt.Sprintf("\n\\pard \\q%s {%s ", par.align, indentStr)
+	res.WriteString(fmt.Sprintf("\n\\pard \\q%s {%s ", par.align, indentStr))
 	if par.isTable {
-		res += "\\intbl"
+		res.WriteString("\\intbl")
 	}
 	// res += fmt.Sprintf(" \\q%s", par.align)
 
 	for _, c := range par.content {
-		res += c.compose()
+		res.WriteString(c.compose())
 	}
 	// res += "\n\\par}"
-	res += "}"
+	res.WriteString("}")
 	if !par.isTable {
-		res += "\\par"
+		res.WriteString("\\par")
 	}
-	return res
+	return res.String()
 }
 
 // SetIndentFirstLine function sets first line indent in twips

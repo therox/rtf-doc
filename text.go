@@ -6,7 +6,7 @@ import (
 )
 
 func (text Text) compose() string {
-	var res string
+	var res strings.Builder
 
 	var emphTextSlice []string
 	if text.isBold {
@@ -36,8 +36,8 @@ func (text Text) compose() string {
 
 	PreparedText := convertNonASCIIToUTF16(text.content)
 
-	res += fmt.Sprintf("\n\\fs%d\\f%d \\cf%d %s{%s}\\f0", text.fontSize*2, text.fontCode, text.colorCode, strings.Join(emphTextSlice, " "), PreparedText)
-	return res
+	res.WriteString(fmt.Sprintf("\n\\fs%d\\f%d \\cf%d %s{%s}\\f0", text.fontSize*2, text.fontCode, text.colorCode, strings.Join(emphTextSlice, " "), PreparedText))
+	return res.String()
 }
 
 // AddText returns new text instance

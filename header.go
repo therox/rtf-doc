@@ -1,6 +1,9 @@
 package rtfdoc
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func getDefaultHeader() header {
 	return header{
@@ -11,13 +14,14 @@ func getDefaultHeader() header {
 }
 
 func (h header) compose() string {
-	res := fmt.Sprintf("\\rtf%s\\%s\\deff%s", h.version, h.charSet, h.deff)
+	var res strings.Builder
+	res.WriteString(fmt.Sprintf("\\rtf%s\\%s\\deff%s", h.version, h.charSet, h.deff))
 
 	if h.fontColor != nil {
-		res += fmt.Sprintf("\n{\\fonttbl;%s}", h.fontColor.encode())
+		res.WriteString(fmt.Sprintf("\n{\\fonttbl;%s}", h.fontColor.encode()))
 	}
 	if h.colorTable != nil {
-		res += fmt.Sprintf("\n{\\colortbl;%s}", h.colorTable.encode())
+		res.WriteString(fmt.Sprintf("\n{\\colortbl;%s}", h.colorTable.encode()))
 	}
-	return res
+	return res.String()
 }

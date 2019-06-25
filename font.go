@@ -1,6 +1,9 @@
 package rtfdoc
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 // AddFont returns font instance
 func (ft *FontTable) AddFont(family string, charset int, prq int, name string, code string) *FontTable {
@@ -24,10 +27,10 @@ func NewFontTable() *FontTable {
 }
 
 func (ft FontTable) encode() string {
-	var fontInfo string
+	var fontInfo strings.Builder
 	for i := range ft {
-		fontInfo += fmt.Sprintf("{\\f%d%s}", i, ft[i].encode())
+		fontInfo.WriteString(fmt.Sprintf("{\\f%d%s}", i, ft[i].encode()))
 
 	}
-	return fontInfo
+	return fontInfo.String()
 }
