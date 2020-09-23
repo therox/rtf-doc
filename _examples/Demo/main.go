@@ -67,6 +67,7 @@ func main() {
 	p = dc.AddParagraph()
 	p.SetAlign(rtfdoc.AlignLeft)
 	p.AddText("Black text in bottom right cell with left align", 16, rtfdoc.FontComicSansMS, rtfdoc.ColorBlack).SetItalic()
+	p.AddText("° degrees", 16, rtfdoc.FontComicSansMS, rtfdoc.ColorBlack).SetItalic()
 
 	p = dc.AddParagraph()
 
