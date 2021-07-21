@@ -6,6 +6,21 @@ import (
 
 func getSize(format string, layout string) (size, error) {
 	switch format {
+	case FormatLetter:
+		switch layout {
+		case OrientationLandscape:
+			return size{
+				width:  15936,
+				height: 12188,
+			}, nil
+		case OrientationPortrait:
+			return size{
+				width:  12188,
+				height: 15936,
+			}, nil
+		default:
+			return size{}, errors.New("Incorrect document orientation")
+		}
 	case FormatA5:
 		switch layout {
 		case OrientationLandscape:

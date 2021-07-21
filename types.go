@@ -188,10 +188,11 @@ const (
 
 // Commont paper formats
 const (
-	FormatA5 = "format_A5"
-	FormatA4 = "format_A4"
-	FormatA3 = "format_A3"
-	FormatA2 = "format_A2"
+	FormatLetter = "format_Letter"
+	FormatA5     = "format_A5"
+	FormatA4     = "format_A4"
+	FormatA3     = "format_A3"
+	FormatA2     = "format_A2"
 )
 
 // Aligning properties
