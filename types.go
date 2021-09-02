@@ -80,6 +80,7 @@ type Table struct {
 	paddings
 	borders
 	generalSettings
+	defaultFontSize int
 }
 
 // TableCell defines cell properties
