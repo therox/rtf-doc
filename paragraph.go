@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-// AddParagraph return new instance of Paragraph
+// AddParagraph return new instance of Paragraph.
 func (doc *Document) AddParagraph() *Paragraph {
 	p := Paragraph{
 		align:   AlignCenter,
@@ -33,7 +33,7 @@ func (par Paragraph) compose() string {
 		par.indentFirstLine,
 		par.indentLeftIndent,
 		par.indentRightIndent)
-	res.WriteString(fmt.Sprintf("\n\\pard \\q%s {%s ", par.align, indentStr))
+	res.WriteString(fmt.Sprintf("\n\\pard \\q%s %s {", par.align, indentStr))
 	if par.isTable {
 		res.WriteString("\\intbl")
 	}
@@ -50,25 +50,25 @@ func (par Paragraph) compose() string {
 	return res.String()
 }
 
-// SetIndentFirstLine function sets first line indent in twips
+// SetIndentFirstLine function sets first line indent in twips.
 func (par *Paragraph) SetIndentFirstLine(value int) *Paragraph {
 	par.indentFirstLine = value
 	return par
 }
 
-// SetIndentRight function sets right indent in twips
+// SetIndentRight function sets right indent in twips.
 func (par *Paragraph) SetIndentRight(value int) *Paragraph {
 	par.indentRightIndent = value
 	return par
 }
 
-// SetIndentLeft function sets left indent in twips
+// SetIndentLeft function sets left indent in twips.
 func (par *Paragraph) SetIndentLeft(value int) *Paragraph {
 	par.indentLeftIndent = value
 	return par
 }
 
-// SetAlign sets Paragraph align (c/center, l/left, r/right, j/justify)
+// SetAlign sets Paragraph align (c/center, l/left, r/right, j/justify).
 func (par *Paragraph) SetAlign(align string) *Paragraph {
 	for _, i := range []string{
 		AlignCenter,
