@@ -8,7 +8,7 @@ import (
 
 func ExampleDocument() {
 	doc := rtfdoc.NewDocument()
-	doc.AddParagraph().SetAlignt(rtfdoc.AlignCenter).AddText("Hello, world!", 14, rtfdoc.FontTimesNewRoman, rtfdoc.ColorAqua)
+	doc.AddParagraph().SetAlign(rtfdoc.AlignCenter).AddText("Hello, world!", 14, rtfdoc.FontTimesNewRoman, rtfdoc.ColorAqua)
 	bs := doc.Export()
 	fmt.Println(string(bs))
 }

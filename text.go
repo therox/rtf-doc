@@ -36,7 +36,14 @@ func (text Text) compose() string {
 
 	PreparedText := convertNonASCIIToUTF16(text.content)
 
-	res.WriteString(fmt.Sprintf("\n\\fs%d\\f%d \\cf%d {%s %s}\\f0", text.fontSize*2, text.fontCode, text.colorCode, strings.Join(emphTextSlice, " "), PreparedText))
+	// If there is no emphasis, remove it from format so that there is no additional space
+	// sb0 and sa0 remove leading and trailing spaces
+	if len(emphTextSlice) > 0 {
+		res.WriteString(fmt.Sprintf("\n\\sb0 \\sa0 \\fs%d\\f%d \\cf%d{%s %s}\\f0", text.fontSize*2, text.fontCode, text.colorCode, strings.Join(emphTextSlice, " "), PreparedText))
+	} else {
+		res.WriteString(fmt.Sprintf("\n\\sb0 \\sa0 \\fs%d\\f%d \\cf%d{%s}\\f0", text.fontSize*2, text.fontCode, text.colorCode, PreparedText))
+	}
+
 	return res.String()
 }
 

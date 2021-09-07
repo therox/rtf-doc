@@ -5,6 +5,12 @@ import (
 	"strings"
 )
 
+// SetDefaultFontSize sets default font size of Table
+func (t *Table) SetDefaultFontSize(size int) *Table {
+	t.defaultFontSize = size
+	return t
+}
+
 // SetMarginLeft function sets Table left margin
 func (t *Table) SetMarginLeft(value int) *Table {
 	t.marginLeft = value
@@ -105,7 +111,9 @@ func (t Table) compose() string {
 	}
 	for _, tr := range t.data {
 		res.WriteString(fmt.Sprintf("\n{\\trowd %s", align))
-
+		if t.defaultFontSize > 0 {
+			res.WriteString(fmt.Sprintf("\\fs%d", 2*t.defaultFontSize))
+		}
 		res.WriteString(fmt.Sprintf("\n\\trpaddl%d \\trpaddr%d \\trpaddt%d \\trpaddb%d\n", t.paddingLeft, t.paddingRight, t.paddingTop, t.paddingBottom))
 		//res += t.getMargins()
 		res.WriteString(tr.encode())
@@ -468,7 +476,7 @@ func (dc TableCell) cellComposeData() string {
 		dc.AddParagraph()
 	}
 	for _, p := range dc.content {
-		res.WriteString(fmt.Sprintf("%s \n", p.compose()))
+		res.WriteString(fmt.Sprintf("%s\n", p.compose()))
 	}
 	res.WriteString("\\cell")
 	return res.String()
